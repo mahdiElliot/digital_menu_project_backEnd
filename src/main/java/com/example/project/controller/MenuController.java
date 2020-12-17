@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/menu")
 @Controller
 public class MenuController {
     private final IMenuService menuService;
@@ -19,7 +20,7 @@ public class MenuController {
         this.menuService = menuService;
     }
 
-    @PostMapping(path = "/menu/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public MenuDTO addMenu (@RequestBody MenuDTO menuDTO){
@@ -27,13 +28,13 @@ public class MenuController {
         return menuService.save(menuEntity);
     }
 
-    @GetMapping(path = "/menu/all")
+    @GetMapping
     @ResponseBody
     public List<MenuDTO> getAllMenus(){
         return menuService.findAll();
     }
 
-    @GetMapping("/menu/{id}")
+    @GetMapping("/{id}")
     public MenuDTO getMenu(@PathVariable("id") Long id){
         return menuService.findById(id);
     }
