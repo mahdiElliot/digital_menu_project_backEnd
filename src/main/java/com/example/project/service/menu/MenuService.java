@@ -32,11 +32,8 @@ public class MenuService implements IMenuService {
 
     @Override
     public MenuDTO findById(Long id) {
-        if(menuRepository.findById(id).isPresent() ||
-                menuRepository.findById(id).isEmpty())
-            return convertToDTO(menuRepository.findById(id).get());
-
-        return null;
+        return menuRepository.findById(id)
+                .map(this::convertToDTO).orElse(null);
     }
 
     @Override

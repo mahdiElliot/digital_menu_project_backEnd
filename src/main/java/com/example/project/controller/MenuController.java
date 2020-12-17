@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("/menu")
@@ -30,16 +29,17 @@ public class MenuController {
 
     @GetMapping
     @ResponseBody
-    public List<MenuDTO> getAllMenus(){
+    public List<MenuDTO> getAllMenus() {
         return menuService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public MenuDTO getMenu(@PathVariable("id") Long id){
+    @GetMapping(path = "{id}")
+    @ResponseBody
+    public MenuDTO getMenu(@PathVariable("id") Long id) {
         return menuService.findById(id);
     }
 
-    private MenuEntity convertToMenuEntity(MenuDTO menuDTO){
+    private MenuEntity convertToMenuEntity(MenuDTO menuDTO) {
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setId(menuDTO.getId());
         menuEntity.setName(menuDTO.getName());
