@@ -11,8 +11,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class MenuService implements IMenuService {
+    private final MenuRepository menuRepository;
+
     @Autowired
-    private MenuRepository menuRepository;
+    public MenuService(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
 
     @Override
     public List<MenuDTO> findAll() {

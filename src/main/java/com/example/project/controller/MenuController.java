@@ -12,9 +12,12 @@ import java.util.List;
 
 @Controller
 public class MenuController {
+    private final IMenuService menuService;
 
     @Autowired
-    private IMenuService menuService;
+    public MenuController(IMenuService menuService) {
+        this.menuService = menuService;
+    }
 
     @PostMapping(path = "/menu/add")
     @ResponseStatus(HttpStatus.CREATED)
