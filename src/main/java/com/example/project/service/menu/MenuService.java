@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,8 +43,13 @@ public class MenuService implements IMenuService {
     }
 
     @Override
-    public void delete(MenuEntity menuEntity) {
-        menuRepository.delete(menuEntity);
+    public MenuDTO delete(Long id) {
+        Optional<MenuEntity> menu = menuRepository.findById(id);
+        if (menu.isPresent()) {
+            menuRepository.deleteById(id);
+            return convertToDTO(menu.get());
+        }
+        return null;
     }
 
     private MenuDTO convertToDTO(MenuEntity menuEntity){

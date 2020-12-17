@@ -39,6 +39,11 @@ public class MenuController {
         return menuService.findById(id);
     }
 
+    @DeleteMapping(path = "{id}")
+    public MenuDTO deleteMenu(@PathVariable("id") Long id) {
+        return menuService.delete(id);
+    }
+
     private MenuEntity convertToMenuEntity(MenuDTO menuDTO) {
         MenuEntity menuEntity = new MenuEntity();
         menuEntity.setId(menuDTO.getId());
