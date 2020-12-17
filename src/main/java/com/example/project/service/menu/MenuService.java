@@ -1,7 +1,7 @@
 package com.example.project.service.menu;
 
 import com.example.project.model.menu.MenuDTO;
-import com.example.project.model.menu.MenuEntity;
+import com.example.project.model.menu.Menu;
 import com.example.project.repository.menu.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class MenuService implements IMenuService {
 
     @Override
     public List<MenuDTO> findAll() {
-        return ((List<MenuEntity>) menuRepository.findAll())
+        return ((List<Menu>) menuRepository.findAll())
                 .stream()
                 .map(this::convertToDTO).collect(Collectors.toList());
     }
@@ -38,13 +38,13 @@ public class MenuService implements IMenuService {
     }
 
     @Override
-    public MenuDTO save(MenuEntity menuEntity) {
-        return convertToDTO(menuRepository.save(menuEntity));
+    public MenuDTO save(Menu menu) {
+        return convertToDTO(menuRepository.save(menu));
     }
 
     @Override
     public MenuDTO delete(Long id) {
-        Optional<MenuEntity> menu = menuRepository.findById(id);
+        Optional<Menu> menu = menuRepository.findById(id);
         if (menu.isPresent()) {
             menuRepository.deleteById(id);
             return convertToDTO(menu.get());
@@ -52,13 +52,19 @@ public class MenuService implements IMenuService {
         return null;
     }
 
-    private MenuDTO convertToDTO(MenuEntity menuEntity){
+    @Override
+    public MenuDTO update(Long id, Menu menu) {
+        return menuRepository.update(id, menu).
+                map(this::convertToDTO).orElse(null);
+    }
+
+    private MenuDTO convertToDTO(Menu menu) {
         MenuDTO menuDTO = new MenuDTO();
-        menuDTO.setId(menuEntity.getId());
-        menuDTO.setDelivery(menuEntity.getDelivery());
-        menuDTO.setEnabled(menuEntity.getEnabled());
-        menuDTO.setName(menuEntity.getName());
-        menuDTO.setPickup(menuEntity.getPickup());
+        menuDTO.setId(menu.getId());
+        menuDTO.setDelivery(menu.getDelivery());
+        menuDTO.setEnabled(menu.getEnabled());
+        menuDTO.setName(menu.getName());
+        menuDTO.setPickup(menu.getPickup());
         return menuDTO;
     }
 }

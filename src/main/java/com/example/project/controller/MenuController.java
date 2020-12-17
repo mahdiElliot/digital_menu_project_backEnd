@@ -1,7 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.model.menu.MenuDTO;
-import com.example.project.model.menu.MenuEntity;
+import com.example.project.model.menu.Menu;
 import com.example.project.service.menu.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +22,9 @@ public class MenuController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public MenuDTO addMenu (@RequestBody MenuDTO menuDTO){
-        MenuEntity menuEntity = convertToMenuEntity(menuDTO);
-        return menuService.save(menuEntity);
+    public MenuDTO addMenu (@RequestBody MenuDTO menuDTO) {
+        Menu menu = convertToMenuEntity(menuDTO);
+        return menuService.save(menu);
     }
 
     @GetMapping
@@ -40,17 +40,25 @@ public class MenuController {
     }
 
     @DeleteMapping(path = "{id}")
+    @ResponseBody
     public MenuDTO deleteMenu(@PathVariable("id") Long id) {
         return menuService.delete(id);
     }
 
-    private MenuEntity convertToMenuEntity(MenuDTO menuDTO) {
-        MenuEntity menuEntity = new MenuEntity();
-        menuEntity.setId(menuDTO.getId());
-        menuEntity.setName(menuDTO.getName());
-        menuEntity.setPickup(menuDTO.getPickup());
-        menuEntity.setDelivery(menuDTO.getDelivery());
-        menuEntity.setEnabled(menuDTO.getEnabled());
-        return menuEntity;
+    @PutMapping(path = "{id}")
+    @ResponseBody
+    public MenuDTO updateMenu(@PathVariable("id") Long id, @RequestBody MenuDTO menuDTO) {
+        Menu menu = convertToMenuEntity(menuDTO);
+        return menuService.update(id, menu);
+    }
+
+    private Menu convertToMenuEntity(MenuDTO menuDTO) {
+        Menu menu = new Menu();
+        menu.setId(menuDTO.getId());
+        menu.setName(menuDTO.getName());
+        menu.setPickup(menuDTO.getPickup());
+        menu.setDelivery(menuDTO.getDelivery());
+        menu.setEnabled(menuDTO.getEnabled());
+        return menu;
     }
 }

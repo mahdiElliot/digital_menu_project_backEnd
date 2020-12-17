@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class MenuEntity {
+public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter
@@ -32,9 +32,10 @@ public class MenuEntity {
     @Getter
     private Boolean enabled;
 
-    public MenuEntity(){ }
+    public Menu() {
+    }
 
-    public MenuEntity(String name, boolean pickup, boolean delivery, boolean enabled){
+    public Menu(String name, boolean pickup, boolean delivery, boolean enabled) {
         this.name = name;
         this.pickup = pickup;
         this.delivery = delivery;
