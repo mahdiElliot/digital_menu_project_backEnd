@@ -1,4 +1,4 @@
-package com.example.project.repository.menu;
+package com.example.project.repositories.menu;
 
 import com.example.project.model.menu.Menu;
 import org.springframework.data.jpa.repository.Query;

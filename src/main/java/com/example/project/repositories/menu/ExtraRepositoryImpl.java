@@ -1,4 +1,4 @@
-package com.example.project.repository.menu;
+package com.example.project.repositories.menu;
 
 import com.example.project.model.menu.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,12 +6,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.Optional;
 
-public class ExtraRepositoryImp implements ExtraRepository {
+public class ExtraRepositoryImpl implements ExtraRepository {
     private final JdbcTemplate jdbcTemplate;
     private final String tableName;
 
     @Autowired
-    public ExtraRepositoryImp(JdbcTemplate jdbcTemplate) {
+    public ExtraRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         tableName = Menu.class.getName().toLowerCase();
     }

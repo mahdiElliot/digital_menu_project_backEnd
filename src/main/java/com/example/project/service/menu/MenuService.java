@@ -2,7 +2,7 @@ package com.example.project.service.menu;
 
 import com.example.project.model.menu.MenuDTO;
 import com.example.project.model.menu.Menu;
-import com.example.project.repository.menu.MenuRepository;
+import com.example.project.repositories.menu.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
