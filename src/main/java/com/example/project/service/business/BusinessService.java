@@ -52,6 +52,7 @@ public class BusinessService implements IBusinessService {
                 business.getServiceFee(),
                 business.getTax(),
                 business.getLogo(),
+                business.getEnabled(),
                 business.getMenus()
         );
     }

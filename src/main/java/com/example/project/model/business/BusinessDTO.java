@@ -29,14 +29,19 @@ public class BusinessDTO {
 
     @Setter
     @Getter
+    private Boolean enabled;
+
+    @Setter
+    @Getter
     private Set<Menu> menus;
 
-    public BusinessDTO(long id, String name, double service_fee, double tax, String logo, Set<Menu> menus) {
+    public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled, Set<Menu> menus) {
         this.id = id;
         this.name = name;
         this.service_fee = service_fee;
         this.tax = tax;
         this.logo = logo;
+        this.enabled = enabled;
         this.menus = menus;
     }
 
@@ -47,6 +52,7 @@ public class BusinessDTO {
                 service_fee,
                 tax,
                 logo,
+                enabled,
                 menus
         );
     }

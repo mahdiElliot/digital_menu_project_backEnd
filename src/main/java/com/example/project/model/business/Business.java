@@ -16,7 +16,7 @@ public class Business {
     @Getter
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Setter
     @Getter
     private String name;
@@ -34,6 +34,11 @@ public class Business {
     @Getter
     private String logo;
 
+    @Column(nullable = false)
+    @Setter
+    @Getter
+    private Boolean enabled;
+
     @OneToMany(mappedBy = "business")
     @Setter
     @Getter
@@ -42,12 +47,13 @@ public class Business {
     public Business() {
     }
 
-    public Business(long id, String name, double serviceFee, double tax, String logo, Set<Menu> menus) {
+    public Business(long id, String name, double serviceFee, double tax, String logo, boolean enabled, Set<Menu> menus) {
         this.id = id;
         this.name = name;
         this.serviceFee = serviceFee;
         this.tax = tax;
         this.logo = logo;
+        this.enabled = enabled;
         this.menus = menus;
     }
 }
