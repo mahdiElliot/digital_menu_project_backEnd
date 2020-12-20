@@ -3,6 +3,7 @@ package com.example.project.model.menu;
 import com.example.project.model.business.Business;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
@@ -30,7 +31,7 @@ public class MenuDTO {
         this.business_id = business_id;
     }
 
-    public Menu convertToMenuEntity(Function<Long, Business> getBusiness) {
+    public Menu convertToMenuEntity(@NotNull Function<Long, Business> getBusiness) {
         return new Menu(
                 id,
                 name,

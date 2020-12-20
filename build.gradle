@@ -35,6 +35,8 @@ dependencies {
 	}
 	implementation('org.postgresql:postgresql')
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+	// https://mvnrepository.com/artifact/org.jetbrains/annotations
+	compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
 }
 
 test {
