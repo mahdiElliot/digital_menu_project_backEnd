@@ -52,19 +52,12 @@ public class MenuService implements IMenuService {
         return null;
     }
 
-    @Override
-    public MenuDTO update(Long id, Menu menu) {
-        return menuRepository.update(id, menu).
-                map(this::convertToDTO).orElse(null);
-    }
-
     private MenuDTO convertToDTO(Menu menu) {
         MenuDTO menuDTO = new MenuDTO();
         menuDTO.setId(menu.getId());
-        menuDTO.setDelivery(menu.getDelivery());
         menuDTO.setEnabled(menu.getEnabled());
         menuDTO.setName(menu.getName());
-        menuDTO.setPickup(menu.getPickup());
+        menuDTO.setBusinessId(menu.getBusiness().getId());
         return menuDTO;
     }
 }

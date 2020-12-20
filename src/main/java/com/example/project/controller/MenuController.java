@@ -48,17 +48,17 @@ public class MenuController {
     @PutMapping(path = "{id}")
     @ResponseBody
     public MenuDTO updateMenu(@PathVariable("id") Long id, @RequestBody MenuDTO menuDTO) {
+        menuDTO.setId(id);
         Menu menu = convertToMenuEntity(menuDTO);
-        return menuService.update(id, menu);
+        return menuService.save(menu);
     }
 
     private Menu convertToMenuEntity(MenuDTO menuDTO) {
         Menu menu = new Menu();
         menu.setId(menuDTO.getId());
         menu.setName(menuDTO.getName());
-        menu.setPickup(menuDTO.getPickup());
-        menu.setDelivery(menuDTO.getDelivery());
         menu.setEnabled(menuDTO.getEnabled());
+        menu.setId(menuDTO.getId());
         return menu;
     }
 }

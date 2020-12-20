@@ -14,13 +14,9 @@ public class MenuDTO {
 
     @Setter
     @Getter
-    private Boolean pickup;
-
-    @Setter
-    @Getter
-    private Boolean delivery;
-
-    @Setter
-    @Getter
     private Boolean enabled;
+
+    @Getter
+    @Setter
+    private Long businessId;
 }

@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MenuRepository extends CrudRepository<Menu, Long>, ExtraRepository {
+public interface MenuRepository extends CrudRepository<Menu, Long> {
 
     @Query(value = "SELECT * FROM #{#entityName} t WHERE t.name=?1", nativeQuery = true)
     Menu findByName(String name);

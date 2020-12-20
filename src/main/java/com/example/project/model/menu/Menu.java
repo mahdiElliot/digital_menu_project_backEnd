@@ -1,14 +1,13 @@
 package com.example.project.model.menu;
 
+import com.example.project.model.business.Business;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "menu")
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,29 +15,21 @@ public class Menu {
     @Getter
     private Long id;
 
+    @Column(nullable = false)
     @Setter
     @Getter
     private String name;
 
     @Setter
     @Getter
-    private Boolean pickup;
-
-    @Setter
-    @Getter
-    private Boolean delivery;
-
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    public Menu() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "business_id", nullable = false)
+    @Setter
+    @Getter
+    private Business business;
 
-    public Menu(String name, boolean pickup, boolean delivery, boolean enabled) {
-        this.name = name;
-        this.pickup = pickup;
-        this.delivery = delivery;
-        this.enabled = enabled;
+    public Menu() {
     }
 }

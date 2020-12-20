@@ -15,6 +15,4 @@ public interface IMenuService {
     public MenuDTO save(Menu menu);
 
     public MenuDTO delete(Long id);
-
-    public MenuDTO update(Long id, Menu menu);
 }
