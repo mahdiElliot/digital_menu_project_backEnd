@@ -1,9 +1,9 @@
 package com.example.project.controller;
 
-import com.example.project.model.DTO;
 import com.example.project.model.business.Business;
 import com.example.project.model.menu.MenuDTO;
 import com.example.project.service.business.BusinessService;
+import com.example.project.service.business.IBusinessService;
 import com.example.project.service.menu.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Controller
 public class MenuController {
     private final IMenuService menuService;
-    private final BusinessService businessService;
+    private final IBusinessService businessService;
 
     @Autowired
     public MenuController(IMenuService menuService, BusinessService businessService) {
@@ -36,19 +36,19 @@ public class MenuController {
 
     @GetMapping
     @ResponseBody
-    public List<DTO> getAllMenus() {
+    public List<MenuDTO> getAllMenus() {
         return menuService.findAll();
     }
 
     @GetMapping(path = "{id}")
     @ResponseBody
-    public DTO getMenu(@PathVariable("id") Long id) {
+    public MenuDTO getMenu(@PathVariable("id") Long id) {
         return menuService.findById(id);
     }
 
     @DeleteMapping(path = "{id}")
     @ResponseBody
-    public DTO deleteMenu(@PathVariable("id") Long id) {
+    public MenuDTO deleteMenu(@PathVariable("id") Long id) {
         return menuService.delete(id);
     }
 
@@ -57,7 +57,7 @@ public class MenuController {
     public MenuDTO updateMenu(@PathVariable("id") Long id, @RequestBody MenuDTO menuDTO) {
         menuDTO.setId(id);
         Function<Long, Business> getBusiness =
-                businessId -> businessService.findById(businessId).convertToBusinessEntity();
+                businessId -> businessService.findById(id).convertToBusinessEntity();
         return menuService.save(menuDTO.convertToMenuEntity(getBusiness));
     }
 }

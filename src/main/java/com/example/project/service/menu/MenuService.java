@@ -1,6 +1,5 @@
 package com.example.project.service.menu;
 
-import com.example.project.model.DTO;
 import com.example.project.model.menu.MenuDTO;
 import com.example.project.model.menu.Menu;
 import com.example.project.repositories.menu.MenuRepository;
@@ -21,7 +20,7 @@ public class MenuService implements IMenuService {
     }
 
     @Override
-    public List<DTO> findAll() {
+    public List<MenuDTO> findAll() {
         return ((List<Menu>) menuRepository.findAll())
                 .stream()
                 .map(this::convertToDTO).collect(Collectors.toList());
@@ -39,11 +38,6 @@ public class MenuService implements IMenuService {
     }
 
     @Override
-    public MenuDTO save(Menu menu) {
-        return convertToDTO(menuRepository.save(menu));
-    }
-
-    @Override
     public MenuDTO delete(Long id) {
         Optional<Menu> menu = menuRepository.findById(id);
         if (menu.isPresent()) {
@@ -53,7 +47,13 @@ public class MenuService implements IMenuService {
         return null;
     }
 
-    private MenuDTO convertToDTO(Menu menu) {
+    @Override
+    public MenuDTO save(Menu menu) {
+        return convertToDTO(menuRepository.save(menu));
+    }
+
+    @Override
+    public MenuDTO convertToDTO(Menu menu) {
         return new MenuDTO(
                 menu.getId(),
                 menu.getName(),

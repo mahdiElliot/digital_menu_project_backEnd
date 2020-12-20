@@ -1,8 +1,8 @@
 package com.example.project.controller;
 
-import com.example.project.model.DTO;
 import com.example.project.model.business.BusinessDTO;
 import com.example.project.service.business.BusinessService;
+import com.example.project.service.business.IBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/business")
 @Controller
 public class BusinessController {
-    private final BusinessService businessService;
+    private final IBusinessService businessService;
 
     @Autowired
     public BusinessController(BusinessService businessService) {
@@ -29,19 +29,19 @@ public class BusinessController {
 
     @GetMapping
     @ResponseBody
-    public List<DTO> getAllMenus() {
+    public List<BusinessDTO> getAllBusinesses() {
         return businessService.findAll();
     }
 
     @GetMapping(path = "{id}")
     @ResponseBody
-    public DTO getMenu(@PathVariable("id") Long id) {
+    public BusinessDTO getBusiness(@PathVariable("id") Long id) {
         return businessService.findById(id);
     }
 
     @DeleteMapping(path = "{id}")
     @ResponseBody
-    public DTO deleteMenu(@PathVariable("id") Long id) {
+    public BusinessDTO deleteBusiness(@PathVariable("id") Long id) {
         return businessService.delete(id);
     }
 

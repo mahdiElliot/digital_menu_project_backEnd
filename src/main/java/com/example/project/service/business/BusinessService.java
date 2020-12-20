@@ -1,6 +1,5 @@
 package com.example.project.service.business;
 
-import com.example.project.model.DTO;
 import com.example.project.model.business.Business;
 import com.example.project.model.business.BusinessDTO;
 import com.example.project.repositories.business.BusinessRepository;
@@ -20,7 +19,7 @@ public class BusinessService implements IBusinessService {
     }
 
     @Override
-    public List<DTO> findAll() {
+    public List<BusinessDTO> findAll() {
         return null;
     }
 
@@ -36,16 +35,17 @@ public class BusinessService implements IBusinessService {
     }
 
     @Override
+    public BusinessDTO delete(Long id) {
+        return null;
+    }
+
+    @Override
     public BusinessDTO save(Business business) {
         return convertToDTO(businessRepository.save(business));
     }
 
     @Override
-    public BusinessDTO delete(Long id) {
-        return null;
-    }
-
-    private BusinessDTO convertToDTO(Business business) {
+    public BusinessDTO convertToDTO(Business business) {
         return new BusinessDTO(
                 business.getId(),
                 business.getName(),

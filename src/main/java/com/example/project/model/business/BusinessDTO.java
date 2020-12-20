@@ -1,13 +1,12 @@
 package com.example.project.model.business;
 
-import com.example.project.model.DTO;
 import com.example.project.model.menu.Menu;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Set;
 
-public class BusinessDTO extends DTO {
+public class BusinessDTO {
     @Setter
     @Getter
     private Long id;
