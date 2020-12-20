@@ -1,5 +1,6 @@
 package com.example.project.service.menu;
 
+import com.example.project.model.DTO;
 import com.example.project.model.menu.MenuDTO;
 import com.example.project.model.menu.Menu;
 import com.example.project.repositories.menu.MenuRepository;
@@ -20,7 +21,7 @@ public class MenuService implements IMenuService {
     }
 
     @Override
-    public List<MenuDTO> findAll() {
+    public List<DTO> findAll() {
         return ((List<Menu>) menuRepository.findAll())
                 .stream()
                 .map(this::convertToDTO).collect(Collectors.toList());

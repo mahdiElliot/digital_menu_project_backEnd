@@ -1,9 +1,10 @@
 package com.example.project.model.menu;
 
+import com.example.project.model.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
-public class MenuDTO {
+public class MenuDTO extends DTO {
     @Setter
     @Getter
     private Long id;
