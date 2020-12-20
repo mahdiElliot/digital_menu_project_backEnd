@@ -17,7 +17,7 @@ public class BusinessDTO {
 
     @Setter
     @Getter
-    private Double service_fee;
+    private Double serviceFee;
 
     @Setter
     @Getter
@@ -35,10 +35,10 @@ public class BusinessDTO {
     @Getter
     private Set<Menu> menus;
 
-    public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled, Set<Menu> menus) {
+    public BusinessDTO(long id, String name, double serviceFee, double tax, String logo, boolean enabled, Set<Menu> menus) {
         this.id = id;
         this.name = name;
-        this.service_fee = service_fee;
+        this.serviceFee = serviceFee;
         this.tax = tax;
         this.logo = logo;
         this.enabled = enabled;
@@ -49,7 +49,7 @@ public class BusinessDTO {
         return new Business(
                 id,
                 name,
-                service_fee,
+                serviceFee,
                 tax,
                 logo,
                 enabled,
