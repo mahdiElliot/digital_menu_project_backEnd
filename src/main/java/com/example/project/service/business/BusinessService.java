@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BusinessService implements IBusinessService {
@@ -20,7 +22,9 @@ public class BusinessService implements IBusinessService {
 
     @Override
     public List<BusinessDTO> findAll() {
-        return null;
+        return ((List<Business>) businessRepository.findAll())
+                .stream()
+                .map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -36,6 +40,11 @@ public class BusinessService implements IBusinessService {
 
     @Override
     public BusinessDTO delete(Long id) {
+        Optional<Business> menu = businessRepository.findById(id);
+        if (menu.isPresent()) {
+            businessRepository.deleteById(id);
+            return convertToDTO(menu.get());
+        }
         return null;
     }
 
