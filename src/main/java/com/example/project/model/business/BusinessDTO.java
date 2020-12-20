@@ -1,6 +1,7 @@
 package com.example.project.model.business;
 
 import com.example.project.model.menu.Menu;
+import com.example.project.model.order.COrder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,7 +36,11 @@ public class BusinessDTO {
     @Getter
     private Set<Menu> menus;
 
-    public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled, Set<Menu> menus) {
+    @Setter
+    @Getter
+    private Set<COrder> COrders;
+
+    public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled, Set<Menu> menus, Set<COrder> COrders) {
         this.id = id;
         this.name = name;
         this.service_fee = service_fee;
@@ -43,6 +48,7 @@ public class BusinessDTO {
         this.logo = logo;
         this.enabled = enabled;
         this.menus = menus;
+        this.COrders = COrders;
     }
 
     public Business convertToBusinessEntity() {
@@ -53,7 +59,8 @@ public class BusinessDTO {
                 tax,
                 logo,
                 enabled,
-                menus
+                menus,
+                COrders
         );
     }
 }
