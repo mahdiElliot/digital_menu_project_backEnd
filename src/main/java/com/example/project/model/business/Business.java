@@ -41,4 +41,13 @@ public class Business {
 
     public Business() {
     }
+
+    public Business(long id, String name, double serviceFee, double tax, String logo, Set<Menu> menus) {
+        this.id = id;
+        this.name = name;
+        this.serviceFee = serviceFee;
+        this.tax = tax;
+        this.logo = logo;
+        this.menus = menus;
+    }
 }

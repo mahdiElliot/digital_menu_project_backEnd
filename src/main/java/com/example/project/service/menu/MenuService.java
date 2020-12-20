@@ -54,11 +54,11 @@ public class MenuService implements IMenuService {
     }
 
     private MenuDTO convertToDTO(Menu menu) {
-        MenuDTO menuDTO = new MenuDTO();
-        menuDTO.setId(menu.getId());
-        menuDTO.setEnabled(menu.getEnabled());
-        menuDTO.setName(menu.getName());
-        menuDTO.setBusinessId(menu.getBusiness().getId());
-        return menuDTO;
+        return new MenuDTO(
+                menu.getId(),
+                menu.getName(),
+                menu.getEnabled(),
+                menu.getBusiness().getId()
+        );
     }
 }

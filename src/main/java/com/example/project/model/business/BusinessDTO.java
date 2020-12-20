@@ -18,7 +18,7 @@ public class BusinessDTO extends DTO {
 
     @Setter
     @Getter
-    private Double serviceFee;
+    private Double service_fee;
 
     @Setter
     @Getter
@@ -31,4 +31,24 @@ public class BusinessDTO extends DTO {
     @Setter
     @Getter
     private Set<Menu> menus;
+
+    public BusinessDTO(long id, String name, double service_fee, double tax, String logo, Set<Menu> menus) {
+        this.id = id;
+        this.name = name;
+        this.service_fee = service_fee;
+        this.tax = tax;
+        this.logo = logo;
+        this.menus = menus;
+    }
+
+    public Business convertToBusinessEntity() {
+        return new Business(
+                id,
+                name,
+                service_fee,
+                tax,
+                logo,
+                menus
+        );
+    }
 }

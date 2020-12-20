@@ -7,6 +7,5 @@ import com.example.project.service.IService;
 import java.util.List;
 
 public interface IBusinessService extends IService {
-
     BusinessDTO save(Business business);
 }

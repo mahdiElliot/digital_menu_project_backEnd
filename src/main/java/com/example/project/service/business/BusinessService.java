@@ -25,18 +25,19 @@ public class BusinessService implements IBusinessService {
     }
 
     @Override
-    public DTO findByName(String name) {
+    public BusinessDTO findByName(String name) {
         return null;
     }
 
     @Override
     public BusinessDTO findById(Long id) {
-        return null;
+        return businessRepository.findById(id)
+                .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public BusinessDTO save(Business business) {
-        return null;
+        return convertToDTO(businessRepository.save(business));
     }
 
     @Override
@@ -44,5 +45,14 @@ public class BusinessService implements IBusinessService {
         return null;
     }
 
-
+    private BusinessDTO convertToDTO(Business business) {
+        return new BusinessDTO(
+                business.getId(),
+                business.getName(),
+                business.getServiceFee(),
+                business.getTax(),
+                business.getLogo(),
+                business.getMenus()
+        );
+    }
 }
