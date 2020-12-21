@@ -10,14 +10,13 @@ import javax.persistence.*;
 @Table(name = "menu")
 public class Menu {
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_generator")
-//    @SequenceGenerator(name = "menu_generator", sequenceName = "menu_seq")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_generator")
+    @SequenceGenerator(name = "menu_generator", sequenceName = "menu_seq")
     @Setter
     @Getter
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Setter
     @Getter
     private String name;

@@ -61,4 +61,11 @@ public class MenuService implements IMenuService {
                 menu.getBusiness().getId()
         );
     }
+
+    @Override
+    public List<MenuDTO> findAllByBusinessId(Long id) {
+        return (menuRepository.findAllByBusinessId(id))
+                .stream()
+                .map(this::convertToDTO).collect(Collectors.toList());
+    }
 }
