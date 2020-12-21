@@ -29,7 +29,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public OrderDTO findById(Long aLong) {
+    public OrderDTO findById(Long id) {
         return null;
     }
 
@@ -39,12 +39,17 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public OrderDTO save(COrder COrder) {
+    public OrderDTO save(COrder order) {
         return null;
     }
 
     @Override
-    public OrderDTO convertToDTO(COrder COrder) {
-        return null;
+    public OrderDTO convertToDTO(COrder order) {
+        return new OrderDTO(
+                order.getId(),
+                order.getTax(),
+                order.getTableNumber(),
+                order.getBusiness().getId()
+        );
     }
 }

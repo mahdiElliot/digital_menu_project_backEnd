@@ -11,7 +11,7 @@ public interface IService<T, DTO, ID> {
 
     DTO findById(ID id);
 
-    DTO delete(Long id);
+    DTO delete(ID id);
 
     DTO save(T t);
 
