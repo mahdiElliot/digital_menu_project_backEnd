@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService implements IOrderService {
@@ -20,7 +22,9 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderDTO> findAll() {
-        return null;
+        return ((List<COrder>) orderRepository.findAll())
+                .stream()
+                .map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -30,17 +34,23 @@ public class OrderService implements IOrderService {
 
     @Override
     public OrderDTO findById(Long id) {
-        return null;
+        return orderRepository.findById(id)
+                .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public OrderDTO delete(Long id) {
+        Optional<COrder> order = orderRepository.findById(id);
+        if (order.isPresent()) {
+            orderRepository.deleteById(id);
+            return convertToDTO(order.get());
+        }
         return null;
     }
 
     @Override
     public OrderDTO save(COrder order) {
-        return null;
+        return convertToDTO(orderRepository.save(order));
     }
 
     @Override
