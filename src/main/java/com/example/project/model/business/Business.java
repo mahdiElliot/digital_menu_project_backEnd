@@ -1,6 +1,7 @@
 package com.example.project.model.business;
 
 import com.example.project.model.category.Category;
+import com.example.project.model.extra.Extra;
 import com.example.project.model.menu.Menu;
 import com.example.project.model.order.COrder;
 import com.example.project.model.paymethod.PayMethod;
@@ -57,6 +58,11 @@ public class Business {
     @Getter
     private Set<Category> categories;
 
+    @OneToMany(mappedBy = "business")
+    @Setter
+    @Getter
+    private Set<Extra> extras;
+
     @ManyToMany(mappedBy = "businesses")
     @Setter
     @Getter
@@ -66,7 +72,8 @@ public class Business {
     }
 
     public Business(long id, String name, double serviceFee, double tax, String logo,
-                    boolean enabled, Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods, Set<Category> categories) {
+                    boolean enabled, Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods,
+                    Set<Category> categories, Set<Extra> extras) {
         this.id = id;
         this.name = name;
         this.serviceFee = serviceFee;
@@ -77,5 +84,6 @@ public class Business {
         this.orders = orders;
         this.payMethods = payMethods;
         this.categories = categories;
+        this.extras = extras;
     }
 }

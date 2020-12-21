@@ -65,7 +65,8 @@ public class BusinessService implements IBusinessService {
                 business.getMenus(),
                 business.getOrders(),
                 business.getPayMethods(),
-                business.getCategories()
+                business.getCategories(),
+                business.getExtras()
         );
     }
 }
