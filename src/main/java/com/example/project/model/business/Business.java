@@ -2,6 +2,7 @@ package com.example.project.model.business;
 
 import com.example.project.model.menu.Menu;
 import com.example.project.model.order.COrder;
+import com.example.project.model.paymethod.PayMethod;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,12 +49,17 @@ public class Business {
     @OneToMany(mappedBy = "business")
     @Setter
     @Getter
-    private Set<COrder> COrders;
+    private Set<COrder> orders;
+
+    @ManyToMany(mappedBy = "businesses")
+    @Setter
+    @Getter
+    private Set<PayMethod> payMethods;
 
     public Business() {
     }
 
-    public Business(long id, String name, double serviceFee, double tax, String logo, boolean enabled, Set<Menu> menus, Set<COrder> COrders) {
+    public Business(long id, String name, double serviceFee, double tax, String logo, boolean enabled, Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods) {
         this.id = id;
         this.name = name;
         this.serviceFee = serviceFee;
@@ -61,6 +67,7 @@ public class Business {
         this.logo = logo;
         this.enabled = enabled;
         this.menus = menus;
-        this.COrders = COrders;
+        this.orders = orders;
+        this.payMethods = payMethods;
     }
 }
