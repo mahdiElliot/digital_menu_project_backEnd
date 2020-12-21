@@ -29,7 +29,7 @@ public class BusinessService implements IBusinessService {
 
     @Override
     public BusinessDTO findByName(String name) {
-        return null;
+        return convertToDTO(businessRepository.findByName(name));
     }
 
     @Override

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.function.Function;
 
-@RequestMapping("/menu")
 @Controller
 public class MenuController {
     private final IMenuService menuService;
@@ -25,39 +24,51 @@ public class MenuController {
         this.businessService = businessService;
     }
 
-    @PostMapping
+    @PostMapping(path = "/business/{id}/menus")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public MenuDTO addMenu (@RequestBody MenuDTO menuDTO) {
-        Function<Long, Business> getBusiness =
-                id -> businessService.findById(id).convertToBusinessEntity();
-        return menuService.save(menuDTO.convertToMenuEntity(getBusiness));
+    public MenuDTO addMenu(@PathVariable("id") Long id, @RequestBody MenuDTO menuDTO) {
+        if (businessService.findById(id) != null) {
+            Function<Long, Business> getBusiness =
+                    ID -> businessService.findById(ID).convertToBusinessEntity();
+            return menuService.save(menuDTO.convertToMenuEntity(getBusiness));
+        }
+        return null;
     }
 
-    @GetMapping
+    @GetMapping(path = "/business/{id}/menus")
     @ResponseBody
-    public List<MenuDTO> getAllMenus() {
-        return menuService.findAll();
+    public List<MenuDTO> getAllMenus(@PathVariable("id") Long id) {
+        if (businessService.findById(id) != null)
+            return menuService.findAll();
+        return null;
     }
 
-    @GetMapping(path = "{id}")
+    @GetMapping(path = "/business/{id}/menus/{id2}")
     @ResponseBody
-    public MenuDTO getMenu(@PathVariable("id") Long id) {
-        return menuService.findById(id);
+    public MenuDTO getMenu(@PathVariable("id") Long id, @PathVariable("id2") Long id2) {
+        if (businessService.findById(id) != null)
+            return menuService.findById(id2);
+        return null;
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/business/{id}/menus/{id2}")
     @ResponseBody
-    public MenuDTO deleteMenu(@PathVariable("id") Long id) {
-        return menuService.delete(id);
+    public MenuDTO deleteMenu(@PathVariable("id") Long id, @PathVariable("id2") Long id2) {
+        if (businessService.findById(id) != null)
+            return menuService.delete(id);
+        return null;
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/business/{id}/menus/{id2}")
     @ResponseBody
-    public MenuDTO updateMenu(@PathVariable("id") Long id, @RequestBody MenuDTO menuDTO) {
-        menuDTO.setId(id);
-        Function<Long, Business> getBusiness =
-                businessId -> businessService.findById(id).convertToBusinessEntity();
-        return menuService.save(menuDTO.convertToMenuEntity(getBusiness));
+    public MenuDTO updateMenu(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @RequestBody MenuDTO menuDTO) {
+        if (businessService.findById(id) != null) {
+            menuDTO.setId(id2);
+            Function<Long, Business> getBusiness =
+                    businessId -> businessService.findById(businessId).convertToBusinessEntity();
+            return menuService.save(menuDTO.convertToMenuEntity(getBusiness));
+        }
+        return null;
     }
 }
