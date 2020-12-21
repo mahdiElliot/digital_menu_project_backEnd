@@ -1,5 +1,6 @@
 package com.example.project.model.business;
 
+import com.example.project.model.category.Category;
 import com.example.project.model.menu.Menu;
 import com.example.project.model.order.COrder;
 import com.example.project.model.paymethod.PayMethod;
@@ -45,8 +46,12 @@ public class BusinessDTO {
     @Getter
     private Set<PayMethod> payMethods;
 
+    @Setter
+    @Getter
+    private Set<Category> categories;
+
     public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled,
-                       Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods) {
+                       Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods, Set<Category> categories) {
         this.id = id;
         this.name = name;
         this.service_fee = service_fee;
@@ -56,6 +61,7 @@ public class BusinessDTO {
         this.menus = menus;
         this.orders = orders;
         this.payMethods = payMethods;
+        this.categories = categories;
     }
 
     public Business convertToBusinessEntity() {
@@ -68,7 +74,8 @@ public class BusinessDTO {
                 enabled,
                 menus,
                 orders,
-                payMethods
+                payMethods,
+                categories
         );
     }
 }

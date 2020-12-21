@@ -53,6 +53,13 @@ public class MenuService implements IMenuService {
     }
 
     @Override
+    public List<MenuDTO> findAllByBusinessId(Long id) {
+        return (menuRepository.findAllByBusinessId(id))
+                .stream()
+                .map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
     public MenuDTO convertToDTO(Menu menu) {
         return new MenuDTO(
                 menu.getId(),
@@ -62,10 +69,4 @@ public class MenuService implements IMenuService {
         );
     }
 
-    @Override
-    public List<MenuDTO> findAllByBusinessId(Long id) {
-        return (menuRepository.findAllByBusinessId(id))
-                .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
-    }
 }

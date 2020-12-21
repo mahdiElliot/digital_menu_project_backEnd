@@ -4,6 +4,7 @@ import com.example.project.model.business.Business;
 import com.example.project.model.order.OrderDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.order.IOrderService;
+import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.function.Function;
 
-@RequestMapping("/order")
+@RequestMapping(URLUtils.ORDER)
 @Controller
 public class OrderController {
 
