@@ -5,6 +5,7 @@ import com.example.project.model.extra.Extra;
 import com.example.project.model.menu.Menu;
 import com.example.project.model.order.COrder;
 import com.example.project.model.paymethod.PayMethod;
+import com.example.project.model.zone.Zone;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,12 +69,17 @@ public class Business {
     @Getter
     private Set<PayMethod> payMethods;
 
+    @ManyToMany(mappedBy = "business")
+    @Setter
+    @Getter
+    private Set<Zone> zones;
+
     public Business() {
     }
 
     public Business(long id, String name, double serviceFee, double tax, String logo,
                     boolean enabled, Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods,
-                    Set<Category> categories, Set<Extra> extras) {
+                    Set<Category> categories, Set<Extra> extras, Set<Zone> zones) {
         this.id = id;
         this.name = name;
         this.serviceFee = serviceFee;
@@ -85,5 +91,6 @@ public class Business {
         this.payMethods = payMethods;
         this.categories = categories;
         this.extras = extras;
+        this.zones = zones;
     }
 }

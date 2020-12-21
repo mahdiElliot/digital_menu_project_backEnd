@@ -5,6 +5,7 @@ import com.example.project.model.extra.Extra;
 import com.example.project.model.menu.Menu;
 import com.example.project.model.order.COrder;
 import com.example.project.model.paymethod.PayMethod;
+import com.example.project.model.zone.Zone;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -55,8 +56,13 @@ public class BusinessDTO {
     @Getter
     private Set<Extra> extras;
 
+    @Setter
+    @Getter
+    private Set<Zone> zones;
+
     public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled,
-                       Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods, Set<Category> categories, Set<Extra> extras) {
+                       Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods, Set<Category> categories,
+                       Set<Extra> extras, Set<Zone> zones) {
         this.id = id;
         this.name = name;
         this.service_fee = service_fee;
@@ -68,6 +74,7 @@ public class BusinessDTO {
         this.payMethods = payMethods;
         this.categories = categories;
         this.extras = extras;
+        this.zones = zones;
     }
 
     public Business convertToBusinessEntity() {
@@ -82,7 +89,8 @@ public class BusinessDTO {
                 orders,
                 payMethods,
                 categories,
-                extras
+                extras,
+                zones
         );
     }
 }

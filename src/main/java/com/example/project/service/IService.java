@@ -3,15 +3,15 @@ package com.example.project.service;
 
 import java.util.List;
 
-public interface IService<T, DTO, ID> {
+public interface IService<T, DTO, I> {
 
     List<DTO> findAll();
 
     DTO findByName(String name);
 
-    DTO findById(ID id);
+    DTO findById(I id);
 
-    DTO delete(ID id);
+    DTO delete(I id);
 
     DTO save(T t);
 
