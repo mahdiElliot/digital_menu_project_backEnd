@@ -1,6 +1,7 @@
 package com.example.project.model.order;
 
 import com.example.project.model.business.Business;
+import com.example.project.model.customer.Customer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +30,12 @@ public class COrder {
     @Setter
     @Getter
     private Business business;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    @Setter
+    @Getter
+    private Customer customer_id;
 
     public COrder() {
     }

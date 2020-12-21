@@ -2,6 +2,7 @@ package com.example.project.model.business;
 
 import com.example.project.model.category.Category;
 import com.example.project.model.extra.Extra;
+import com.example.project.model.location.Location;
 import com.example.project.model.menu.Menu;
 import com.example.project.model.order.COrder;
 import com.example.project.model.paymethod.PayMethod;
@@ -73,6 +74,10 @@ public class Business {
     @Setter
     @Getter
     private Set<Zone> zones;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
 
     public Business() {
     }
