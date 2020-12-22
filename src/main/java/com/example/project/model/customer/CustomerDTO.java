@@ -1,22 +1,16 @@
 package com.example.project.model.customer;
 
-
-import com.example.project.model.menu.Menu;
+import com.example.project.model.category.Category;
 import com.example.project.model.order.COrder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "customer")
-public class Customer {
+public class CustomerDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
     @Getter
+    @Setter
     private Long id;
 
     @Getter
@@ -29,20 +23,27 @@ public class Customer {
 
     @Getter
     @Setter
-    private String phoneNumber;
+    private String phone_number;
 
-    @OneToMany(mappedBy = "customer")
     @Setter
     @Getter
     private Set<COrder> orders;
 
-    public Customer(){}
-
-    public Customer(Long id, String name, String email, String phoneNumber, Set<COrder> orders) {
+    public CustomerDTO(Long id, String name, String email, String phone_number, Set<COrder> orders) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.phone_number = phone_number;
         this.orders = orders;
+    }
+
+    public Customer convertToCustomerEntity(){
+        return new Customer(
+                id,
+                name,
+                email,
+                phone_number,
+                orders
+        );
     }
 }

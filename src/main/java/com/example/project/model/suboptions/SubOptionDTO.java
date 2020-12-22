@@ -4,16 +4,11 @@ import com.example.project.model.business.Business;
 import com.example.project.model.option.Option;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
+import java.util.function.Function;
 
-@Entity
-@Table(name = "suboptions")
-
-public class SubOption {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class SubOptionDTO {
     @Setter
     @Getter
     private Long id;
@@ -38,22 +33,29 @@ public class SubOption {
     @Getter
     private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "option_id", nullable = false)
     @Setter
     @Getter
-    private Option option;
+    private Long option_id;
 
-    public SubOption() {
-    }
-
-    public SubOption(Long id, Integer price, String name, String description, boolean enabled, String image, Option option) {
+    public SubOptionDTO(Long id, Integer price, String name, String description, boolean enabled, String image, Long option_id) {
         this.id = id;
         this.price = price;
         this.name = name;
         this.description = description;
         this.enabled = enabled;
         this.image = image;
-        this.option = option;
+        this.option_id = option_id;
+    }
+
+    public SubOption convertToSubOptionEntity(@NotNull Function<Long, Option> getOption){
+        return new SubOption(
+                id,
+                price,
+                name,
+                description,
+                enabled,
+                image,
+                getOption.apply(option_id)
+        );
     }
 }

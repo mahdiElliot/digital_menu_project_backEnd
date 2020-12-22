@@ -1,34 +1,27 @@
 package com.example.project.model.option;
 
-
-import com.example.project.model.menu.Menu;
 import com.example.project.model.suboptions.SubOption;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "option")
-public class Option {
+public class OptionDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter
     @Getter
     private Long id;
 
-    @Getter
     @Setter
+    @Getter
     private String name;
 
-    @Getter
     @Setter
+    @Getter
     private Integer min;
 
-    @Getter
     @Setter
+    @Getter
     private Integer max;
 
     @Setter
@@ -39,15 +32,11 @@ public class Option {
     @Getter
     private String image;
 
-    @OneToMany(mappedBy = "option")
     @Setter
     @Getter
     private Set<SubOption> subOptions;
 
-    public Option() {
-    }
-
-    public Option(Long id, String name, Integer min, Integer max, boolean enabled, String image, Set<SubOption> subOptions) {
+    public OptionDTO(Long id, String name, Integer min, Integer max, boolean enabled, String image, Set<SubOption> subOptions) {
         this.id = id;
         this.name = name;
         this.min = min;
@@ -55,5 +44,17 @@ public class Option {
         this.enabled = enabled;
         this.image = image;
         this.subOptions = subOptions;
+    }
+
+    public Option convertToOptionEntity(){
+        return new Option(
+                id,
+                name,
+                min,
+                max,
+                enabled,
+                image,
+                subOptions
+        );
     }
 }

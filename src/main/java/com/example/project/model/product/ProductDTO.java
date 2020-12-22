@@ -5,15 +5,12 @@ import com.example.project.model.category.Category;
 import com.example.project.model.menu.Menu;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
+import java.util.function.Function;
 
-@Entity
-@Table(name = "product")
-public class Product {
+public class ProductDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter
     @Getter
     private Long id;
@@ -62,22 +59,15 @@ public class Product {
     @Getter
     private Integer rank;
 
-    @ManyToOne
-    @JoinColumn(name = "menu_id", nullable = false)
     @Setter
     @Getter
-    private Menu menu;
+    private Long menu_id;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
     @Setter
     @Getter
-    private Category category;
+    private Long category_id;
 
-    public Product() {
-    }
-
-    public Product(Long id, Integer price, Integer quantity, String name, String description, String images, boolean inventoried, boolean featured, boolean enabled, boolean upselling, Integer offer_price, Integer rank, Menu menu, Category category) {
+    public ProductDTO(Long id, Integer price, Integer quantity, String name, String description, String images, boolean inventoried, boolean featured, boolean enabled, boolean upselling, Integer offer_price, Integer rank, Long menu_id, Long category_id) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;
@@ -90,7 +80,26 @@ public class Product {
         this.upselling = upselling;
         this.offer_price = offer_price;
         this.rank = rank;
-        this.menu = menu;
-        this.category = category;
+        this.menu_id = menu_id;
+        this.category_id = category_id;
+    }
+
+    public Product convertToProductEntity(@NotNull Function<Long, Menu> getMenu,@NotNull Function<Long, Category> getCategory){
+        return new Product(
+                id,
+                price,
+                quantity,
+                name,
+                description,
+                images,
+                inventoried,
+                featured,
+                enabled,
+                upselling,
+                offer_price,
+                rank,
+                getMenu.apply(menu_id),
+                getCategory.apply(category_id)
+        );
     }
 }
