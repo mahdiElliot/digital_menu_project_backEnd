@@ -70,7 +70,7 @@ public class Business {
     @Getter
     private Set<PayMethod> payMethods;
 
-    @ManyToMany(mappedBy = "business")
+    @ManyToMany(mappedBy = "businesses")
     @Setter
     @Getter
     private Set<Zone> zones;

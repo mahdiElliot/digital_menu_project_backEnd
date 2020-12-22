@@ -35,7 +35,7 @@ public class COrder {
     @JoinColumn(name = "customer_id", nullable = false)
     @Setter
     @Getter
-    private Customer customer_id;
+    private Customer customer;
 
     public COrder() {
     }
