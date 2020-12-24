@@ -57,4 +57,11 @@ public class SubOptionService implements ISubOptionService {
     public SubOptionDTO convertToDTO(SubOption option) {
         return option.convertToDTO();
     }
+
+    @Override
+    public List<SubOptionDTO> findAllByOptionId(Long id) {
+        return (repository.findAllByOptionId(id))
+                .stream()
+                .map(this::convertToDTO).collect(Collectors.toList());
+    }
 }
