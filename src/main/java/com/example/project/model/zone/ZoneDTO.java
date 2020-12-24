@@ -1,6 +1,7 @@
 package com.example.project.model.zone;
 
 import com.example.project.model.business.Business;
+import com.example.project.model.business.BusinessDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +22,9 @@ public class ZoneDTO {
 
     @Setter
     @Getter
-    Set<Business> businesses;
+    Set<BusinessDTO> businesses;
 
-    public ZoneDTO(long id, double price, boolean enabled, Set<Business> businesses) {
+    public ZoneDTO(long id, double price, boolean enabled, Set<BusinessDTO> businesses) {
         this.id = id;
         this.price = price;
         this.enabled = enabled;
@@ -34,8 +35,7 @@ public class ZoneDTO {
         return new Zone(
                 id,
                 price,
-                enabled,
-                businesses
+                enabled
         );
     }
 }

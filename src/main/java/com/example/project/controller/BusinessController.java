@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.model.business.BusinessDTO;
+import com.example.project.model.location.Location;
 import com.example.project.service.business.BusinessService;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.utils.URLUtils;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.function.Function;
 
 @RequestMapping(URLUtils.BUSINESS)
 @Controller
@@ -25,7 +27,8 @@ public class BusinessController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public BusinessDTO addBusiness(@RequestBody BusinessDTO businessDTO) {
-        return businessService.save(businessDTO.convertToBusinessEntity());
+        Function<Long, Location> getLocation = id -> null;
+        return businessService.save(businessDTO.convertToBusinessEntity(getLocation));
     }
 
     @GetMapping
@@ -50,6 +53,7 @@ public class BusinessController {
     @ResponseBody
     public BusinessDTO updateBusiness(@PathVariable("id") Long id, @RequestBody BusinessDTO businessDTO) {
         businessDTO.setId(id);
-        return businessService.save(businessDTO.convertToBusinessEntity());
+        Function<Long, Location> getLocation = ID -> null;
+        return businessService.save(businessDTO.convertToBusinessEntity(getLocation));
     }
 }

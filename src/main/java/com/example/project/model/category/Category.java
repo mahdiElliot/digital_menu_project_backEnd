@@ -1,10 +1,14 @@
 package com.example.project.model.category;
 
 import com.example.project.model.business.Business;
+import com.example.project.model.product.Product;
+import com.example.project.model.product.ProductDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "category")
@@ -15,6 +19,7 @@ public class Category {
     @Getter
     private Long id;
 
+    @Column(nullable = false, unique = true)
     @Setter
     @Getter
     private String name;
@@ -23,6 +28,7 @@ public class Category {
     @Getter
     private Integer rank;
 
+    @Column(nullable = false)
     @Setter
     @Getter
     private Boolean enabled;
@@ -37,6 +43,11 @@ public class Category {
     @Getter
     private Business business;
 
+    @OneToMany(mappedBy = "category")
+    @Setter
+    @Getter
+    private Set<Product> products;
+
     public Category() {
     }
 
@@ -47,5 +58,25 @@ public class Category {
         this.enabled = enabled;
         this.image = image;
         this.business = business;
+    }
+
+    public CategoryDTO convertToDTO() {
+        long businessId = 0;
+        if (business != null)
+            businessId = business.getId();
+
+        Set<ProductDTO> productDTOS = null;
+        if (products != null)
+            productDTOS = products.stream().map(Product::convertToDTO).collect(Collectors.toSet());
+
+        return new CategoryDTO(
+                id,
+                name,
+                rank,
+                enabled,
+                image,
+                businessId,
+                productDTOS
+        );
     }
 }

@@ -1,6 +1,6 @@
 package com.example.project.service.order;
 
-import com.example.project.model.order.COrder;
+import com.example.project.model.order.Order;
 import com.example.project.model.order.OrderDTO;
 import com.example.project.repositories.order.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public List<OrderDTO> findAll() {
-        return ((List<COrder>) orderRepository.findAll())
+        return ((List<Order>) orderRepository.findAll())
                 .stream()
                 .map(this::convertToDTO).collect(Collectors.toList());
     }
@@ -40,7 +40,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public OrderDTO delete(Long id) {
-        Optional<COrder> order = orderRepository.findById(id);
+        Optional<Order> order = orderRepository.findById(id);
         if (order.isPresent()) {
             orderRepository.deleteById(id);
             return convertToDTO(order.get());
@@ -49,17 +49,12 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public OrderDTO save(COrder order) {
+    public OrderDTO save(Order order) {
         return convertToDTO(orderRepository.save(order));
     }
 
     @Override
-    public OrderDTO convertToDTO(COrder order) {
-        return new OrderDTO(
-                order.getId(),
-                order.getTax(),
-                order.getTableNumber(),
-                order.getBusiness().getId()
-        );
+    public OrderDTO convertToDTO(Order order) {
+        return order.convertToDTO();
     }
 }

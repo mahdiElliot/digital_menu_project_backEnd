@@ -61,12 +61,7 @@ public class MenuService implements IMenuService {
 
     @Override
     public MenuDTO convertToDTO(Menu menu) {
-        return new MenuDTO(
-                menu.getId(),
-                menu.getName(),
-                menu.getEnabled(),
-                menu.getBusiness().getId()
-        );
+        return menu.convertToDTO();
     }
 
 }

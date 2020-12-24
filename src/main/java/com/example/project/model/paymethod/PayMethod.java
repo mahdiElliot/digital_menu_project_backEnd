@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "pay_method")
@@ -30,24 +31,33 @@ public class PayMethod {
     @Getter
     private Boolean enabled;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "business_paymethod",
-            joinColumns = {@JoinColumn(name = "paymethod_id")},
-            inverseJoinColumns = {@JoinColumn(name = "business_id")}
-    )
+    @ManyToOne
+    @JoinColumn(name = "business_id")
     @Setter
     @Getter
-    Set<Business> businesses;
+    Business business;
 
     public PayMethod() {
     }
 
-    public PayMethod(long id, String data, String name, boolean enabled, Set<Business> businesses) {
+    public PayMethod(long id, String data, String name, boolean enabled, Business business) {
         this.id = id;
         this.data = data;
         this.name = name;
         this.enabled = enabled;
-        this.businesses = businesses;
+        this.business = business;
+    }
+
+    public PayMethodDTO convertToDTO() {
+        long businessId = 0;
+        if (business != null)
+            businessId = business.getId();
+        return new PayMethodDTO(
+                id,
+                data,
+                name,
+                enabled,
+                businessId
+        );
     }
 }

@@ -16,11 +16,11 @@ public class LocationDTO {
 
     @Setter
     @Getter
-    private double lat;
+    private Double lat;
 
     @Setter
     @Getter
-    private double lng;
+    private Double lng;
 
     @Setter
     @Getter
@@ -30,28 +30,21 @@ public class LocationDTO {
     @Getter
     private Integer zoom;
 
-    @Setter
-    @Getter
-    private Long business_id;
-
-
-    public LocationDTO(Long id, double lat, double lng, Integer zipcode, Integer zoom, Long business_id) {
+    public LocationDTO(long id, double lat, double lng, int zipcode, int zoom) {
         this.id = id;
         this.lat = lat;
         this.lng = lng;
         this.zipcode = zipcode;
         this.zoom = zoom;
-        this.business_id = business_id;
     }
 
-    public Location convertToLocationEntity(@NotNull Function<Long, Business> getBusiness) {
+    public Location convertToLocationEntity() {
         return new Location(
                 id,
                 lat,
                 lng,
                 zipcode,
-                zoom,
-                getBusiness.apply(business_id)
+                zoom
         );
     }
 }

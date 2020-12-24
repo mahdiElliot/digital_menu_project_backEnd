@@ -55,19 +55,6 @@ public class BusinessService implements IBusinessService {
 
     @Override
     public BusinessDTO convertToDTO(Business business) {
-        return new BusinessDTO(
-                business.getId(),
-                business.getName(),
-                business.getServiceFee(),
-                business.getTax(),
-                business.getLogo(),
-                business.getEnabled(),
-                business.getMenus(),
-                business.getOrders(),
-                business.getPayMethods(),
-                business.getCategories(),
-                business.getExtras(),
-                business.getZones()
-        );
+        return business.convertToDTO();
     }
 }

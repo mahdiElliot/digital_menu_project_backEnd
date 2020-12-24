@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.model.business.Business;
+import com.example.project.model.location.Location;
 import com.example.project.model.menu.MenuDTO;
 import com.example.project.service.business.BusinessService;
 import com.example.project.service.business.IBusinessService;
@@ -31,8 +32,9 @@ public class MenuController {
     public MenuDTO addMenu(@PathVariable("id") Long id, @RequestBody MenuDTO menuDTO) {
         if (businessService.findById(id) != null) {
             menuDTO.setBusiness_id(id);
+            Function<Long, Location> getLocation = ID -> null;
             Function<Long, Business> getBusiness =
-                    ID -> businessService.findById(ID).convertToBusinessEntity();
+                    ID -> businessService.findById(ID).convertToBusinessEntity(getLocation);
             return menuService.save(menuDTO.convertToMenuEntity(getBusiness));
         }
         return null;
@@ -69,8 +71,9 @@ public class MenuController {
         if (businessService.findById(id) != null) {
             menuDTO.setBusiness_id(id);
             menuDTO.setId(id2);
+            Function<Long, Location> getLocation = ID -> null;
             Function<Long, Business> getBusiness =
-                    businessId -> businessService.findById(businessId).convertToBusinessEntity();
+                    businessId -> businessService.findById(businessId).convertToBusinessEntity(getLocation);
             return menuService.save(menuDTO.convertToMenuEntity(getBusiness));
         }
         return null;

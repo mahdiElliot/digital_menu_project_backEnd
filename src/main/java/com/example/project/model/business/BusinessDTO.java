@@ -1,15 +1,26 @@
 package com.example.project.model.business;
 
 import com.example.project.model.category.Category;
+import com.example.project.model.category.CategoryDTO;
 import com.example.project.model.extra.Extra;
+import com.example.project.model.extra.ExtraDTO;
+import com.example.project.model.location.Location;
+import com.example.project.model.location.LocationDTO;
 import com.example.project.model.menu.Menu;
-import com.example.project.model.order.COrder;
+import com.example.project.model.menu.MenuDTO;
+import com.example.project.model.order.Order;
+import com.example.project.model.order.OrderDTO;
 import com.example.project.model.paymethod.PayMethod;
+import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.zone.Zone;
+import com.example.project.model.zone.ZoneDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.lang.Nullable;
 
 import java.util.Set;
+import java.util.function.Function;
 
 public class BusinessDTO {
     @Setter
@@ -36,48 +47,28 @@ public class BusinessDTO {
     @Getter
     private Boolean enabled;
 
+    @Nullable
     @Setter
     @Getter
-    private Set<Menu> menus;
+    private Set<PayMethodDTO> payMethods;
 
     @Setter
     @Getter
-    private Set<COrder> orders;
-
-    @Setter
-    @Getter
-    private Set<PayMethod> payMethods;
-
-    @Setter
-    @Getter
-    private Set<Category> categories;
-
-    @Setter
-    @Getter
-    private Set<Extra> extras;
-
-    @Setter
-    @Getter
-    private Set<Zone> zones;
+    private Long location_id;
 
     public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled,
-                       Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods, Set<Category> categories,
-                       Set<Extra> extras, Set<Zone> zones) {
+                       @Nullable Set<PayMethodDTO> payMethods, long location_id) {
         this.id = id;
         this.name = name;
         this.service_fee = service_fee;
         this.tax = tax;
         this.logo = logo;
         this.enabled = enabled;
-        this.menus = menus;
-        this.orders = orders;
         this.payMethods = payMethods;
-        this.categories = categories;
-        this.extras = extras;
-        this.zones = zones;
+        this.location_id = location_id;
     }
 
-    public Business convertToBusinessEntity() {
+    public Business convertToBusinessEntity(@NotNull Function<Long, Location> getLocation) {
         return new Business(
                 id,
                 name,
@@ -85,12 +76,7 @@ public class BusinessDTO {
                 tax,
                 logo,
                 enabled,
-                menus,
-                orders,
-                payMethods,
-                categories,
-                extras,
-                zones
+                getLocation.apply(location_id)
         );
     }
 }

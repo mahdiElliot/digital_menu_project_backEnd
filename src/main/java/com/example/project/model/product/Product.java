@@ -2,11 +2,16 @@ package com.example.project.model.product;
 
 import com.example.project.model.business.Business;
 import com.example.project.model.category.Category;
+import com.example.project.model.extra.Extra;
+import com.example.project.model.extra.ExtraDTO;
 import com.example.project.model.menu.Menu;
+import com.example.project.model.specproduct.SpecificProduct;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "product")
@@ -38,35 +43,26 @@ public class Product {
     @Getter
     private String images;
 
+    @Column(nullable = false)
     @Setter
     @Getter
-    private boolean inventoried;
+    private Boolean inventoried;
 
+    @Column(nullable = false)
     @Setter
     @Getter
-    private boolean featured;
+    private Boolean enabled;
 
+    @OneToMany(mappedBy = "product")
     @Setter
     @Getter
-    private boolean enabled;
+    private Set<SpecificProduct> specificProducts;
 
+    @Column(nullable = false)
+    @ManyToMany(mappedBy = "products")
     @Setter
     @Getter
-    private boolean upselling;
-
-    @Setter
-    @Getter
-    private Integer offer_price;
-
-    @Setter
-    @Getter
-    private Integer rank;
-
-    @ManyToOne
-    @JoinColumn(name = "menu_id", nullable = false)
-    @Setter
-    @Getter
-    private Menu menu;
+    private Set<Menu> menus;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -74,10 +70,16 @@ public class Product {
     @Getter
     private Category category;
 
+    @ManyToMany(mappedBy = "products")
+    @Setter
+    @Getter
+    private Set<Extra> extras;
+
     public Product() {
     }
 
-    public Product(Long id, Integer price, Integer quantity, String name, String description, String images, boolean inventoried, boolean featured, boolean enabled, boolean upselling, Integer offer_price, Integer rank, Menu menu, Category category) {
+    public Product(long id, int price, int quantity, String name, String description, String images,
+                   boolean inventoried, boolean enabled, Category category) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;
@@ -85,12 +87,29 @@ public class Product {
         this.description = description;
         this.images = images;
         this.inventoried = inventoried;
-        this.featured = featured;
         this.enabled = enabled;
-        this.upselling = upselling;
-        this.offer_price = offer_price;
-        this.rank = rank;
-        this.menu = menu;
         this.category = category;
+    }
+
+    public ProductDTO convertToDTO() {
+        Set<ExtraDTO> extraDTOS = null;
+        if (extras != null)
+            extraDTOS = extras.stream().map(Extra::convertToDTO).collect(Collectors.toSet());
+
+        long categoryId = 0;
+        if (category != null)
+            categoryId = category.getId();
+        return new ProductDTO(
+                id,
+                price,
+                quantity,
+                name,
+                description,
+                images,
+                inventoried,
+                enabled,
+                categoryId,
+                extraDTOS
+        );
     }
 }

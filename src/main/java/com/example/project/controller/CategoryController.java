@@ -3,6 +3,7 @@ package com.example.project.controller;
 import com.example.project.model.business.Business;
 import com.example.project.model.category.Category;
 import com.example.project.model.category.CategoryDTO;
+import com.example.project.model.location.Location;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
 import com.example.project.utils.URLUtils;
@@ -31,8 +32,9 @@ public class CategoryController {
     public CategoryDTO addCategory(@PathVariable("id") Long id, @RequestBody CategoryDTO categoryDTO) {
         if (businessService.findById(id) != null) {
             categoryDTO.setBusiness_id(id);
+            Function<Long, Location> getLocation = ID -> null;
             Function<Long, Business> getBusiness =
-                    ID -> businessService.findById(ID).convertToBusinessEntity();
+                    ID -> businessService.findById(ID).convertToBusinessEntity(getLocation);
             return categoryService.save(categoryDTO.convertToCategoryEntity(getBusiness));
         }
         return null;

@@ -1,8 +1,7 @@
 package com.example.project.model.customer;
 
 
-import com.example.project.model.menu.Menu;
-import com.example.project.model.order.COrder;
+import com.example.project.model.order.Order;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,15 +33,14 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     @Setter
     @Getter
-    private Set<COrder> orders;
+    private Set<Order> orders;
 
     public Customer(){}
 
-    public Customer(Long id, String name, String email, String phoneNumber, Set<COrder> orders) {
+    public Customer(Long id, String name, String email, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.orders = orders;
     }
 }

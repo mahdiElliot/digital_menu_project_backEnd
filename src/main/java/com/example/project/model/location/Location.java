@@ -18,11 +18,11 @@ public class Location {
 
     @Setter
     @Getter
-    private double lat;
+    private Double lat;
 
     @Setter
     @Getter
-    private double lng;
+    private Double lng;
 
     @Setter
     @Getter
@@ -33,17 +33,24 @@ public class Location {
     private Integer zoom;
 
     @OneToOne(mappedBy = "location")
+    @Setter
+    @Getter
     private Business business;
 
     public Location() {
     }
 
-    public Location(Long id, double lat, double lng, Integer zipcode, Integer zoom, Business business) {
+    public Location(long id, double lat, double lng, int zipcode, int zoom) {
         this.id = id;
         this.lat = lat;
         this.lng = lng;
         this.zipcode = zipcode;
         this.zoom = zoom;
-        this.business = business;
+    }
+
+    public LocationDTO convertToDTO() {
+        return new LocationDTO(
+                id, lat, lng, zipcode, zoom
+        );
     }
 }

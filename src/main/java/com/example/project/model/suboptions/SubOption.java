@@ -18,10 +18,12 @@ public class SubOption {
     @Getter
     private Long id;
 
+    @Column(nullable = false)
     @Getter
     @Setter
     private Integer price;
 
+    @Column(nullable = false)
     @Getter
     @Setter
     private String name;
@@ -30,9 +32,10 @@ public class SubOption {
     @Getter
     private String description;
 
+    @Column(nullable = false)
     @Setter
     @Getter
-    private boolean enabled;
+    private Boolean enabled;
 
     @Setter
     @Getter
@@ -47,7 +50,7 @@ public class SubOption {
     public SubOption() {
     }
 
-    public SubOption(Long id, Integer price, String name, String description, boolean enabled, String image, Option option) {
+    public SubOption(long id, int price, String name, String description, boolean enabled, String image, Option option) {
         this.id = id;
         this.price = price;
         this.name = name;
@@ -55,5 +58,20 @@ public class SubOption {
         this.enabled = enabled;
         this.image = image;
         this.option = option;
+    }
+
+    public SubOptionDTO convertToDTO() {
+        long optionId = 0;
+        if (option != null)
+            optionId = option.getId();
+        return new SubOptionDTO(
+                id,
+                price,
+                name,
+                description,
+                enabled,
+                image,
+                optionId
+        );
     }
 }

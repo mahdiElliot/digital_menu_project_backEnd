@@ -4,14 +4,16 @@ import com.example.project.model.category.Category;
 import com.example.project.model.extra.Extra;
 import com.example.project.model.location.Location;
 import com.example.project.model.menu.Menu;
-import com.example.project.model.order.COrder;
+import com.example.project.model.order.Order;
 import com.example.project.model.paymethod.PayMethod;
+import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.zone.Zone;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "business")
@@ -53,7 +55,7 @@ public class Business {
     @OneToMany(mappedBy = "business")
     @Setter
     @Getter
-    private Set<COrder> orders;
+    private Set<Order> orders;
 
     @OneToMany(mappedBy = "business")
     @Setter
@@ -65,7 +67,7 @@ public class Business {
     @Getter
     private Set<Extra> extras;
 
-    @ManyToMany(mappedBy = "businesses")
+    @OneToMany(mappedBy = "business")
     @Setter
     @Getter
     private Set<PayMethod> payMethods;
@@ -77,25 +79,39 @@ public class Business {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
+    @Setter
+    @Getter
     private Location location;
 
     public Business() {
     }
 
-    public Business(long id, String name, double serviceFee, double tax, String logo,
-                    boolean enabled, Set<Menu> menus, Set<COrder> orders, Set<PayMethod> payMethods,
-                    Set<Category> categories, Set<Extra> extras, Set<Zone> zones) {
+    public Business(long id, String name, double serviceFee, double tax, String logo, boolean enabled, Location location) {
         this.id = id;
         this.name = name;
         this.serviceFee = serviceFee;
         this.tax = tax;
         this.logo = logo;
         this.enabled = enabled;
-        this.menus = menus;
-        this.orders = orders;
-        this.payMethods = payMethods;
-        this.categories = categories;
-        this.extras = extras;
-        this.zones = zones;
+        this.location = location;
+    }
+
+    public BusinessDTO convertToDTO() {
+        Set<PayMethodDTO> payMethodDTOS = null;
+        if (payMethods != null)
+            payMethodDTOS = payMethods.stream().map(PayMethod::convertToDTO).collect(Collectors.toSet());
+        long l = 0;
+        if (location != null)
+            l = location.getId();
+        return new BusinessDTO(
+                id,
+                name,
+                serviceFee,
+                tax,
+                logo,
+                enabled,
+                payMethodDTOS,
+                l
+        );
     }
 }

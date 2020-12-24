@@ -1,6 +1,8 @@
 package com.example.project.controller;
 
 import com.example.project.model.business.Business;
+import com.example.project.model.customer.Customer;
+import com.example.project.model.location.Location;
 import com.example.project.model.order.OrderDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.order.IOrderService;
@@ -30,9 +32,11 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) {
+        Function<Long, Location> getLocation = id -> null;
         Function<Long, Business> getBusiness =
-                id -> businessService.findById(id).convertToBusinessEntity();
-        return orderService.save(orderDTO.convertToOrderEntity(getBusiness));
+                id -> businessService.findById(id).convertToBusinessEntity(getLocation);
+        Function<Long, Customer> getCustomer = id -> null;
+        return orderService.save(orderDTO.convertToOrderEntity(getBusiness, getCustomer));
     }
 
     @GetMapping

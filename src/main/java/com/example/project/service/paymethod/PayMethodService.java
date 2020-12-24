@@ -54,12 +54,6 @@ public class PayMethodService implements IPayMethodService {
 
     @Override
     public PayMethodDTO convertToDTO(PayMethod payMethod) {
-        return new PayMethodDTO(
-                payMethod.getId(),
-                payMethod.getData(),
-                payMethod.getName(),
-                payMethod.getEnabled(),
-                payMethod.getBusinesses()
-        );
+        return payMethod.convertToDTO();
     }
 }

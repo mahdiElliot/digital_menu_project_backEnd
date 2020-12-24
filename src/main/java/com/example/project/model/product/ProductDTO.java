@@ -2,11 +2,18 @@ package com.example.project.model.product;
 
 import com.example.project.model.business.Business;
 import com.example.project.model.category.Category;
+import com.example.project.model.category.CategoryDTO;
+import com.example.project.model.extra.Extra;
+import com.example.project.model.extra.ExtraDTO;
 import com.example.project.model.menu.Menu;
+import com.example.project.model.menu.MenuDTO;
+import com.example.project.model.specproduct.SpecificProduct;
+import com.example.project.model.specproduct.SpecificProductDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
 import java.util.function.Function;
 
 public class ProductDTO {
@@ -37,37 +44,22 @@ public class ProductDTO {
 
     @Setter
     @Getter
-    private boolean inventoried;
+    private Boolean inventoried;
 
     @Setter
     @Getter
-    private boolean featured;
-
-    @Setter
-    @Getter
-    private boolean enabled;
-
-    @Setter
-    @Getter
-    private boolean upselling;
-
-    @Setter
-    @Getter
-    private Integer offer_price;
-
-    @Setter
-    @Getter
-    private Integer rank;
-
-    @Setter
-    @Getter
-    private Long menu_id;
+    private Boolean enabled;
 
     @Setter
     @Getter
     private Long category_id;
 
-    public ProductDTO(Long id, Integer price, Integer quantity, String name, String description, String images, boolean inventoried, boolean featured, boolean enabled, boolean upselling, Integer offer_price, Integer rank, Long menu_id, Long category_id) {
+    @Setter
+    @Getter
+    private Set<ExtraDTO> extras;
+
+    public ProductDTO(long id, int price, int quantity, String name, String description, String images,
+                      boolean inventoried, boolean enabled, long category_id, Set<ExtraDTO> extras) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;
@@ -75,16 +67,12 @@ public class ProductDTO {
         this.description = description;
         this.images = images;
         this.inventoried = inventoried;
-        this.featured = featured;
         this.enabled = enabled;
-        this.upselling = upselling;
-        this.offer_price = offer_price;
-        this.rank = rank;
-        this.menu_id = menu_id;
         this.category_id = category_id;
+        this.extras = extras;
     }
 
-    public Product convertToProductEntity(@NotNull Function<Long, Menu> getMenu,@NotNull Function<Long, Category> getCategory){
+    public Product convertToProductEntity(@NotNull Function<Long, Category> getCategory) {
         return new Product(
                 id,
                 price,
@@ -93,12 +81,7 @@ public class ProductDTO {
                 description,
                 images,
                 inventoried,
-                featured,
                 enabled,
-                upselling,
-                offer_price,
-                rank,
-                getMenu.apply(menu_id),
                 getCategory.apply(category_id)
         );
     }
