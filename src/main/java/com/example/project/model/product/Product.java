@@ -8,6 +8,7 @@ import com.example.project.model.menu.Menu;
 import com.example.project.model.specproduct.SpecificProduct;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -58,7 +59,7 @@ public class Product {
     @Getter
     private Set<SpecificProduct> specificProducts;
 
-    @Column(nullable = false)
+    @NotNull
     @ManyToMany(mappedBy = "products")
     @Setter
     @Getter

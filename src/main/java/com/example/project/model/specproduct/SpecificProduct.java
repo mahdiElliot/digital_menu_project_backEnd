@@ -1,13 +1,16 @@
 package com.example.project.model.specproduct;
 
 import com.example.project.model.option.Option;
+import com.example.project.model.option.OptionDTO;
 import com.example.project.model.order.Order;
+import com.example.project.model.order.OrderDTO;
 import com.example.project.model.product.Product;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "specific_product")
@@ -17,6 +20,10 @@ public class SpecificProduct {
     @Setter
     @Getter
     private Long id;
+
+    @Setter
+    @Getter
+    private String name;
 
     @Setter
     @Getter
@@ -49,14 +56,34 @@ public class SpecificProduct {
     public SpecificProduct() {
     }
 
-    public SpecificProduct(long id, String comment, int quantity, double price,
-                           Set<Option> options, Product product, Set<Order> orders) {
+    public SpecificProduct(long id, String name, String comment, int quantity, double price, Product product) {
         this.id = id;
         this.comment = comment;
         this.quantity = quantity;
         this.price = price;
-        this.options = options;
+        this.name = name;
         this.product = product;
-        this.orders = orders;
+    }
+
+    public SpecificProductDTO convertToDTO() {
+        Set<OptionDTO> optionDTOS = null;
+        if (options != null)
+            optionDTOS = options.stream().map(Option::convertToDTO).collect(Collectors.toSet());
+        Set<OrderDTO> orderDTOS = null;
+        if (orders != null)
+            orderDTOS = orders.stream().map(Order::convertToDTO).collect(Collectors.toSet());
+        long productId = 0;
+        if (product != null)
+            productId = product.getId();
+        return new SpecificProductDTO(
+                id,
+                name,
+                comment,
+                quantity,
+                price,
+                optionDTOS,
+                productId,
+                orderDTOS
+        );
     }
 }

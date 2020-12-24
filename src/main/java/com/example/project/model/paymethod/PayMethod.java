@@ -1,6 +1,7 @@
 package com.example.project.model.paymethod;
 
 import com.example.project.model.business.Business;
+import com.example.project.model.order.Order;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,10 +33,15 @@ public class PayMethod {
     private Boolean enabled;
 
     @ManyToOne
-    @JoinColumn(name = "business_id")
+    @JoinColumn(name = "business_id", nullable = false)
     @Setter
     @Getter
-    Business business;
+    private Business business;
+
+    @OneToMany(mappedBy = "payMethod")
+    @Setter
+    @Getter
+    private Set<Order> orders;
 
     public PayMethod() {
     }

@@ -1,7 +1,9 @@
 package com.example.project.model.specproduct;
 
 import com.example.project.model.option.Option;
+import com.example.project.model.option.OptionDTO;
 import com.example.project.model.order.Order;
+import com.example.project.model.order.OrderDTO;
 import com.example.project.model.product.Product;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +19,10 @@ public class SpecificProductDTO {
 
     @Setter
     @Getter
+    private String name;
+
+    @Setter
+    @Getter
     private String comment;
 
     @Setter
@@ -29,7 +35,7 @@ public class SpecificProductDTO {
 
     @Setter
     @Getter
-    private Set<Option> options;
+    private Set<OptionDTO> options;
 
     @Setter
     @Getter
@@ -37,10 +43,11 @@ public class SpecificProductDTO {
 
     @Setter
     @Getter
-    private Set<Order> orders;
+    private Set<OrderDTO> orders;
 
-    public SpecificProductDTO(long id, String comment, int quantity, double price, Set<Option> options, long product_id, Set<Order> orders) {
+    public SpecificProductDTO(long id, String name, String comment, int quantity, double price, Set<OptionDTO> options, long product_id, Set<OrderDTO> orders) {
         this.id = id;
+        this.name = name;
         this.comment = comment;
         this.quantity = quantity;
         this.price = price;
@@ -52,12 +59,11 @@ public class SpecificProductDTO {
     public SpecificProduct convertToSpecificProductEntity(@NotNull Function<Long, Product> getProduct) {
         return new SpecificProduct(
                 id,
+                name,
                 comment,
                 quantity,
                 price,
-                options,
-                getProduct.apply(product_id),
-                orders
+                getProduct.apply(product_id)
         );
     }
 }

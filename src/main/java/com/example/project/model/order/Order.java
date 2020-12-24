@@ -2,9 +2,11 @@ package com.example.project.model.order;
 
 import com.example.project.model.business.Business;
 import com.example.project.model.customer.Customer;
+import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.specproduct.SpecificProduct;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -39,7 +41,7 @@ public class Order {
     @Getter
     private Customer customer;
 
-    @Column(nullable = false)
+    @NotNull
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "order_sproduct",
@@ -50,15 +52,22 @@ public class Order {
     @Getter
     private Set<SpecificProduct> specificProducts;
 
+    @ManyToOne
+    @JoinColumn(name = "paymethod_id", nullable = false)
+    @Setter
+    @Getter
+    private PayMethod payMethod;
+
     public Order() {
     }
 
-    public Order(long id, double tax, int tableNumber, Business business, Customer customer) {
+    public Order(long id, double tax, int tableNumber, Business business, Customer customer, PayMethod payMethod) {
         this.id = id;
         this.tax = tax;
         this.tableNumber = tableNumber;
         this.business = business;
         this.customer = customer;
+        this.payMethod = payMethod;
     }
 
     public OrderDTO convertToDTO() {
@@ -73,7 +82,8 @@ public class Order {
                 tax,
                 tableNumber,
                 businessId,
-                customerId
+                customerId,
+                payMethod.getId()
         );
     }
 }
