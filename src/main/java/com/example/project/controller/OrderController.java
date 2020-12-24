@@ -4,6 +4,7 @@ import com.example.project.model.business.Business;
 import com.example.project.model.customer.Customer;
 import com.example.project.model.location.Location;
 import com.example.project.model.order.OrderDTO;
+import com.example.project.model.paymethod.PayMethod;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.order.IOrderService;
 import com.example.project.utils.URLUtils;
@@ -36,7 +37,8 @@ public class OrderController {
         Function<Long, Business> getBusiness =
                 id -> businessService.findById(id).convertToBusinessEntity(getLocation);
         Function<Long, Customer> getCustomer = id -> null;
-        return orderService.save(orderDTO.convertToOrderEntity(getBusiness, getCustomer));
+        Function<Long, PayMethod> getPayMethod = id -> null;
+        return orderService.save(orderDTO.convertToOrderEntity(getBusiness, getCustomer, getPayMethod));
     }
 
     @GetMapping
