@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.function.Function;
 
@@ -31,7 +32,7 @@ public class CategoryController {
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public CategoryDTO addCategory(@PathVariable("id") Long id, @RequestBody CategoryDTO categoryDTO) {
+    public CategoryDTO addCategory(@PathVariable("id") Long id, @Valid @RequestBody CategoryDTO categoryDTO) {
         if (businessService.findById(id) != null) {
             categoryDTO.setBusiness_id(id);
             Function<Long, Location> getLocation = ID -> locationService.findById(ID).convertToLocationEntity();

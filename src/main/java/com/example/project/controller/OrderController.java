@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.function.Function;
 
@@ -42,7 +43,7 @@ public class OrderController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) {
+    public OrderDTO addOrder(@Valid @RequestBody OrderDTO orderDTO) {
         Function<Long, Location> getLocation = ID -> locationService.findById(ID).convertToLocationEntity();
         Function<Long, Business> getBusiness =
                 ID -> businessService.findById(ID).convertToBusinessEntity(getLocation);

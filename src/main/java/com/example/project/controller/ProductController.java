@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.function.Function;
 
@@ -36,7 +37,7 @@ public class ProductController {
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ProductDTO addProduct(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @RequestBody ProductDTO productDTO) {
+    public ProductDTO addProduct(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @Valid @RequestBody ProductDTO productDTO) {
         if (businessService.findById(id) != null && categoryService.findById(id2) != null) {
             productDTO.setCategory_id(id2);
             Function<Long, Location> getLocation = ID -> locationService.findById(ID).convertToLocationEntity();
@@ -57,6 +58,5 @@ public class ProductController {
 
         return null;
     }
-
 
 }

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.function.Function;
 
@@ -31,7 +32,7 @@ public class MenuController {
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.MENU)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public MenuDTO addMenu(@PathVariable("id") Long id, @RequestBody MenuDTO menuDTO) {
+    public MenuDTO addMenu(@PathVariable("id") Long id, @Valid @RequestBody MenuDTO menuDTO) {
         if (businessService.findById(id) != null) {
             menuDTO.setBusiness_id(id);
             Function<Long, Location> getLocation = ID -> locationService.findById(ID).convertToLocationEntity();
@@ -69,7 +70,7 @@ public class MenuController {
 
     @PutMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.MENU + "/{id2}")
     @ResponseBody
-    public MenuDTO updateMenu(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @RequestBody MenuDTO menuDTO) {
+    public MenuDTO updateMenu(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @Valid @RequestBody MenuDTO menuDTO) {
         if (businessService.findById(id) != null) {
             menuDTO.setBusiness_id(id);
             menuDTO.setId(id2);
