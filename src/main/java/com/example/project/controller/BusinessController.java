@@ -8,8 +8,10 @@ import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.function.Function;
 
@@ -28,7 +30,7 @@ public class BusinessController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public BusinessDTO addBusiness(@RequestBody BusinessDTO businessDTO) {
+    public BusinessDTO addBusiness(@Valid @RequestBody BusinessDTO businessDTO) {
         Function<Long, Location> getLocation =
                 ID -> locationService.findById(ID).convertToLocationEntity();
         return businessService.save(businessDTO.convertToBusinessEntity(getLocation));
