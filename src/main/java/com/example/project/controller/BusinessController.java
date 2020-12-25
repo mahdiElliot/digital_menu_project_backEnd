@@ -2,8 +2,8 @@ package com.example.project.controller;
 
 import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.location.Location;
-import com.example.project.service.business.BusinessService;
 import com.example.project.service.business.IBusinessService;
+import com.example.project.service.location.ILocationService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,17 +17,20 @@ import java.util.function.Function;
 @Controller
 public class BusinessController {
     private final IBusinessService businessService;
+    private final ILocationService locationService;
 
     @Autowired
-    public BusinessController(BusinessService businessService) {
+    public BusinessController(IBusinessService businessService, ILocationService locationService) {
         this.businessService = businessService;
+        this.locationService = locationService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public BusinessDTO addBusiness(@RequestBody BusinessDTO businessDTO) {
-        Function<Long, Location> getLocation = id -> null;
+        Function<Long, Location> getLocation =
+                ID -> locationService.findById(ID).convertToLocationEntity();
         return businessService.save(businessDTO.convertToBusinessEntity(getLocation));
     }
 
@@ -53,7 +56,8 @@ public class BusinessController {
     @ResponseBody
     public BusinessDTO updateBusiness(@PathVariable("id") Long id, @RequestBody BusinessDTO businessDTO) {
         businessDTO.setId(id);
-        Function<Long, Location> getLocation = ID -> null;
+        Function<Long, Location> getLocation =
+                ID -> locationService.findById(ID).convertToLocationEntity();
         return businessService.save(businessDTO.convertToBusinessEntity(getLocation));
     }
 }

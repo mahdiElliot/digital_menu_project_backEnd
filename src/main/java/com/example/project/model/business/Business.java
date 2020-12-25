@@ -7,6 +7,7 @@ import com.example.project.model.menu.Menu;
 import com.example.project.model.order.Order;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.paymethod.PayMethodDTO;
+import com.example.project.model.product.Product;
 import com.example.project.model.zone.Zone;
 import lombok.Getter;
 import lombok.Setter;
@@ -82,6 +83,16 @@ public class Business {
     @Setter
     @Getter
     private Location location;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "business_products",
+            joinColumns = {@JoinColumn(name = "business_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")}
+    )
+    @Setter
+    @Getter
+    private Set<Product> products;
 
     public Business() {
     }

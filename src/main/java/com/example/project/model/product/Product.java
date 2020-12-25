@@ -59,7 +59,6 @@ public class Product {
     @Getter
     private Set<SpecificProduct> specificProducts;
 
-    @NotNull
     @ManyToMany(mappedBy = "products")
     @Setter
     @Getter
@@ -75,6 +74,11 @@ public class Product {
     @Setter
     @Getter
     private Set<Extra> extras;
+
+    @ManyToMany(mappedBy = "products")
+    @Setter
+    @Getter
+    private Set<Business> businesses;
 
     public Product() {
     }
