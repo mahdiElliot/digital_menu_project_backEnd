@@ -49,13 +49,8 @@ public class SubOptionService implements ISubOptionService {
     }
 
     @Override
-    public SubOptionDTO save(SubOption option) {
-        return convertToDTO(repository.save(option));
-    }
-
-    @Override
-    public SubOptionDTO convertToDTO(SubOption option) {
-        return option.convertToDTO();
+    public SubOptionDTO save(SubOption subOption) {
+        return convertToDTO(repository.save(subOption));
     }
 
     @Override
@@ -63,5 +58,10 @@ public class SubOptionService implements ISubOptionService {
         return (repository.findAllByOptionId(id))
                 .stream()
                 .map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public SubOptionDTO convertToDTO(SubOption subOption) {
+        return subOption.convertToDTO();
     }
 }

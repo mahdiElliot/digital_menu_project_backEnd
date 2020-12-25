@@ -55,6 +55,6 @@ public class ExtraService implements IExtraService {
 
     @Override
     public ExtraDTO convertToDTO(Extra extra) {
-        return null;
+        return extra.convertToDTO();
     }
 }

@@ -61,7 +61,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryDTO convertToDTO(Category category) {
-        return null;
+        return category.convertToDTO();
     }
 
 }

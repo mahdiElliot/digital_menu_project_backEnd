@@ -49,12 +49,12 @@ public class SpecificProductService implements ISpecificProductService {
     }
 
     @Override
-    public SpecificProductDTO save(SpecificProduct option) {
-        return convertToDTO(repository.save(option));
+    public SpecificProductDTO save(SpecificProduct specificProduct) {
+        return convertToDTO(repository.save(specificProduct));
     }
 
     @Override
-    public SpecificProductDTO convertToDTO(SpecificProduct option) {
-        return option.convertToDTO();
+    public SpecificProductDTO convertToDTO(SpecificProduct specificProduct) {
+        return specificProduct.convertToDTO();
     }
 }

@@ -54,14 +54,14 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public ProductDTO convertToDTO(Product product) {
-        return product.convertToDTO();
-    }
-
-    @Override
     public List<ProductDTO> findAllByCategoryId(Long id) {
         return (repository.findAllByCategoryId(id))
                 .stream()
                 .map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDTO convertToDTO(Product product) {
+        return product.convertToDTO();
     }
 }

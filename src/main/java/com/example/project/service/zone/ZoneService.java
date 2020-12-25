@@ -55,6 +55,6 @@ public class ZoneService implements IZoneService {
 
     @Override
     public ZoneDTO convertToDTO(Zone zone) {
-        return null;
+        return zone.convertToDTO();
     }
 }
