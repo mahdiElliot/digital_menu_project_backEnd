@@ -111,9 +111,9 @@ public class Business {
         Set<PayMethodDTO> payMethodDTOS = null;
         if (payMethods != null)
             payMethodDTOS = payMethods.stream().map(PayMethod::convertToDTO).collect(Collectors.toSet());
-        long l = 0;
+        Long locationId = null;
         if (location != null)
-            l = location.getId();
+            locationId = location.getId();
         return new BusinessDTO(
                 id,
                 name,
@@ -122,7 +122,7 @@ public class Business {
                 logo,
                 enabled,
                 payMethodDTOS,
-                l
+                locationId
         );
     }
 }

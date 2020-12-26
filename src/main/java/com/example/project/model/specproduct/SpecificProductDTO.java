@@ -45,7 +45,7 @@ public class SpecificProductDTO {
     @Getter
     private Set<OrderDTO> orders;
 
-    public SpecificProductDTO(long id, String name, String comment, int quantity, double price, Set<OptionDTO> options, long product_id, Set<OrderDTO> orders) {
+    public SpecificProductDTO(long id, String name, String comment, int quantity, double price, Set<OptionDTO> options, Long product_id, Set<OrderDTO> orders) {
         this.id = id;
         this.name = name;
         this.comment = comment;

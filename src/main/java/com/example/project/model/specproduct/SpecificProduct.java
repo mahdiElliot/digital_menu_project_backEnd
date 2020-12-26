@@ -72,7 +72,7 @@ public class SpecificProduct {
         Set<OrderDTO> orderDTOS = null;
         if (orders != null)
             orderDTOS = orders.stream().map(Order::convertToDTO).collect(Collectors.toSet());
-        long productId = 0;
+        Long productId = null;
         if (product != null)
             productId = product.getId();
         return new SpecificProductDTO(

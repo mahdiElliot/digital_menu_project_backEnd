@@ -34,7 +34,7 @@ public class OrderDTO {
     @Getter
     private Long paymethod_id;
 
-    public OrderDTO(long id, double tax, int table_number, long business_id, long customer_id, long paymethod_id) {
+    public OrderDTO(long id, double tax, int table_number, Long business_id, Long customer_id, Long paymethod_id) {
         this.id = id;
         this.tax = tax;
         this.table_number = table_number;

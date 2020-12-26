@@ -57,7 +57,7 @@ public class BusinessDTO {
     private Long location_id;
 
     public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled,
-                       @Nullable Set<PayMethodDTO> payMethods, long location_id) {
+                       @Nullable Set<PayMethodDTO> payMethods, Long location_id) {
         this.id = id;
         this.name = name;
         this.service_fee = service_fee;

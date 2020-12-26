@@ -70,7 +70,7 @@ public class Extra {
         Set<OptionDTO> optionDTOS = null;
         if (options != null)
             optionDTOS = options.stream().map(Option::convertToDTO).collect(Collectors.toSet());
-        long businessId = 0;
+        Long businessId = null;
         if (business != null)
             businessId = business.getId();
         return new ExtraDTO(

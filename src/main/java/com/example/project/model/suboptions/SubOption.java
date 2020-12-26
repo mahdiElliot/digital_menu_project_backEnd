@@ -61,7 +61,7 @@ public class SubOption {
     }
 
     public SubOptionDTO convertToDTO() {
-        long optionId = 0;
+        Long optionId = null;
         if (option != null)
             optionId = option.getId();
         return new SubOptionDTO(

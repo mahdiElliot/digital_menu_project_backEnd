@@ -62,7 +62,7 @@ public class Menu {
         if (products != null)
             productDTOS = products.stream().map(Product::convertToDTO).collect(Collectors.toSet());
 
-        long businessId = 0;
+        Long businessId = null;
         if (business != null)
             businessId = business.getId();
         return new MenuDTO(

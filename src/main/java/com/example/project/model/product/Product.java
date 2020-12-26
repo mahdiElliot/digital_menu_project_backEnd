@@ -101,7 +101,7 @@ public class Product {
         if (extras != null)
             extraDTOS = extras.stream().map(Extra::convertToDTO).collect(Collectors.toSet());
 
-        long categoryId = 0;
+        Long categoryId = null;
         if (category != null)
             categoryId = category.getId();
         return new ProductDTO(

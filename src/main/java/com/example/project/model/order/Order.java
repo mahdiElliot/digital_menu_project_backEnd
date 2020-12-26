@@ -71,8 +71,8 @@ public class Order {
     }
 
     public OrderDTO convertToDTO() {
-        long businessId = 0;
-        long customerId = 0;
+        Long businessId = null;
+        Long customerId = null;
         if (business != null)
             businessId = business.getId();
         if (customer != null)

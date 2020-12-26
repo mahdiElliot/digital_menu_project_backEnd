@@ -30,7 +30,7 @@ public class PayMethodDTO {
     @Getter
     Long business_id;
 
-    public PayMethodDTO(long id, String data, String name, boolean enabled, long business_id) {
+    public PayMethodDTO(long id, String data, String name, boolean enabled, Long business_id) {
         this.id = id;
         this.data = data;
         this.name = name;

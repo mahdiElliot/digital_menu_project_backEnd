@@ -55,7 +55,7 @@ public class PayMethod {
     }
 
     public PayMethodDTO convertToDTO() {
-        long businessId = 0;
+        Long businessId = null;
         if (business != null)
             businessId = business.getId();
         return new PayMethodDTO(

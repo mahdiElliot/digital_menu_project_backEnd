@@ -39,7 +39,7 @@ public class CategoryDTO {
     @Getter
     private Set<ProductDTO> products;
 
-    public CategoryDTO(long id, String name, int rank, boolean enabled, String image, long business_id, Set<ProductDTO> products) {
+    public CategoryDTO(long id, String name, int rank, boolean enabled, String image, Long business_id, Set<ProductDTO> products) {
         this.id = id;
         this.name = name;
         this.rank = rank;

@@ -45,7 +45,7 @@ public class OptionDTO {
     @Getter
     private Long extra_id;
 
-    public OptionDTO(long id, String name, int min, int max, boolean enabled, String image, Set<SubOptionDTO> subOptions, long extra_id) {
+    public OptionDTO(long id, String name, int min, int max, boolean enabled, String image, Set<SubOptionDTO> subOptions, Long extra_id) {
         this.id = id;
         this.name = name;
         this.min = min;

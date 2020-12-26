@@ -61,7 +61,7 @@ public class Category {
     }
 
     public CategoryDTO convertToDTO() {
-        long businessId = 0;
+        Long businessId = null;
         if (business != null)
             businessId = business.getId();
 

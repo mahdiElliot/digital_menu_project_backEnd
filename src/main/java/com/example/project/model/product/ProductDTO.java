@@ -59,7 +59,7 @@ public class ProductDTO {
     private Set<ExtraDTO> extras;
 
     public ProductDTO(long id, int price, int quantity, String name, String description, String images,
-                      boolean inventoried, boolean enabled, long category_id, Set<ExtraDTO> extras) {
+                      boolean inventoried, boolean enabled, Long category_id, Set<ExtraDTO> extras) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;

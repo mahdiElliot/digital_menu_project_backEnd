@@ -37,7 +37,7 @@ public class SubOptionDTO {
     @Getter
     private Long option_id;
 
-    public SubOptionDTO(long id, int price, String name, String description, boolean enabled, String image, long option_id) {
+    public SubOptionDTO(long id, int price, String name, String description, boolean enabled, String image, Long option_id) {
         this.id = id;
         this.price = price;
         this.name = name;

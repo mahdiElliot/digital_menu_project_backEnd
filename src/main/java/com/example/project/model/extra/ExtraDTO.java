@@ -36,7 +36,7 @@ public class ExtraDTO {
     @Getter
     private Set<OptionDTO> options;
 
-    public ExtraDTO(long id, String name, String description, boolean enabled, long business_id, Set<OptionDTO> options) {
+    public ExtraDTO(long id, String name, String description, boolean enabled, Long business_id, Set<OptionDTO> options) {
         this.id = id;
         this.name = name;
         this.description = description;

@@ -85,7 +85,7 @@ public class Option {
         if (subOptions != null)
             subOptionDTOS = subOptions.stream().map(SubOption::convertToDTO).collect(Collectors.toSet());
 
-        long extraId = 0;
+        Long extraId = null;
         if (extra != null)
             extraId = extra.getId();
         return new OptionDTO(

@@ -30,7 +30,7 @@ public class MenuDTO {
     @Getter
     private Set<ProductDTO> products;
 
-    public MenuDTO(long id, String name, boolean enabled, long business_id, Set<ProductDTO> products) {
+    public MenuDTO(long id, String name, boolean enabled, Long business_id, Set<ProductDTO> products) {
         this.id = id;
         this.name = name;
         this.enabled = enabled;
