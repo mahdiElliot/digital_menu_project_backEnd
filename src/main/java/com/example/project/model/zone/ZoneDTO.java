@@ -5,6 +5,7 @@ import com.example.project.model.business.BusinessDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Setter
@@ -12,8 +13,10 @@ import java.util.Set;
 public class ZoneDTO {
     private Long id;
 
+    @NotNull
     private double price;
 
+    @NotNull
     private Boolean enabled;
 
     Set<BusinessDTO> businesses;

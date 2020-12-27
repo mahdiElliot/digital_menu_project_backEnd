@@ -5,8 +5,9 @@ import com.example.project.model.product.Product;
 import com.example.project.model.product.ProductDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -15,12 +16,18 @@ import java.util.function.Function;
 public class CategoryDTO {
     private Long id;
 
+    @NotEmpty
+    @NotNull
     private String name;
 
+    @NotNull
     private Integer rank;
 
+    @NotNull
     private Boolean enabled;
 
+    @NotNull
+    @NotEmpty
     private String image;
 
     private Long business_id;
@@ -37,7 +44,7 @@ public class CategoryDTO {
         this.products = products;
     }
 
-    public Category convertToCategoryEntity(@NotNull Function<Long, Business> getBusiness) {
+    public Category convertToCategoryEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness) {
         return new Category(
                 id,
                 name,

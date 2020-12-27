@@ -4,8 +4,8 @@ import com.example.project.model.business.Business;
 import com.example.project.model.business.BusinessDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
-
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -17,8 +17,11 @@ public class PayMethodDTO {
 
     private String data;
 
+    @NotNull
+    @NotEmpty
     private String name;
 
+    @NotNull
     private Boolean enabled;
 
     Long business_id;
@@ -31,7 +34,7 @@ public class PayMethodDTO {
         this.business_id = business_id;
     }
 
-    public PayMethod convertToPayMethodEntity(@NotNull Function<Long, Business> getBusiness) {
+    public PayMethod convertToPayMethodEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness) {
         return new PayMethod(
                 id,
                 data,

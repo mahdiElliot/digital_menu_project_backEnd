@@ -6,8 +6,9 @@ import com.example.project.model.option.OptionDTO;
 import com.example.project.model.product.Product;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -16,10 +17,13 @@ import java.util.function.Function;
 public class ExtraDTO {
     private Long id;
 
+    @NotNull
+    @NotEmpty
     private String name;
 
     private String description;
 
+    @NotNull
     private Boolean enabled;
 
     private Long business_id;
@@ -35,7 +39,7 @@ public class ExtraDTO {
         this.options = options;
     }
 
-    public Extra convertToExtraEntity(@NotNull Function<Long, Business> getBusiness) {
+    public Extra convertToExtraEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness) {
         return new Extra(
                 id,
                 name,

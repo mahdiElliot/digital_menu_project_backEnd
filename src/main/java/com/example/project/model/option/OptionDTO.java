@@ -6,8 +6,9 @@ import com.example.project.model.suboptions.SubOption;
 import com.example.project.model.suboptions.SubOptionDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -17,12 +18,17 @@ public class OptionDTO {
 
     private Long id;
 
+    @NotEmpty
+    @NotNull
     private String name;
 
+    @NotNull
     private Integer min;
 
+    @NotNull
     private Integer max;
 
+    @NotNull
     private Boolean enabled;
 
     private String image;
@@ -42,7 +48,7 @@ public class OptionDTO {
         this.extra_id = extra_id;
     }
 
-    public Option convertToOptionEntity(@NotNull Function<Long, Extra> getExtra) {
+    public Option convertToOptionEntity(@org.jetbrains.annotations.NotNull Function<Long, Extra> getExtra) {
         return new Option(
                 id,
                 name,

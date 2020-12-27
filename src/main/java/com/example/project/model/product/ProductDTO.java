@@ -11,8 +11,9 @@ import com.example.project.model.specproduct.SpecificProduct;
 import com.example.project.model.specproduct.SpecificProductDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -22,18 +23,24 @@ public class ProductDTO {
 
     private Long id;
 
+    @NotNull
     private Integer price;
 
+    @NotNull
     private Integer quantity;
 
+    @NotNull
+    @NotEmpty
     private String name;
 
     private String description;
 
     private String images;
 
+    @NotNull
     private Boolean inventoried;
 
+    @NotNull
     private Boolean enabled;
 
     private Long category_id;
@@ -54,7 +61,7 @@ public class ProductDTO {
         this.extras = extras;
     }
 
-    public Product convertToProductEntity(@NotNull Function<Long, Category> getCategory) {
+    public Product convertToProductEntity(@org.jetbrains.annotations.NotNull Function<Long, Category> getCategory) {
         return new Product(
                 id,
                 price,

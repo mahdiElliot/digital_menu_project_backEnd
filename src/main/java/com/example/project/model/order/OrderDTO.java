@@ -5,8 +5,8 @@ import com.example.project.model.customer.Customer;
 import com.example.project.model.paymethod.PayMethod;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotNull;
 import java.util.function.Function;
 
 @Setter
@@ -14,14 +14,18 @@ import java.util.function.Function;
 public class OrderDTO {
     private Long id;
 
+    @NotNull
     private Double tax;
 
+    @NotNull
     private Integer table_number;
 
     private Long business_id;
 
+    @NotNull
     private Long customer_id;
 
+    @NotNull
     private Long paymethod_id;
 
     public OrderDTO(long id, double tax, int table_number, Long business_id, Long customer_id, Long paymethod_id) {
@@ -33,8 +37,9 @@ public class OrderDTO {
         this.paymethod_id = paymethod_id;
     }
 
-    public Order convertToOrderEntity(@NotNull Function<Long, Business> getBusiness,
-                                      @NotNull Function<Long, Customer> getCustomer, @NotNull Function<Long, PayMethod> getPayMethod) {
+    public Order convertToOrderEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness,
+                                      @org.jetbrains.annotations.NotNull Function<Long, Customer> getCustomer,
+                                      @org.jetbrains.annotations.NotNull Function<Long, PayMethod> getPayMethod) {
         return new Order(
                 id,
                 tax,

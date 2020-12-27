@@ -4,8 +4,9 @@ import com.example.project.model.business.Business;
 import com.example.project.model.option.Option;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.function.Function;
 
 @Getter
@@ -13,12 +14,16 @@ import java.util.function.Function;
 public class SubOptionDTO {
     private Long id;
 
+    @NotNull
     private Integer price;
 
+    @NotNull
+    @NotEmpty
     private String name;
 
     private String description;
 
+    @NotNull
     private Boolean enabled;
 
     private String image;
@@ -35,7 +40,7 @@ public class SubOptionDTO {
         this.option_id = option_id;
     }
 
-    public SubOption convertToSubOptionEntity(@NotNull Function<Long, Option> getOption){
+    public SubOption convertToSubOptionEntity(@org.jetbrains.annotations.NotNull Function<Long, Option> getOption){
         return new SubOption(
                 id,
                 price,

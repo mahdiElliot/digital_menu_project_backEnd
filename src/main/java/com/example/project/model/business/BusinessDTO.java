@@ -16,9 +16,11 @@ import com.example.project.model.zone.Zone;
 import com.example.project.model.zone.ZoneDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.lang.Nullable;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -28,14 +30,20 @@ public class BusinessDTO {
 
     private Long id;
 
+    @NotEmpty
+    @NotNull
     private String name;
 
+    @NotNull
     private Double service_fee;
 
     private Double tax;
 
+    @NotEmpty
+    @NotNull
     private String logo;
 
+    @NotNull
     private Boolean enabled;
 
     private Set<PayMethodDTO> payMethods;
@@ -54,7 +62,7 @@ public class BusinessDTO {
         this.location_id = location_id;
     }
 
-    public Business convertToBusinessEntity(@NotNull Function<Long, Location> getLocation) {
+    public Business convertToBusinessEntity(@org.jetbrains.annotations.NotNull Function<Long, Location> getLocation) {
         return new Business(
                 id,
                 name,

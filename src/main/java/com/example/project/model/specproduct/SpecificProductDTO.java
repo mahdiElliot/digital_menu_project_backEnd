@@ -7,8 +7,9 @@ import com.example.project.model.order.OrderDTO;
 import com.example.project.model.product.Product;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -18,12 +19,16 @@ public class SpecificProductDTO {
 
     private Long id;
 
+    @NotNull
+    @NotEmpty
     private String name;
 
     private String comment;
 
+    @NotNull
     private Integer quantity;
 
+    @NotNull
     private Double price;
 
     private Set<OptionDTO> options;
@@ -43,7 +48,7 @@ public class SpecificProductDTO {
         this.orders = orders;
     }
 
-    public SpecificProduct convertToSpecificProductEntity(@NotNull Function<Long, Product> getProduct) {
+    public SpecificProduct convertToSpecificProductEntity(@org.jetbrains.annotations.NotNull Function<Long, Product> getProduct) {
         return new SpecificProduct(
                 id,
                 name,

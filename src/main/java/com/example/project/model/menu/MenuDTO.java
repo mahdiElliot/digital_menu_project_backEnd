@@ -4,8 +4,9 @@ import com.example.project.model.business.Business;
 import com.example.project.model.product.ProductDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -14,8 +15,11 @@ import java.util.function.Function;
 public class MenuDTO {
     private Long id;
 
+    @NotEmpty
+    @NotNull
     private String name;
 
+    @NotNull
     private Boolean enabled;
 
     private Long business_id;
@@ -30,7 +34,7 @@ public class MenuDTO {
         this.products = products;
     }
 
-    public Menu convertToMenuEntity(@NotNull Function<Long, Business> getBusiness) {
+    public Menu convertToMenuEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness) {
         return new Menu(
                 id,
                 name,

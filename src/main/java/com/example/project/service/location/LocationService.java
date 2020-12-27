@@ -33,6 +33,7 @@ public class LocationService implements ILocationService {
 
     @Override
     public LocationDTO findById(Long id) {
+        if (id == null) return null;
         return locationRepository.findById(id)
                 .map(this::convertToDTO).orElse(null);
     }
