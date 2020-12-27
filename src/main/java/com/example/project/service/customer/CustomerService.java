@@ -29,17 +29,20 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public CustomerDTO findByName(String name) {
+        if (name == null) return null;
         return convertToDTO(customerRepository.findByName(name));
     }
 
     @Override
     public CustomerDTO findById(Long id) {
+        if (id == null) return null;
         return customerRepository.findById(id)
                 .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public CustomerDTO delete(Long id) {
+        if (id == null) return null;
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()){
             customerRepository.deleteById(id);

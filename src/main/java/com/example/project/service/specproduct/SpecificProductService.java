@@ -29,17 +29,20 @@ public class SpecificProductService implements ISpecificProductService {
 
     @Override
     public SpecificProductDTO findByName(String name) {
+        if (name == null) return null;
         return convertToDTO(repository.findByName(name));
     }
 
     @Override
     public SpecificProductDTO findById(Long id) {
+        if (id == null) return null;
         return repository.findById(id)
                 .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public SpecificProductDTO delete(Long id) {
+        if (id == null) return null;
         Optional<SpecificProduct> item = repository.findById(id);
         if (item.isPresent()) {
             repository.deleteById(id);

@@ -34,12 +34,14 @@ public class OrderService implements IOrderService {
 
     @Override
     public OrderDTO findById(Long id) {
+        if (id == null) return null;
         return orderRepository.findById(id)
                 .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public OrderDTO delete(Long id) {
+        if (id == null) return null;
         Optional<Order> order = orderRepository.findById(id);
         if (order.isPresent()) {
             orderRepository.deleteById(id);

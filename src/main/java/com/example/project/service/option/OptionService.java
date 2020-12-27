@@ -30,17 +30,20 @@ public class OptionService implements IOptionService {
 
     @Override
     public OptionDTO findByName(String name) {
+        if (name == null) return null;
         return convertToDTO(repository.findByName(name));
     }
 
     @Override
     public OptionDTO findById(Long id) {
+        if (id == null) return null;
         return repository.findById(id)
                 .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public OptionDTO delete(Long id) {
+        if (id == null) return null;
         Optional<Option> item = repository.findById(id);
         if (item.isPresent()) {
             repository.deleteById(id);

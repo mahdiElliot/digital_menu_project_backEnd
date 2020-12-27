@@ -29,17 +29,20 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductDTO findByName(String name) {
+        if (name == null) return null;
         return convertToDTO(repository.findByName(name));
     }
 
     @Override
     public ProductDTO findById(Long id) {
+        if (id == null) return null;
         return repository.findById(id)
                 .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public ProductDTO delete(Long id) {
+        if (id == null) return null;
         Optional<Product> item = repository.findById(id);
         if (item.isPresent()) {
             repository.deleteById(id);

@@ -28,6 +28,7 @@ public class LocationService implements ILocationService {
 
     @Override
     public LocationDTO findByName(String name) {
+        if (name == null) return null;
         return convertToDTO(locationRepository.findByName(name));
     }
 
@@ -40,6 +41,7 @@ public class LocationService implements ILocationService {
 
     @Override
     public LocationDTO delete(Long id) {
+        if (id == null) return null;
         Optional<Location> location = locationRepository.findById(id);
         if (location.isPresent()){
             locationRepository.deleteById(id);

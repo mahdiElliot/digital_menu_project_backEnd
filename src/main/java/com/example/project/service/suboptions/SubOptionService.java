@@ -29,17 +29,20 @@ public class SubOptionService implements ISubOptionService {
 
     @Override
     public SubOptionDTO findByName(String name) {
+        if (name == null) return null;
         return convertToDTO(repository.findByName(name));
     }
 
     @Override
     public SubOptionDTO findById(Long id) {
+        if (id == null) return null;
         return repository.findById(id)
                 .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public SubOptionDTO delete(Long id) {
+        if (id == null) return null;
         Optional<SubOption> item = repository.findById(id);
         if (item.isPresent()) {
             repository.deleteById(id);

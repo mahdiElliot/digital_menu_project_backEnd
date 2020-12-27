@@ -28,17 +28,20 @@ public class MenuService implements IMenuService {
 
     @Override
     public MenuDTO findByName(String name) {
+        if (name == null) return null;
         return convertToDTO(menuRepository.findByName(name));
     }
 
     @Override
     public MenuDTO findById(Long id) {
+        if (id == null) return null;
         return menuRepository.findById(id)
                 .map(this::convertToDTO).orElse(null);
     }
 
     @Override
     public MenuDTO delete(Long id) {
+        if (id == null) return null;
         Optional<Menu> menu = menuRepository.findById(id);
         if (menu.isPresent()) {
             menuRepository.deleteById(id);
