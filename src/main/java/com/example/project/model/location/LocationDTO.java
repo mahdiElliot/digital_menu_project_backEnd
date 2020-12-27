@@ -8,26 +8,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class LocationDTO {
 
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private Double lat;
 
-    @Setter
-    @Getter
     private Double lng;
 
-    @Setter
-    @Getter
     private Integer zipcode;
 
-    @Setter
-    @Getter
     private Integer zoom;
 
     public LocationDTO(long id, double lat, double lng, int zipcode, int zoom) {

@@ -12,45 +12,31 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "specific_product")
 public class SpecificProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private String comment;
 
-    @Setter
-    @Getter
     private Integer quantity;
 
-    @Setter
-    @Getter
     private Double price;
 
     @ManyToMany(mappedBy = "specificProducts")
-    @Setter
-    @Getter
     private Set<Option> options;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    @Setter
-    @Getter
     private Product product;
 
     @ManyToMany(mappedBy = "specificProducts")
-    @Setter
-    @Getter
     private Set<Order> orders;
 
     public SpecificProduct() {

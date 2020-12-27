@@ -10,30 +10,24 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "menu")
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_generator")
     @SequenceGenerator(name = "menu_generator", sequenceName = "menu_seq")
-    @Setter
-    @Getter
     private Long id;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private String name;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = false)
-    @Setter
-    @Getter
     private Business business;
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -42,8 +36,6 @@ public class Menu {
             joinColumns = {@JoinColumn(name = "menu_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
-    @Setter
-    @Getter
     private Set<Product> products;
 
 

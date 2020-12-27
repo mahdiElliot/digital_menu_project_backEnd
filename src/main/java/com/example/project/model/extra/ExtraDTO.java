@@ -11,29 +11,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class ExtraDTO {
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private String description;
 
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     private Long business_id;
 
-    @Setter
-    @Getter
     private Set<OptionDTO> options;
 
     public ExtraDTO(long id, String name, String description, boolean enabled, Long business_id, Set<OptionDTO> options) {

@@ -11,38 +11,28 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "extra")
 public class Extra {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private String description;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = false)
-    @Setter
-    @Getter
     private Business business;
 
     @OneToMany(mappedBy = "extra")
-    @Setter
-    @Getter
     private Set<Option> options;
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -51,8 +41,6 @@ public class Extra {
             joinColumns = {@JoinColumn(name = "extra_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
-    @Setter
-    @Getter
     private Set<Product> products;
 
     public Extra() {

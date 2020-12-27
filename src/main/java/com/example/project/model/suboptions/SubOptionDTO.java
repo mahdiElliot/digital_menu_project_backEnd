@@ -8,33 +8,21 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
+@Getter
+@Setter
 public class SubOptionDTO {
-    @Setter
-    @Getter
     private Long id;
 
-    @Getter
-    @Setter
     private Integer price;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Setter
-    @Getter
     private String description;
 
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     private String image;
 
-    @Setter
-    @Getter
     private Long option_id;
 
     public SubOptionDTO(long id, int price, String name, String description, boolean enabled, String image, Long option_id) {

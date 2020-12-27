@@ -11,6 +11,8 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -18,27 +20,17 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_generator")
     @SequenceGenerator(name = "customer_generator", sequenceName = "customer_seq")
-    @Setter
-    @Getter
     private Long id;
 
     @Column(nullable = false)
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
     private String email;
 
-    @Getter
-    @Setter
     private String phoneNumber;
 
     @NotNull
     @OneToMany(mappedBy = "customer")
-    @Setter
-    @Getter
     private Set<Order> orders;
 
     public Customer() {

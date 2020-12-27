@@ -16,72 +16,48 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "business")
 public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private Double serviceFee;
 
-    @Setter
-    @Getter
     private Double tax;
 
     @Column(nullable = false, unique = true)
-    @Setter
-    @Getter
     private String logo;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
     @OneToMany(mappedBy = "business")
-    @Setter
-    @Getter
     private Set<Menu> menus;
 
     @OneToMany(mappedBy = "business")
-    @Setter
-    @Getter
     private Set<Order> orders;
 
     @OneToMany(mappedBy = "business")
-    @Setter
-    @Getter
     private Set<Category> categories;
 
     @OneToMany(mappedBy = "business")
-    @Setter
-    @Getter
     private Set<Extra> extras;
 
     @OneToMany(mappedBy = "business")
-    @Setter
-    @Getter
     private Set<PayMethod> payMethods;
 
     @ManyToMany(mappedBy = "businesses")
-    @Setter
-    @Getter
     private Set<Zone> zones;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
-    @Setter
-    @Getter
     private Location location;
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -90,8 +66,6 @@ public class Business {
             joinColumns = {@JoinColumn(name = "business_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
-    @Setter
-    @Getter
     private Set<Product> products;
 
     public Business() {

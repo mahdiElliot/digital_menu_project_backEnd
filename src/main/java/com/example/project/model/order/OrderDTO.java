@@ -9,29 +9,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class OrderDTO {
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private Double tax;
 
-    @Setter
-    @Getter
     private Integer table_number;
 
-    @Getter
-    @Setter
     private Long business_id;
 
-    @Setter
-    @Getter
     private Long customer_id;
 
-    @Setter
-    @Getter
     private Long paymethod_id;
 
     public OrderDTO(long id, double tax, int table_number, Long business_id, Long customer_id, Long paymethod_id) {

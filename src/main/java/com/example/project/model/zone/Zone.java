@@ -9,22 +9,18 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "zone")
 public class Zone {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private double price;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -33,8 +29,6 @@ public class Zone {
             joinColumns = {@JoinColumn(name = "zone_id")},
             inverseJoinColumns = {@JoinColumn(name = "business_id")}
     )
-    @Setter
-    @Getter
     Set<Business> businesses;
 
     public Zone() {

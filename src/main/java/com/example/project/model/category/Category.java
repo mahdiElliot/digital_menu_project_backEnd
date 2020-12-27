@@ -10,42 +10,30 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private Integer rank;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     private String image;
 
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = false)
-    @Setter
-    @Getter
     private Business business;
 
     @OneToMany(mappedBy = "category")
-    @Setter
-    @Getter
     private Set<Product> products;
 
     public Category() {

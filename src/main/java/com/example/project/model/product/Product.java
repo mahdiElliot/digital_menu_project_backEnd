@@ -14,70 +14,47 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
+
     private Long id;
 
-    @Getter
-    @Setter
     private Integer price;
 
-    @Getter
-    @Setter
     private Integer quantity;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Setter
-    @Getter
     private String description;
 
-    @Setter
-    @Getter
     private String images;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean inventoried;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
     @OneToMany(mappedBy = "product")
-    @Setter
-    @Getter
     private Set<SpecificProduct> specificProducts;
 
     @ManyToMany(mappedBy = "products")
-    @Setter
-    @Getter
     private Set<Menu> menus;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @Setter
-    @Getter
     private Category category;
 
     @ManyToMany(mappedBy = "products")
-    @Setter
-    @Getter
     private Set<Extra> extras;
 
     @ManyToMany(mappedBy = "products")
-    @Setter
-    @Getter
     private Set<Business> businesses;
 
     public Product() {

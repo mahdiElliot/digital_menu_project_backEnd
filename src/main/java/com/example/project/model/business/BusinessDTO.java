@@ -22,38 +22,24 @@ import org.springframework.lang.Nullable;
 import java.util.Set;
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class BusinessDTO {
-    @Setter
-    @Getter
+
     private Long id;
 
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private Double service_fee;
 
-    @Setter
-    @Getter
     private Double tax;
 
-    @Setter
-    @Getter
     private String logo;
 
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Nullable
-    @Setter
-    @Getter
     private Set<PayMethodDTO> payMethods;
 
-    @Setter
-    @Getter
     private Long location_id;
 
     public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled,

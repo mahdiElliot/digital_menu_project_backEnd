@@ -11,38 +11,24 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class OptionDTO {
 
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private Integer min;
 
-    @Setter
-    @Getter
     private Integer max;
 
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     private String image;
 
-    @Setter
-    @Getter
     private Set<SubOptionDTO> subOptions;
 
-    @Setter
-    @Getter
     private Long extra_id;
 
     public OptionDTO(long id, String name, int min, int max, boolean enabled, String image, Set<SubOptionDTO> subOptions, Long extra_id) {

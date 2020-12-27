@@ -7,26 +7,18 @@ import lombok.Setter;
 
 import java.util.Set;
 
+@Setter
+@Getter
 public class CustomerDTO {
 
-    @Getter
-    @Setter
     private Long id;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
     private String email;
 
-    @Getter
-    @Setter
     private String phone_number;
 
-    @Setter
-    @Getter
     private Set<OrderDTO> orders;
 
     public CustomerDTO(Long id, String name, String email, String phone_number, Set<OrderDTO> orders) {

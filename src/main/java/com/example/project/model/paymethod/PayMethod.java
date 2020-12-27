@@ -9,38 +9,28 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "pay_method")
 public class PayMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private String data;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private String name;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = false)
-    @Setter
-    @Getter
     private Business business;
 
     @OneToMany(mappedBy = "payMethod")
-    @Setter
-    @Getter
     private Set<Order> orders;
 
     public PayMethod() {

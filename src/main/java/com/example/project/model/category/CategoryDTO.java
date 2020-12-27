@@ -10,33 +10,21 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class CategoryDTO {
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private Integer rank;
 
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     private String image;
 
-    @Setter
-    @Getter
     private Long business_id;
 
-    @Setter
-    @Getter
     private Set<ProductDTO> products;
 
     public CategoryDTO(long id, String name, int rank, boolean enabled, String image, Long business_id, Set<ProductDTO> products) {

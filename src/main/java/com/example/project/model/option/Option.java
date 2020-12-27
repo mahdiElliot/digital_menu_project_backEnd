@@ -13,48 +13,34 @@ import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "option")
 public class Option {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
-    @Getter
-    @Setter
     private String name;
 
     @Column(nullable = false)
-    @Getter
-    @Setter
     private Integer min;
 
     @Column(nullable = false)
-    @Getter
-    @Setter
     private Integer max;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     private String image;
 
     @OneToMany(mappedBy = "option")
-    @Setter
-    @Getter
     private Set<SubOption> subOptions;
 
     @ManyToOne
     @JoinColumn(name = "extra_id", nullable = false)
-    @Setter
-    @Getter
     private Extra extra;
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -63,8 +49,6 @@ public class Option {
             joinColumns = {@JoinColumn(name = "option_id")},
             inverseJoinColumns = {@JoinColumn(name = "sproduct_id")}
     )
-    @Setter
-    @Getter
     private Set<SpecificProduct> specificProducts;
 
     public Option() {

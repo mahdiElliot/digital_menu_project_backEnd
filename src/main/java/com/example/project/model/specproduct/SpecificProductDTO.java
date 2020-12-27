@@ -12,37 +12,24 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class SpecificProductDTO {
-    @Setter
-    @Getter
+
     private Long id;
 
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private String comment;
 
-    @Setter
-    @Getter
     private Integer quantity;
 
-    @Setter
-    @Getter
     private Double price;
 
-    @Setter
-    @Getter
     private Set<OptionDTO> options;
 
-    @Setter
-    @Getter
     private Long product_id;
 
-    @Setter
-    @Getter
     private Set<OrderDTO> orders;
 
     public SpecificProductDTO(long id, String name, String comment, int quantity, double price, Set<OptionDTO> options, Long product_id, Set<OrderDTO> orders) {

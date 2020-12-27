@@ -6,35 +6,25 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "location")
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private Double lat;
 
-    @Setter
-    @Getter
     private Double lng;
 
-    @Setter
-    @Getter
     private Integer zipcode;
 
-    @Setter
-    @Getter
     private Integer zoom;
 
     @OneToOne(mappedBy = "location")
-    @Setter
-    @Getter
     private Business business;
 
     public Location() {

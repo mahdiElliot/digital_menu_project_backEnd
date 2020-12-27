@@ -11,34 +11,26 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.util.Set;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "corder")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private Double tax;
 
     @Column(nullable = false, unique = true)
-    @Setter
-    @Getter
     private Integer tableNumber;
 
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = false)
-    @Setter
-    @Getter
     private Business business;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    @Setter
-    @Getter
     private Customer customer;
 
     @NotNull
@@ -48,14 +40,10 @@ public class Order {
             joinColumns = {@JoinColumn(name = "order_id")},
             inverseJoinColumns = {@JoinColumn(name = "sproduct_id")}
     )
-    @Setter
-    @Getter
     private Set<SpecificProduct> specificProducts;
 
     @ManyToOne
     @JoinColumn(name = "paymethod_id", nullable = false)
-    @Setter
-    @Getter
     private PayMethod payMethod;
 
     public Order() {

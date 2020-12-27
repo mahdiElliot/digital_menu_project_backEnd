@@ -9,25 +9,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class PayMethodDTO {
-    @Setter
-    @Getter
+
     private Long id;
 
-    @Setter
-    @Getter
     private String data;
 
-    @Setter
-    @Getter
     private String name;
 
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     Long business_id;
 
     public PayMethodDTO(long id, String data, String name, boolean enabled, Long business_id) {

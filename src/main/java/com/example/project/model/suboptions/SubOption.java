@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "suboptions")
 
@@ -14,37 +16,23 @@ public class SubOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    @Getter
     private Long id;
 
     @Column(nullable = false)
-    @Getter
-    @Setter
     private Integer price;
 
     @Column(nullable = false)
-    @Getter
-    @Setter
     private String name;
 
-    @Setter
-    @Getter
     private String description;
 
     @Column(nullable = false)
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     private String image;
 
     @ManyToOne
     @JoinColumn(name = "option_id", nullable = false)
-    @Setter
-    @Getter
     private Option option;
 
     public SubOption() {

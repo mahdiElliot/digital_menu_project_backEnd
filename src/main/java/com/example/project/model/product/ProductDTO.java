@@ -16,46 +16,28 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
+@Setter
+@Getter
 public class ProductDTO {
 
-    @Setter
-    @Getter
     private Long id;
 
-    @Getter
-    @Setter
     private Integer price;
 
-    @Getter
-    @Setter
     private Integer quantity;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Setter
-    @Getter
     private String description;
 
-    @Setter
-    @Getter
     private String images;
 
-    @Setter
-    @Getter
     private Boolean inventoried;
 
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     private Long category_id;
 
-    @Setter
-    @Getter
     private Set<ExtraDTO> extras;
 
     public ProductDTO(long id, int price, int quantity, String name, String description, String images,

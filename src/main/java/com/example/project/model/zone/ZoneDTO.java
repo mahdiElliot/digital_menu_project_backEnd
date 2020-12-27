@@ -7,21 +7,15 @@ import lombok.Setter;
 
 import java.util.Set;
 
+@Setter
+@Getter
 public class ZoneDTO {
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private double price;
 
-    @Setter
-    @Getter
     private Boolean enabled;
 
-    @Setter
-    @Getter
     Set<BusinessDTO> businesses;
 
     public ZoneDTO(long id, double price, boolean enabled, Set<BusinessDTO> businesses) {
