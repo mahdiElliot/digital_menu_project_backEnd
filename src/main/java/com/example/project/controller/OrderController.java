@@ -28,40 +28,19 @@ import java.util.function.Function;
 
 @RequestMapping(URLUtils.ORDER)
 @Controller
-public class OrderController {
+public class OrderController extends BaseController {
 
     private final IOrderService orderService;
-    private final IBusinessService businessService;
-    private final ILocationService locationService;
     private final ICustomerService customerService;
     private final IPayMethodService payMethodService;
 
     @Autowired
     public OrderController(IOrderService orderService, IBusinessService businessService, ILocationService locationService,
                            ICustomerService customerService, IPayMethodService payMethodService) {
+        super(businessService, locationService);
         this.orderService = orderService;
-        this.businessService = businessService;
-        this.locationService = locationService;
         this.customerService = customerService;
         this.payMethodService = payMethodService;
-    }
-
-    @Contract(pure = true)
-    private @NotNull Function<Long, Location> getLocationFunction() {
-        return
-                ID -> {
-                    LocationDTO locationDTO = locationService.findById(ID);
-                    return locationDTO == null ? null : locationDTO.convertToLocationEntity();
-                };
-    }
-
-    @Contract(pure = true)
-    private @NotNull Function<Long, Business> getBusinessFunction() {
-        return
-                ID -> {
-                    BusinessDTO businessDTO = businessService.findById(ID);
-                    return businessDTO == null ? null : businessDTO.convertToBusinessEntity(getLocationFunction());
-                };
     }
 
     @PostMapping

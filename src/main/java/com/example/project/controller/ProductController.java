@@ -24,38 +24,16 @@ import java.util.List;
 import java.util.function.Function;
 
 @Controller
-public class ProductController {
+public class ProductController extends BaseController {
     private final IProductService productService;
-    private final IBusinessService businessService;
     private final ICategoryService categoryService;
-    private final ILocationService locationService;
 
     @Autowired
     public ProductController(IProductService productService, IBusinessService businessService,
                              ICategoryService categoryService, ILocationService locationService) {
+        super(businessService, locationService);
         this.productService = productService;
-        this.businessService = businessService;
         this.categoryService = categoryService;
-        this.locationService = locationService;
-    }
-
-
-    @Contract(pure = true)
-    private @NotNull Function<Long, Location> getLocationFunction() {
-        return
-                ID -> {
-                    LocationDTO locationDTO = locationService.findById(ID);
-                    return locationDTO == null ? null : locationDTO.convertToLocationEntity();
-                };
-    }
-
-    @Contract(pure = true)
-    private @NotNull Function<Long, Business> getBusinessFunction() {
-        return
-                ID -> {
-                    BusinessDTO businessDTO = businessService.findById(ID);
-                    return businessDTO == null ? null : businessDTO.convertToBusinessEntity(getLocationFunction());
-                };
     }
 
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)

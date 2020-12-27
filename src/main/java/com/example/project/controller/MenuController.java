@@ -21,35 +21,13 @@ import java.util.List;
 import java.util.function.Function;
 
 @Controller
-public class MenuController {
+public class MenuController extends BaseController {
     private final IMenuService menuService;
-    private final IBusinessService businessService;
-    private final ILocationService locationService;
 
     @Autowired
     public MenuController(IMenuService menuService, IBusinessService businessService, ILocationService locationService) {
+        super(businessService, locationService);
         this.menuService = menuService;
-        this.businessService = businessService;
-        this.locationService = locationService;
-    }
-
-
-    @Contract(pure = true)
-    private @NotNull Function<Long, Location> getLocationFunction() {
-        return
-                ID -> {
-                    LocationDTO locationDTO = locationService.findById(ID);
-                    return locationDTO == null ? null : locationDTO.convertToLocationEntity();
-                };
-    }
-
-    @Contract(pure = true)
-    private @NotNull Function<Long, Business> getBusinessFunction() {
-        return
-                ID -> {
-                    BusinessDTO businessDTO = businessService.findById(ID);
-                    return businessDTO == null ? null : businessDTO.convertToBusinessEntity(getLocationFunction());
-                };
     }
 
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.MENU)

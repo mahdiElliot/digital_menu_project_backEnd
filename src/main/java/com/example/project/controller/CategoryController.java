@@ -19,16 +19,13 @@ import java.util.List;
 import java.util.function.Function;
 
 @Controller
-public class CategoryController {
+public class CategoryController extends BaseController {
     private final ICategoryService categoryService;
-    private final IBusinessService businessService;
-    private final ILocationService locationService;
 
     @Autowired
     public CategoryController(ICategoryService categoryService, IBusinessService businessService, ILocationService locationService) {
+        super(businessService, locationService);
         this.categoryService = categoryService;
-        this.businessService = businessService;
-        this.locationService = locationService;
     }
 
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY)
@@ -37,17 +34,7 @@ public class CategoryController {
     public CategoryDTO addCategory(@PathVariable("id") Long id, @Valid @RequestBody CategoryDTO categoryDTO) {
         if (businessService.findById(id) != null) {
             categoryDTO.setBusiness_id(id);
-            Function<Long, Location> getLocation =
-                    ID -> {
-                        LocationDTO locationDTO = locationService.findById(ID);
-                        return locationDTO == null ? null : locationDTO.convertToLocationEntity();
-                    };
-            Function<Long, Business> getBusiness =
-                    ID -> {
-                        BusinessDTO businessDTO = businessService.findById(ID);
-                        return businessDTO == null ? null : businessDTO.convertToBusinessEntity(getLocation);
-                    };
-            return categoryService.save(categoryDTO.convertToCategoryEntity(getBusiness));
+            return categoryService.save(categoryDTO.convertToCategoryEntity(getBusinessFunction()));
         }
         return null;
     }
