@@ -36,12 +36,12 @@ public class ProductController extends BaseController {
     public ProductDTO addProduct(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @Valid @RequestBody ProductDTO productDTO) {
         if (businessService.findById(id) != null && categoryService.findById(id2) != null) {
             productDTO.setCategory_id(id2);
-            Function<Long, Category> getCategory =
+            Function<Long, Category> categoryMapper =
                     ID -> {
                         CategoryDTO categoryDTO = categoryService.findById(ID);
-                        return categoryDTO == null ? null : categoryDTO.convertToCategoryEntity(getBusinessFunction());
+                        return categoryDTO == null ? null : categoryDTO.convertToCategoryEntity(businessMapper());
                     };
-            return productService.save(productDTO.convertToProductEntity(getCategory));
+            return productService.save(productDTO.convertToProductEntity(categoryMapper));
         }
         return null;
     }

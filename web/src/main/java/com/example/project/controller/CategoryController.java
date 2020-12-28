@@ -29,7 +29,7 @@ public class CategoryController extends BaseController {
     public CategoryDTO addCategory(@PathVariable("id") Long id, @Valid @RequestBody CategoryDTO categoryDTO) {
         if (businessService.findById(id) != null) {
             categoryDTO.setBusiness_id(id);
-            return categoryService.save(categoryDTO.convertToCategoryEntity(getBusinessFunction()));
+            return categoryService.save(categoryDTO.convertToCategoryEntity(businessMapper()));
         }
         return null;
     }

@@ -25,7 +25,7 @@ public class BaseController {
     }
 
     @Contract(pure = true)
-    protected @NotNull Function<Long, Location> getLocationFunction() {
+    protected @NotNull Function<Long, Location> locationMapper() {
         return
                 ID -> {
                     LocationDTO locationDTO = locationService.findById(ID);
@@ -34,11 +34,11 @@ public class BaseController {
     }
 
     @Contract(pure = true)
-    protected @NotNull Function<Long, Business> getBusinessFunction() {
+    protected @NotNull Function<Long, Business> businessMapper() {
         return
                 ID -> {
                     BusinessDTO businessDTO = businessService.findById(ID);
-                    return businessDTO == null ? null : businessDTO.convertToBusinessEntity(getLocationFunction());
+                    return businessDTO == null ? null : businessDTO.convertToBusinessEntity(locationMapper());
                 };
     }
 }

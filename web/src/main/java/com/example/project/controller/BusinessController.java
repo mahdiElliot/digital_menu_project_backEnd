@@ -27,7 +27,7 @@ public class BusinessController extends BaseController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public BusinessDTO addBusiness(@Valid @RequestBody BusinessDTO businessDTO) {
-        return businessService.save(businessDTO.convertToBusinessEntity(getLocationFunction()));
+        return businessService.save(businessDTO.convertToBusinessEntity(locationMapper()));
     }
 
     @GetMapping
@@ -52,6 +52,6 @@ public class BusinessController extends BaseController {
     @ResponseBody
     public BusinessDTO updateBusiness(@PathVariable("id") Long id, @RequestBody BusinessDTO businessDTO) {
         businessDTO.setId(id);
-        return businessService.save(businessDTO.convertToBusinessEntity(getLocationFunction()));
+        return businessService.save(businessDTO.convertToBusinessEntity(locationMapper()));
     }
 }

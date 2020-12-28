@@ -41,17 +41,17 @@ public class OrderController extends BaseController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public OrderDTO addOrder(@Valid @RequestBody OrderDTO orderDTO) {
-        Function<Long, Customer> getCustomer =
+        Function<Long, Customer> customerMapper =
                 ID -> {
                     CustomerDTO customerDTO = customerService.findById(ID);
                     return customerDTO == null ? null : customerDTO.convertToCustomerEntity();
                 };
-        Function<Long, PayMethod> getPayMethod =
+        Function<Long, PayMethod> payMethodMapper =
                 ID -> {
                     PayMethodDTO payMethodDTO = payMethodService.findById(ID);
-                    return payMethodDTO == null ? null : payMethodDTO.convertToPayMethodEntity(getBusinessFunction());
+                    return payMethodDTO == null ? null : payMethodDTO.convertToPayMethodEntity(businessMapper());
                 };
-        return orderService.save(orderDTO.convertToOrderEntity(getBusinessFunction(), getCustomer, getPayMethod));
+        return orderService.save(orderDTO.convertToOrderEntity(businessMapper(), customerMapper, payMethodMapper));
     }
 
     @GetMapping

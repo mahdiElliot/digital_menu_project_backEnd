@@ -29,7 +29,7 @@ public class MenuController extends BaseController {
     public MenuDTO addMenu(@PathVariable("id") Long id, @Valid @RequestBody MenuDTO menuDTO) {
         if (businessService.findById(id) != null) {
             menuDTO.setBusiness_id(id);
-            return menuService.save(menuDTO.convertToMenuEntity(getBusinessFunction()));
+            return menuService.save(menuDTO.convertToMenuEntity(businessMapper()));
         }
         return null;
     }
@@ -65,7 +65,7 @@ public class MenuController extends BaseController {
         if (businessService.findById(id) != null) {
             menuDTO.setBusiness_id(id);
             menuDTO.setId(id2);
-            return menuService.save(menuDTO.convertToMenuEntity(getBusinessFunction()));
+            return menuService.save(menuDTO.convertToMenuEntity(businessMapper()));
         }
         return null;
     }
