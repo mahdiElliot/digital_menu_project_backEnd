@@ -41,7 +41,7 @@ public class BusinessDTO {
         super();
     }
 
-    public BusinessDTO(long id, @NotNull String name, double service_fee, double tax, String logo, boolean enabled,
+    public BusinessDTO(long id, @NotNull String name, double service_fee, double tax, @NotNull String logo, boolean enabled,
                        @Nullable Set<PayMethodDTO> payMethods, Long location_id) {
         this.id = id;
         this.name = name;

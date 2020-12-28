@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,20 +42,20 @@ public class Product {
     private Boolean enabled;
 
     @OneToMany(mappedBy = "product")
-    private Set<SpecificProduct> specificProducts;
+    private Set<SpecificProduct> specificProducts = new HashSet<>();
 
     @ManyToMany(mappedBy = "products")
-    private Set<Menu> menus;
+    private Set<Menu> menus = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @ManyToMany(mappedBy = "products")
-    private Set<Extra> extras;
+    private Set<Extra> extras = new HashSet<>();
 
     @ManyToMany(mappedBy = "products")
-    private Set<Business> businesses;
+    private Set<Business> businesses = new HashSet<>();
 
     public Product() {
     }

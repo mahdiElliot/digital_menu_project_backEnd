@@ -37,7 +37,7 @@ public class PayMethodDTO {
         this.business_id = business_id;
     }
 
-    public PayMethod convertToPayMethodEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness) {
+    public PayMethod convertToPayMethodEntity(@NotNull Function<Long, Business> getBusiness) {
         return new PayMethod(
                 id,
                 data,

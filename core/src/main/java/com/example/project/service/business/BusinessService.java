@@ -29,26 +29,26 @@ public class BusinessService implements IBusinessService {
 
     @Override
     public BusinessDTO findByName(String name) {
-        if (name == null) return null;
+        if (name == null) return new BusinessDTO();
         return businessRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public BusinessDTO findById(Long id) {
-        if (id == null) return null;
+        if (id == null) return new BusinessDTO();
         return businessRepository.findById(id)
-                .map(Business::convertToDTO).orElse(null);
+                .map(Business::convertToDTO).orElse(new BusinessDTO());
     }
 
     @Override
     public BusinessDTO delete(Long id) {
-        if (id == null) return null;
+        if (id == null) return new BusinessDTO();
         Optional<Business> menu = businessRepository.findById(id);
         if (menu.isPresent()) {
             businessRepository.deleteById(id);
             return menu.get().convertToDTO();
         }
-        return null;
+        return new BusinessDTO();
     }
 
     @Override

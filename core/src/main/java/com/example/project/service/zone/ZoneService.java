@@ -34,20 +34,20 @@ public class ZoneService implements IZoneService {
 
     @Override
     public ZoneDTO findById(Long id) {
-        if (id == null) return null;
+        if (id == null) return new ZoneDTO();
         return zoneRepository.findById(id)
-                .map(Zone::convertToDTO).orElse(null);
+                .map(Zone::convertToDTO).orElse(new ZoneDTO());
     }
 
     @Override
     public ZoneDTO delete(Long id) {
-        if (id == null) return null;
+        if (id == null) return new ZoneDTO();
         Optional<Zone> menu = zoneRepository.findById(id);
         if (menu.isPresent()) {
             zoneRepository.deleteById(id);
             return menu.get().convertToDTO();
         }
-        return null;
+        return new ZoneDTO();
     }
 
     @Override

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ public class Extra {
     private Business business;
 
     @OneToMany(mappedBy = "extra")
-    private Set<Option> options;
+    private Set<Option> options = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
@@ -41,7 +42,7 @@ public class Extra {
             joinColumns = {@JoinColumn(name = "extra_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 
     public Extra() {
     }

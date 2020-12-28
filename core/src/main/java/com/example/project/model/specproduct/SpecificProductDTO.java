@@ -50,7 +50,7 @@ public class SpecificProductDTO {
         this.orders = orders;
     }
 
-    public SpecificProduct convertToSpecificProductEntity(@org.jetbrains.annotations.NotNull Function<Long, Product> getProduct) {
+    public SpecificProduct convertToSpecificProductEntity(@NotNull Function<Long, Product> getProduct) {
         return new SpecificProduct(
                 id,
                 name,

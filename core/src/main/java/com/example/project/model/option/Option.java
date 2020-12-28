@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,7 @@ public class Option {
     private String image;
 
     @OneToMany(mappedBy = "option")
-    private Set<SubOption> subOptions;
+    private Set<SubOption> subOptions = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "extra_id", nullable = false)
@@ -48,7 +49,7 @@ public class Option {
             joinColumns = {@JoinColumn(name = "option_id")},
             inverseJoinColumns = {@JoinColumn(name = "sproduct_id")}
     )
-    private Set<SpecificProduct> specificProducts;
+    private Set<SpecificProduct> specificProducts = new HashSet<>();
 
     public Option() {
     }

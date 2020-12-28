@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -20,6 +21,8 @@ public class Order {
     private Long id;
 
     private Double tax;
+
+    private String comment;
 
     @Column(nullable = false, unique = true)
     private Integer tableNumber;
@@ -39,7 +42,7 @@ public class Order {
             joinColumns = {@JoinColumn(name = "order_id")},
             inverseJoinColumns = {@JoinColumn(name = "sproduct_id")}
     )
-    private Set<SpecificProduct> specificProducts;
+    private Set<SpecificProduct> specificProducts = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "paymethod_id", nullable = false)
@@ -48,13 +51,14 @@ public class Order {
     public Order() {
     }
 
-    public Order(long id, double tax, int tableNumber, Business business, Customer customer, PayMethod payMethod) {
+    public Order(long id, double tax, int tableNumber, String comment, Business business, Customer customer, PayMethod payMethod) {
         this.id = id;
         this.tax = tax;
         this.tableNumber = tableNumber;
         this.business = business;
         this.customer = customer;
         this.payMethod = payMethod;
+        this.comment = comment;
     }
 
     public OrderDTO convertToDTO() {
@@ -68,6 +72,7 @@ public class Order {
                 id,
                 tax,
                 tableNumber,
+                comment,
                 businessId,
                 customerId,
                 payMethod.getId()

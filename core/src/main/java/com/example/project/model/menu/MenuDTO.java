@@ -38,7 +38,7 @@ public class MenuDTO {
         this.products = products;
     }
 
-    public Menu convertToMenuEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness) {
+    public Menu convertToMenuEntity(@NotNull Function<Long, Business> getBusiness) {
         return new Menu(
                 id,
                 name,

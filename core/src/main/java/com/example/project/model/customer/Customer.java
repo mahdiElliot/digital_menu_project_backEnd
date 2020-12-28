@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class Customer {
 
     @NotNull
     @OneToMany(mappedBy = "customer")
-    private Set<Order> orders;
+    private Set<Order> orders = new HashSet<>();
 
     public Customer() {
     }

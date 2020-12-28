@@ -29,26 +29,26 @@ public class ExtraService implements IExtraService {
 
     @Override
     public ExtraDTO findByName(String name) {
-        if (name == null) return null;
+        if (name == null) return new ExtraDTO();
         return extraRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public ExtraDTO findById(Long id) {
-        if (id == null) return null;
+        if (id == null) return new ExtraDTO();
         return extraRepository.findById(id)
-                .map(Extra::convertToDTO).orElse(null);
+                .map(Extra::convertToDTO).orElse(new ExtraDTO());
     }
 
     @Override
     public ExtraDTO delete(Long id) {
-        if (id == null) return null;
+        if (id == null) return new ExtraDTO();
         Optional<Extra> menu = extraRepository.findById(id);
         if (menu.isPresent()) {
             extraRepository.deleteById(id);
             return menu.get().convertToDTO();
         }
-        return null;
+        return new ExtraDTO();
     }
 
     @Override

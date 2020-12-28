@@ -47,7 +47,7 @@ public class CategoryDTO {
         this.products = products;
     }
 
-    public Category convertToCategoryEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness) {
+    public Category convertToCategoryEntity(@NotNull Function<Long, Business> getBusiness) {
         return new Category(
                 id,
                 name,

@@ -43,7 +43,7 @@ public class SubOptionDTO {
         this.option_id = option_id;
     }
 
-    public SubOption convertToSubOptionEntity(@org.jetbrains.annotations.NotNull Function<Long, Option> getOption){
+    public SubOption convertToSubOptionEntity(@NotNull Function<Long, Option> getOption) {
         return new SubOption(
                 id,
                 price,

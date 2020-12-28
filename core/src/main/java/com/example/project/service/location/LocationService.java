@@ -28,26 +28,26 @@ public class LocationService implements ILocationService {
 
     @Override
     public LocationDTO findByName(String name) {
-        if (name == null) return null;
+        if (name == null) return new LocationDTO();
         return locationRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public LocationDTO findById(Long id) {
-        if (id == null) return null;
+        if (id == null) return new LocationDTO();
         return locationRepository.findById(id)
-                .map(Location::convertToDTO).orElse(null);
+                .map(Location::convertToDTO).orElse(new LocationDTO());
     }
 
     @Override
     public LocationDTO delete(Long id) {
-        if (id == null) return null;
+        if (id == null) return new LocationDTO();
         Optional<Location> location = locationRepository.findById(id);
         if (location.isPresent()){
             locationRepository.deleteById(id);
             return location.get().convertToDTO();
         }
-        return null;
+        return new LocationDTO();
     }
 
     @Override

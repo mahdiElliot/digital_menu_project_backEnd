@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class Category {
     private Business business;
 
     @OneToMany(mappedBy = "category")
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 
     public Category() {
     }

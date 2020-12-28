@@ -50,7 +50,7 @@ public class OptionDTO {
         this.extra_id = extra_id;
     }
 
-    public Option convertToOptionEntity(@org.jetbrains.annotations.NotNull Function<Long, Extra> getExtra) {
+    public Option convertToOptionEntity(@NotNull Function<Long, Extra> getExtra) {
         return new Option(
                 id,
                 name,

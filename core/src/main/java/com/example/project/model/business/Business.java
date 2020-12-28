@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,22 +40,22 @@ public class Business {
     private Boolean enabled;
 
     @OneToMany(mappedBy = "business")
-    private Set<Menu> menus;
+    private Set<Menu> menus = new HashSet<>();
 
     @OneToMany(mappedBy = "business")
-    private Set<Order> orders;
+    private Set<Order> orders = new HashSet<>();
 
     @OneToMany(mappedBy = "business")
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "business")
-    private Set<Extra> extras;
+    private Set<Extra> extras = new HashSet<>();
 
     @OneToMany(mappedBy = "business")
-    private Set<PayMethod> payMethods;
+    private Set<PayMethod> payMethods = new HashSet<>();
 
     @ManyToMany(mappedBy = "businesses")
-    private Set<Zone> zones;
+    private Set<Zone> zones = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
@@ -66,7 +67,7 @@ public class Business {
             joinColumns = {@JoinColumn(name = "business_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 
     public Business() {
     }

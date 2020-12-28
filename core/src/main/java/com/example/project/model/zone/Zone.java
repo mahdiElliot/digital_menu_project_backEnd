@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,21 +24,24 @@ public class Zone {
     @Column(nullable = false)
     private Boolean enabled;
 
+    private Double radius;
+
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "business_zone",
             joinColumns = {@JoinColumn(name = "zone_id")},
             inverseJoinColumns = {@JoinColumn(name = "business_id")}
     )
-    Set<Business> businesses;
+    Set<Business> businesses = new HashSet<>();
 
     public Zone() {
     }
 
-    public Zone(long id, double price, boolean enabled) {
+    public Zone(long id, double price, boolean enabled, double radius) {
         this.id = id;
         this.price = price;
         this.enabled = enabled;
+        this.radius = radius;
     }
 
     public ZoneDTO convertToDTO() {
@@ -48,6 +52,7 @@ public class Zone {
                 id,
                 price,
                 enabled,
+                radius,
                 businessDTOS
         );
     }

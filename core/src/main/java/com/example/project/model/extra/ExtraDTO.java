@@ -41,7 +41,7 @@ public class ExtraDTO {
         this.options = options;
     }
 
-    public Extra convertToExtraEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness) {
+    public Extra convertToExtraEntity(@NotNull Function<Long, Business> getBusiness) {
         return new Extra(
                 id,
                 name,

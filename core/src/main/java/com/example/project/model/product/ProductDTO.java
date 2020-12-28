@@ -58,7 +58,7 @@ public class ProductDTO {
         this.extras = extras;
     }
 
-    public Product convertToProductEntity(@org.jetbrains.annotations.NotNull Function<Long, Category> getCategory) {
+    public Product convertToProductEntity(@NotNull Function<Long, Category> getCategory) {
         return new Product(
                 id,
                 price,

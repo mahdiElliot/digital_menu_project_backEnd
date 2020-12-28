@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,14 +31,14 @@ public class SpecificProduct {
     private Double price;
 
     @ManyToMany(mappedBy = "specificProducts")
-    private Set<Option> options;
+    private Set<Option> options = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @ManyToMany(mappedBy = "specificProducts")
-    private Set<Order> orders;
+    private Set<Order> orders = new HashSet<>();
 
     public SpecificProduct() {
     }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -30,7 +31,7 @@ public class PayMethod {
     private Business business;
 
     @OneToMany(mappedBy = "payMethod")
-    private Set<Order> orders;
+    private Set<Order> orders = new HashSet<>();
 
     public PayMethod() {
     }
