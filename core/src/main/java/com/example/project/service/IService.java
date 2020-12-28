@@ -14,7 +14,4 @@ public interface IService<T, DTO, I> {
     DTO delete(I id);
 
     DTO save(T t);
-
-    DTO convertToDTO(T t);
-
 }

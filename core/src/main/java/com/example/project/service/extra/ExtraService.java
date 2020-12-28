@@ -24,20 +24,20 @@ public class ExtraService implements IExtraService {
     public List<ExtraDTO> findAll() {
         return ((List<Extra>) extraRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Extra::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public ExtraDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(extraRepository.findByName(name));
+        return extraRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public ExtraDTO findById(Long id) {
         if (id == null) return null;
         return extraRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Extra::convertToDTO).orElse(null);
     }
 
     @Override
@@ -46,18 +46,13 @@ public class ExtraService implements IExtraService {
         Optional<Extra> menu = extraRepository.findById(id);
         if (menu.isPresent()) {
             extraRepository.deleteById(id);
-            return convertToDTO(menu.get());
+            return menu.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public ExtraDTO save(Extra extra) {
-        return convertToDTO(extraRepository.save(extra));
-    }
-
-    @Override
-    public ExtraDTO convertToDTO(Extra extra) {
-        return extra.convertToDTO();
+        return extraRepository.save(extra).convertToDTO();
     }
 }

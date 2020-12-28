@@ -23,20 +23,20 @@ public class LocationService implements ILocationService {
     public List<LocationDTO> findAll() {
         return ((List<Location>) locationRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Location::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public LocationDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(locationRepository.findByName(name));
+        return locationRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public LocationDTO findById(Long id) {
         if (id == null) return null;
         return locationRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Location::convertToDTO).orElse(null);
     }
 
     @Override
@@ -45,18 +45,13 @@ public class LocationService implements ILocationService {
         Optional<Location> location = locationRepository.findById(id);
         if (location.isPresent()){
             locationRepository.deleteById(id);
-            return convertToDTO(location.get());
+            return location.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public LocationDTO save(Location location) {
-        return convertToDTO(locationRepository.save(location));
-    }
-
-    @Override
-    public LocationDTO convertToDTO(Location location) {
-        return location.convertToDTO();
+        return locationRepository.save(location).convertToDTO();
     }
 }

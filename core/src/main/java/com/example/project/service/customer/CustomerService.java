@@ -24,20 +24,20 @@ public class CustomerService implements ICustomerService {
     public List<CustomerDTO> findAll() {
         return ((List<Customer>) customerRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Customer::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public CustomerDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(customerRepository.findByName(name));
+        return customerRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public CustomerDTO findById(Long id) {
         if (id == null) return null;
         return customerRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Customer::convertToDTO).orElse(null);
     }
 
     @Override
@@ -46,18 +46,13 @@ public class CustomerService implements ICustomerService {
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()){
             customerRepository.deleteById(id);
-            return convertToDTO(customer.get());
+            return customer.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public CustomerDTO save(Customer customer) {
-        return convertToDTO(customerRepository.save(customer));
-    }
-
-    @Override
-    public CustomerDTO convertToDTO(Customer customer) {
-        return customer.convertToDTO();
+        return customerRepository.save(customer).convertToDTO();
     }
 }

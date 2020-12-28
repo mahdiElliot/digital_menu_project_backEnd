@@ -23,20 +23,20 @@ public class MenuService implements IMenuService {
     public List<MenuDTO> findAll() {
         return ((List<Menu>) menuRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Menu::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public MenuDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(menuRepository.findByName(name));
+        return menuRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public MenuDTO findById(Long id) {
         if (id == null) return null;
         return menuRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Menu::convertToDTO).orElse(null);
     }
 
     @Override
@@ -45,26 +45,20 @@ public class MenuService implements IMenuService {
         Optional<Menu> menu = menuRepository.findById(id);
         if (menu.isPresent()) {
             menuRepository.deleteById(id);
-            return convertToDTO(menu.get());
+            return menu.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public MenuDTO save(Menu menu) {
-        return convertToDTO(menuRepository.save(menu));
+        return menuRepository.save(menu).convertToDTO();
     }
 
     @Override
     public List<MenuDTO> findAllByBusinessId(Long id) {
         return (menuRepository.findAllByBusinessId(id))
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Menu::convertToDTO).collect(Collectors.toList());
     }
-
-    @Override
-    public MenuDTO convertToDTO(Menu menu) {
-        return menu.convertToDTO();
-    }
-
 }

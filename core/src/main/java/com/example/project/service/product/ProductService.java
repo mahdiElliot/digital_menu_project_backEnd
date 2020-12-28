@@ -24,20 +24,20 @@ public class ProductService implements IProductService {
     public List<ProductDTO> findAll() {
         return ((List<Product>) repository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Product::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public ProductDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(repository.findByName(name));
+        return repository.findByName(name).convertToDTO();
     }
 
     @Override
     public ProductDTO findById(Long id) {
         if (id == null) return null;
         return repository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Product::convertToDTO).orElse(null);
     }
 
     @Override
@@ -46,25 +46,20 @@ public class ProductService implements IProductService {
         Optional<Product> item = repository.findById(id);
         if (item.isPresent()) {
             repository.deleteById(id);
-            return convertToDTO(item.get());
+            return item.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public ProductDTO save(Product product) {
-        return convertToDTO(repository.save(product));
+        return repository.save(product).convertToDTO();
     }
 
     @Override
     public List<ProductDTO> findAllByCategoryId(Long id) {
         return (repository.findAllByCategoryId(id))
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
-    }
-
-    @Override
-    public ProductDTO convertToDTO(Product product) {
-        return product.convertToDTO();
+                .map(Product::convertToDTO).collect(Collectors.toList());
     }
 }

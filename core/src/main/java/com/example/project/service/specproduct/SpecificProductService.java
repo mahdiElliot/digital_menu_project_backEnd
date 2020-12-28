@@ -24,20 +24,20 @@ public class SpecificProductService implements ISpecificProductService {
     public List<SpecificProductDTO> findAll() {
         return ((List<SpecificProduct>) repository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(SpecificProduct::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public SpecificProductDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(repository.findByName(name));
+        return repository.findByName(name).convertToDTO();
     }
 
     @Override
     public SpecificProductDTO findById(Long id) {
         if (id == null) return null;
         return repository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(SpecificProduct::convertToDTO).orElse(null);
     }
 
     @Override
@@ -46,18 +46,13 @@ public class SpecificProductService implements ISpecificProductService {
         Optional<SpecificProduct> item = repository.findById(id);
         if (item.isPresent()) {
             repository.deleteById(id);
-            return convertToDTO(item.get());
+            return item.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public SpecificProductDTO save(SpecificProduct specificProduct) {
-        return convertToDTO(repository.save(specificProduct));
-    }
-
-    @Override
-    public SpecificProductDTO convertToDTO(SpecificProduct specificProduct) {
-        return specificProduct.convertToDTO();
+        return repository.save(specificProduct).convertToDTO();
     }
 }

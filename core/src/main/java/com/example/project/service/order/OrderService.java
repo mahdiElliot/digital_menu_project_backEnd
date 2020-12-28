@@ -24,7 +24,7 @@ public class OrderService implements IOrderService {
     public List<OrderDTO> findAll() {
         return ((List<Order>) orderRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Order::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -36,7 +36,7 @@ public class OrderService implements IOrderService {
     public OrderDTO findById(Long id) {
         if (id == null) return null;
         return orderRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Order::convertToDTO).orElse(null);
     }
 
     @Override
@@ -45,18 +45,13 @@ public class OrderService implements IOrderService {
         Optional<Order> order = orderRepository.findById(id);
         if (order.isPresent()) {
             orderRepository.deleteById(id);
-            return convertToDTO(order.get());
+            return order.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public OrderDTO save(Order order) {
-        return convertToDTO(orderRepository.save(order));
-    }
-
-    @Override
-    public OrderDTO convertToDTO(Order order) {
-        return order.convertToDTO();
+        return orderRepository.save(order).convertToDTO();
     }
 }

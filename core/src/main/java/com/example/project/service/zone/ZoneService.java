@@ -24,7 +24,7 @@ public class ZoneService implements IZoneService {
     public List<ZoneDTO> findAll() {
         return ((List<Zone>) zoneRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Zone::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ZoneService implements IZoneService {
     public ZoneDTO findById(Long id) {
         if (id == null) return null;
         return zoneRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Zone::convertToDTO).orElse(null);
     }
 
     @Override
@@ -45,18 +45,13 @@ public class ZoneService implements IZoneService {
         Optional<Zone> menu = zoneRepository.findById(id);
         if (menu.isPresent()) {
             zoneRepository.deleteById(id);
-            return convertToDTO(menu.get());
+            return menu.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public ZoneDTO save(Zone zone) {
-        return convertToDTO(zoneRepository.save(zone));
-    }
-
-    @Override
-    public ZoneDTO convertToDTO(Zone zone) {
-        return zone.convertToDTO();
+        return zoneRepository.save(zone).convertToDTO();
     }
 }

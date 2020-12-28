@@ -24,20 +24,20 @@ public class SubOptionService implements ISubOptionService {
     public List<SubOptionDTO> findAll() {
         return ((List<SubOption>) repository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(SubOption::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public SubOptionDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(repository.findByName(name));
+        return repository.findByName(name).convertToDTO();
     }
 
     @Override
     public SubOptionDTO findById(Long id) {
         if (id == null) return null;
         return repository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(SubOption::convertToDTO).orElse(null);
     }
 
     @Override
@@ -46,25 +46,20 @@ public class SubOptionService implements ISubOptionService {
         Optional<SubOption> item = repository.findById(id);
         if (item.isPresent()) {
             repository.deleteById(id);
-            return convertToDTO(item.get());
+            return item.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public SubOptionDTO save(SubOption subOption) {
-        return convertToDTO(repository.save(subOption));
+        return repository.save(subOption).convertToDTO();
     }
 
     @Override
     public List<SubOptionDTO> findAllByOptionId(Long id) {
         return (repository.findAllByOptionId(id))
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
-    }
-
-    @Override
-    public SubOptionDTO convertToDTO(SubOption subOption) {
-        return subOption.convertToDTO();
+                .map(SubOption::convertToDTO).collect(Collectors.toList());
     }
 }

@@ -24,20 +24,20 @@ public class BusinessService implements IBusinessService {
     public List<BusinessDTO> findAll() {
         return ((List<Business>) businessRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Business::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public BusinessDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(businessRepository.findByName(name));
+        return businessRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public BusinessDTO findById(Long id) {
         if (id == null) return null;
         return businessRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Business::convertToDTO).orElse(null);
     }
 
     @Override
@@ -46,18 +46,13 @@ public class BusinessService implements IBusinessService {
         Optional<Business> menu = businessRepository.findById(id);
         if (menu.isPresent()) {
             businessRepository.deleteById(id);
-            return convertToDTO(menu.get());
+            return menu.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public BusinessDTO save(Business business) {
-        return convertToDTO(businessRepository.save(business));
-    }
-
-    @Override
-    public BusinessDTO convertToDTO(Business business) {
-        return business.convertToDTO();
+        return businessRepository.save(business).convertToDTO();
     }
 }

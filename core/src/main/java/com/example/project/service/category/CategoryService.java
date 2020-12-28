@@ -23,27 +23,27 @@ public class CategoryService implements ICategoryService {
     public List<CategoryDTO> findAll() {
         return ((List<Category>) categoryRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Category::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<CategoryDTO> findAllByBusinessId(Long id) {
         return (categoryRepository.findAllByBusinessId(id))
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(Category::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public CategoryDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(categoryRepository.findByName(name));
+        return categoryRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public CategoryDTO findById(Long id) {
         if (id == null) return null;
         return categoryRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(Category::convertToDTO).orElse(null);
     }
 
     @Override
@@ -52,19 +52,14 @@ public class CategoryService implements ICategoryService {
         Optional<Category> menu = categoryRepository.findById(id);
         if (menu.isPresent()) {
             categoryRepository.deleteById(id);
-            return convertToDTO(menu.get());
+            return menu.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public CategoryDTO save(Category category) {
-        return convertToDTO(categoryRepository.save(category));
-    }
-
-    @Override
-    public CategoryDTO convertToDTO(Category category) {
-        return category.convertToDTO();
+        return categoryRepository.save(category).convertToDTO();
     }
 
 }

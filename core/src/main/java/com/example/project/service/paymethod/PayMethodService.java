@@ -23,20 +23,20 @@ public class PayMethodService implements IPayMethodService {
     public List<PayMethodDTO> findAll() {
         return ((List<PayMethod>) payMethodRepository.findAll())
                 .stream()
-                .map(this::convertToDTO).collect(Collectors.toList());
+                .map(PayMethod::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public PayMethodDTO findByName(String name) {
         if (name == null) return null;
-        return convertToDTO(payMethodRepository.findByName(name));
+        return payMethodRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public PayMethodDTO findById(Long id) {
         if (id == null) return null;
         return payMethodRepository.findById(id)
-                .map(this::convertToDTO).orElse(null);
+                .map(PayMethod::convertToDTO).orElse(null);
     }
 
     @Override
@@ -45,18 +45,13 @@ public class PayMethodService implements IPayMethodService {
         Optional<PayMethod> menu = payMethodRepository.findById(id);
         if (menu.isPresent()) {
             payMethodRepository.deleteById(id);
-            return convertToDTO(menu.get());
+            return menu.get().convertToDTO();
         }
         return null;
     }
 
     @Override
     public PayMethodDTO save(PayMethod payMethod) {
-        return convertToDTO(payMethodRepository.save(payMethod));
-    }
-
-    @Override
-    public PayMethodDTO convertToDTO(PayMethod payMethod) {
-        return payMethod.convertToDTO();
+        return payMethodRepository.save(payMethod).convertToDTO();
     }
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.function.Function;
 
-@RequestMapping(URLUtils.OPTION)
 @Controller
 public class OptionController extends BaseController {
     protected final IOptionService optionService;
@@ -36,7 +35,7 @@ public class OptionController extends BaseController {
                 };
     }
 
-    @PostMapping
+    @PostMapping(URLUtils.OPTION)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public OptionDTO addOption(@RequestBody OptionDTO optionDTO) {
