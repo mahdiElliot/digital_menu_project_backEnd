@@ -1,8 +1,6 @@
 package com.example.project.model.specproduct;
 
-import com.example.project.model.option.Option;
 import com.example.project.model.option.OptionDTO;
-import com.example.project.model.order.Order;
 import com.example.project.model.order.OrderDTO;
 import com.example.project.model.product.Product;
 import lombok.Getter;
@@ -17,7 +15,7 @@ import java.util.function.Function;
 @Getter
 public class SpecificProductDTO {
 
-    private Long id;
+    private long id;
 
     @NotNull
     @NotEmpty
@@ -36,6 +34,10 @@ public class SpecificProductDTO {
     private Long product_id;
 
     private Set<OrderDTO> orders;
+
+    public SpecificProductDTO() {
+        super();
+    }
 
     public SpecificProductDTO(long id, String name, String comment, int quantity, double price, Set<OptionDTO> options, Long product_id, Set<OrderDTO> orders) {
         this.id = id;

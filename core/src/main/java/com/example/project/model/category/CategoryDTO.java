@@ -1,7 +1,6 @@
 package com.example.project.model.category;
 
 import com.example.project.model.business.Business;
-import com.example.project.model.product.Product;
 import com.example.project.model.product.ProductDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,7 @@ import java.util.function.Function;
 @Setter
 @Getter
 public class CategoryDTO {
-    private Long id;
+    private long id;
 
     @NotEmpty
     @NotNull
@@ -33,6 +32,10 @@ public class CategoryDTO {
     private Long business_id;
 
     private Set<ProductDTO> products;
+
+    public CategoryDTO() {
+        super();
+    }
 
     public CategoryDTO(long id, String name, int rank, boolean enabled, String image, Long business_id, Set<ProductDTO> products) {
         this.id = id;

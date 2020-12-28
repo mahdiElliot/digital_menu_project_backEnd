@@ -1,9 +1,7 @@
 package com.example.project.model.extra;
 
 import com.example.project.model.business.Business;
-import com.example.project.model.option.Option;
 import com.example.project.model.option.OptionDTO;
-import com.example.project.model.product.Product;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +13,7 @@ import java.util.function.Function;
 @Setter
 @Getter
 public class ExtraDTO {
-    private Long id;
+    private long id;
 
     @NotNull
     @NotEmpty
@@ -29,6 +27,10 @@ public class ExtraDTO {
     private Long business_id;
 
     private Set<OptionDTO> options;
+
+    public ExtraDTO() {
+        super();
+    }
 
     public ExtraDTO(long id, String name, String description, boolean enabled, Long business_id, Set<OptionDTO> options) {
         this.id = id;

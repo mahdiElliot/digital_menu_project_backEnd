@@ -12,7 +12,7 @@ import java.util.function.Function;
 @Setter
 @Getter
 public class OrderDTO {
-    private Long id;
+    private long id;
 
     @NotNull
     private Double tax;
@@ -27,6 +27,10 @@ public class OrderDTO {
 
     @NotNull
     private Long paymethod_id;
+
+    public OrderDTO() {
+        super();
+    }
 
     public OrderDTO(long id, double tax, int table_number, Long business_id, Long customer_id, Long paymethod_id) {
         this.id = id;

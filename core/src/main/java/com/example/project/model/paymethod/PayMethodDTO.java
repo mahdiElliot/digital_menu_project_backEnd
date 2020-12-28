@@ -1,19 +1,18 @@
 package com.example.project.model.paymethod;
 
 import com.example.project.model.business.Business;
-import com.example.project.model.business.BusinessDTO;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 import java.util.function.Function;
 
 @Setter
 @Getter
 public class PayMethodDTO {
 
-    private Long id;
+    private long id;
 
     private String data;
 
@@ -25,6 +24,10 @@ public class PayMethodDTO {
     private Boolean enabled;
 
     Long business_id;
+
+    public PayMethodDTO() {
+        super();
+    }
 
     public PayMethodDTO(long id, String data, String name, boolean enabled, Long business_id) {
         this.id = id;

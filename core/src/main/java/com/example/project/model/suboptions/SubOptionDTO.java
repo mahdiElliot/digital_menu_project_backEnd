@@ -1,6 +1,5 @@
 package com.example.project.model.suboptions;
 
-import com.example.project.model.business.Business;
 import com.example.project.model.option.Option;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import java.util.function.Function;
 @Getter
 @Setter
 public class SubOptionDTO {
-    private Long id;
+    private long id;
 
     @NotNull
     private Integer price;
@@ -29,6 +28,10 @@ public class SubOptionDTO {
     private String image;
 
     private Long option_id;
+
+    public SubOptionDTO() {
+        super();
+    }
 
     public SubOptionDTO(long id, int price, String name, String description, boolean enabled, String image, Long option_id) {
         this.id = id;

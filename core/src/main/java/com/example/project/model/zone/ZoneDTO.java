@@ -1,6 +1,5 @@
 package com.example.project.model.zone;
 
-import com.example.project.model.business.Business;
 import com.example.project.model.business.BusinessDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import java.util.Set;
 @Setter
 @Getter
 public class ZoneDTO {
-    private Long id;
+    private long id;
 
     @NotNull
     private double price;
@@ -20,6 +19,10 @@ public class ZoneDTO {
     private Boolean enabled;
 
     Set<BusinessDTO> businesses;
+
+    public ZoneDTO() {
+        super();
+    }
 
     public ZoneDTO(long id, double price, boolean enabled, Set<BusinessDTO> businesses) {
         this.id = id;

@@ -1,26 +1,13 @@
 package com.example.project.model.business;
 
-import com.example.project.model.category.Category;
-import com.example.project.model.category.CategoryDTO;
-import com.example.project.model.extra.Extra;
-import com.example.project.model.extra.ExtraDTO;
 import com.example.project.model.location.Location;
-import com.example.project.model.location.LocationDTO;
-import com.example.project.model.menu.Menu;
-import com.example.project.model.menu.MenuDTO;
-import com.example.project.model.order.Order;
-import com.example.project.model.order.OrderDTO;
-import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.paymethod.PayMethodDTO;
-import com.example.project.model.zone.Zone;
-import com.example.project.model.zone.ZoneDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -28,7 +15,7 @@ import java.util.function.Function;
 @Getter
 public class BusinessDTO {
 
-    private Long id;
+    private long id;
 
     @NotEmpty
     @NotNull
@@ -50,7 +37,11 @@ public class BusinessDTO {
 
     private Long location_id;
 
-    public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled,
+    public BusinessDTO() {
+        super();
+    }
+
+    public BusinessDTO(long id, @NotNull String name, double service_fee, double tax, String logo, boolean enabled,
                        @Nullable Set<PayMethodDTO> payMethods, Long location_id) {
         this.id = id;
         this.name = name;
@@ -62,7 +53,7 @@ public class BusinessDTO {
         this.location_id = location_id;
     }
 
-    public Business convertToBusinessEntity(@org.jetbrains.annotations.NotNull Function<Long, Location> getLocation) {
+    public Business convertToBusinessEntity(@NotNull Function<Long, Location> getLocation) {
         return new Business(
                 id,
                 name,
