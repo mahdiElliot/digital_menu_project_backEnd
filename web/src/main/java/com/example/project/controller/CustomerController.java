@@ -5,11 +5,10 @@ import com.example.project.service.customer.ICustomerService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(URLUtils.CUSTOMER)
-@Controller
+@RestController
 public class CustomerController {
     private final ICustomerService customerService;
 
@@ -20,7 +19,6 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public CustomerDTO addCustomer(@RequestBody CustomerDTO customerDTO) {
         return customerService.save(customerDTO.convertToCustomerEntity());
     }

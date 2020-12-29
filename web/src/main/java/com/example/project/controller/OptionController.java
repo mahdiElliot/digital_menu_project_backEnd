@@ -10,12 +10,11 @@ import com.example.project.service.option.IOptionService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.function.Function;
 
-@Controller
+@RestController
 public class OptionController extends BaseController {
     protected final IOptionService optionService;
     protected final IExtraService extraService;
@@ -37,7 +36,6 @@ public class OptionController extends BaseController {
 
     @PostMapping(URLUtils.OPTION)
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public OptionDTO addOption(@RequestBody OptionDTO optionDTO) {
         return optionService.save(optionDTO.convertToOptionEntity(extraMapper()));
     }

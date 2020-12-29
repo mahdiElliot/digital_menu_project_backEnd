@@ -10,14 +10,13 @@ import com.example.project.service.product.IProductService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.function.Function;
 
-@Controller
+@RestController
 public class ProductController extends BaseController {
     private final IProductService productService;
     private final ICategoryService categoryService;
@@ -32,7 +31,6 @@ public class ProductController extends BaseController {
 
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public ProductDTO addProduct(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @Valid @RequestBody ProductDTO productDTO) {
         if (businessService.findById(id) != null && categoryService.findById(id2) != null) {
             productDTO.setCategory_id(id2);
@@ -47,7 +45,6 @@ public class ProductController extends BaseController {
     }
 
     @GetMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
-    @ResponseBody
     public List<ProductDTO> getAllProducts(@PathVariable("id") Long id, @PathVariable("id2") Long id2) {
         if (businessService.findById(id) != null && categoryService.findById(id) != null)
             return productService.findAllByCategoryId(id2);

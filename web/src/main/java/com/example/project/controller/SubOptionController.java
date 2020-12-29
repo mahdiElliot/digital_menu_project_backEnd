@@ -11,13 +11,12 @@ import com.example.project.service.suboptions.ISubOptionService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.function.Function;
 
 @RequestMapping(URLUtils.SUBOPTION)
-@Controller
+@RestController
 public class SubOptionController extends OptionController {
     private final ISubOptionService subOptionService;
 
@@ -30,7 +29,6 @@ public class SubOptionController extends OptionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public SubOptionDTO addSubOption(@RequestBody SubOptionDTO subOptionDTO) {
         Function<Long, Option> optionMapper =
                 ID -> {

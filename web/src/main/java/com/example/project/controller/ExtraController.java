@@ -7,11 +7,10 @@ import com.example.project.service.location.ILocationService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(URLUtils.EXTRA)
-@Controller
+@RestController
 public class ExtraController extends BaseController {
     private final IExtraService extraService;
 
@@ -23,7 +22,6 @@ public class ExtraController extends BaseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public ExtraDTO addExtra(@RequestBody ExtraDTO extraDTO) {
         return extraService.save(extraDTO.convertToExtraEntity(businessMapper()));
     }
