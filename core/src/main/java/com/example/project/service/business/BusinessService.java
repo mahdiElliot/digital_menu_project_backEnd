@@ -9,7 +9,10 @@ import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
@@ -73,23 +76,24 @@ public class BusinessService implements IBusinessService {
         return list.stream().map(Business::convertToDTO).collect(Collectors.toList());
     }
 
-    private Optional<Business> getBusiness(String sql, Object object) {
-        return jdbcTemplate.queryForObject(sql, new Object[]{object},
-                (rs, rowNum) -> {
-                    Geometry geometry = getGeom(rs);
-                    return Optional.of(
-                            new Business(
-                                    rs.getLong("id"),
-                                    rs.getString("name"),
-                                    rs.getDouble("service_fee"),
-                                    rs.getDouble("tax"),
-                                    rs.getString("logo"),
-                                    rs.getBoolean("enabled"),
-                                    geometry
-                            )
-                    );
-                }
-        );
+    private Business getBusiness(String sql, Object object) {
+        return jdbcTemplate.execute(sql, (PreparedStatementCallback<Business>) ps -> {
+            ps.setObject(1, object);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Geometry location = getGeom(rs);
+                return new Business(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getDouble("service_fee"),
+                        rs.getDouble("tax"),
+                        rs.getString("logo"),
+                        rs.getBoolean("enabled"),
+                        location
+                );
+            }
+            return null;
+        });
     }
 
     @Override
@@ -97,9 +101,9 @@ public class BusinessService implements IBusinessService {
         if (name == null) return null;
         String sql = "SELECT id, name, service_fee, tax, logo, enabled," +
                 " ST_X(ST_Transform(geometry, 4326)) as lng, ST_Y(ST_Transform(geometry, 4326)) as lat FROM business WHERE name = ?";
-        Optional<Business> business = getBusiness(sql, name);
+        Business business = getBusiness(sql, name);
         if (business == null) return null;
-        return business.map(Business::convertToDTO).orElse(null);
+        return business.convertToDTO();
     }
 
     @Override
@@ -107,9 +111,9 @@ public class BusinessService implements IBusinessService {
         if (id == null) return null;
         String sql = "SELECT id, name, service_fee, tax, logo, enabled," +
                 " ST_X(ST_Transform(geometry, 4326)) as lng, ST_Y(ST_Transform(geometry, 4326)) as lat FROM business WHERE id = ?";
-        Optional<Business> business = getBusiness(sql, id);
+        Business business = getBusiness(sql, id);
         if (business == null) return null;
-        return business.map(Business::convertToDTO).orElse(null);
+        return business.convertToDTO();
     }
 
     @Override
