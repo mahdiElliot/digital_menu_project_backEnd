@@ -5,7 +5,6 @@ import com.example.project.model.category.CategoryDTO;
 import com.example.project.model.product.ProductDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
-import com.example.project.service.location.ILocationService;
 import com.example.project.service.product.IProductService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,8 @@ public class ProductController extends BaseController {
 
     @Autowired
     public ProductController(IProductService productService, IBusinessService businessService,
-                             ICategoryService categoryService, ILocationService locationService) {
-        super(businessService, locationService);
+                             ICategoryService categoryService) {
+        super(businessService);
         this.productService = productService;
         this.categoryService = categoryService;
     }

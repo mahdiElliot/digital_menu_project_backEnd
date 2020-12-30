@@ -2,7 +2,6 @@ package com.example.project.controller;
 
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.service.business.IBusinessService;
-import com.example.project.service.location.ILocationService;
 import com.example.project.service.paymethod.IPayMethodService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ public class PayMethodController extends BaseController {
     private final IPayMethodService payMethodService;
 
     @Autowired
-    public PayMethodController(IPayMethodService payMethodService, IBusinessService businessService, ILocationService locationService) {
-        super(businessService, locationService);
+    public PayMethodController(IPayMethodService payMethodService, IBusinessService businessService) {
+        super(businessService);
         this.payMethodService = payMethodService;
     }
 

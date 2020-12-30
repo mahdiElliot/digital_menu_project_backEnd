@@ -7,7 +7,6 @@ import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.customer.ICustomerService;
-import com.example.project.service.location.ILocationService;
 import com.example.project.service.order.IOrderService;
 import com.example.project.service.paymethod.IPayMethodService;
 import com.example.project.utils.URLUtils;
@@ -28,9 +27,9 @@ public class OrderController extends BaseController {
     private final IPayMethodService payMethodService;
 
     @Autowired
-    public OrderController(IOrderService orderService, IBusinessService businessService, ILocationService locationService,
+    public OrderController(IOrderService orderService, IBusinessService businessService,
                            ICustomerService customerService, IPayMethodService payMethodService) {
-        super(businessService, locationService);
+        super(businessService);
         this.orderService = orderService;
         this.customerService = customerService;
         this.payMethodService = payMethodService;

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menu_generator")
-    @SequenceGenerator(name = "menu_generator", sequenceName = "menu_seq")
+    @SequenceGenerator(name = "menu_generator", sequenceName = "menu_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)

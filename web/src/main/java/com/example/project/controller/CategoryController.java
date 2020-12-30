@@ -3,7 +3,6 @@ package com.example.project.controller;
 import com.example.project.model.category.CategoryDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
-import com.example.project.service.location.ILocationService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,8 @@ public class CategoryController extends BaseController {
     private final ICategoryService categoryService;
 
     @Autowired
-    public CategoryController(ICategoryService categoryService, IBusinessService businessService, ILocationService locationService) {
-        super(businessService, locationService);
+    public CategoryController(ICategoryService categoryService, IBusinessService businessService) {
+        super(businessService);
         this.categoryService = categoryService;
     }
 

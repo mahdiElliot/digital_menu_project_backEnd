@@ -28,26 +28,26 @@ public class PayMethodService implements IPayMethodService {
 
     @Override
     public PayMethodDTO findByName(String name) {
-        if (name == null) return new PayMethodDTO();
+        if (name == null) return null;
         return payMethodRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public PayMethodDTO findById(Long id) {
-        if (id == null) return new PayMethodDTO();
+        if (id == null) return null;
         return payMethodRepository.findById(id)
-                .map(PayMethod::convertToDTO).orElse(new PayMethodDTO());
+                .map(PayMethod::convertToDTO).orElse(null);
     }
 
     @Override
     public PayMethodDTO delete(Long id) {
-        if (id == null) return new PayMethodDTO();
+        if (id == null) return null;
         Optional<PayMethod> menu = payMethodRepository.findById(id);
         if (menu.isPresent()) {
             payMethodRepository.deleteById(id);
             return menu.get().convertToDTO();
         }
-        return new PayMethodDTO();
+        return null;
     }
 
     @Override

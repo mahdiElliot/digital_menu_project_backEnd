@@ -29,26 +29,26 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public CustomerDTO findByName(String name) {
-        if (name == null) return new CustomerDTO();
+        if (name == null) return null;
         return customerRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public CustomerDTO findById(Long id) {
-        if (id == null) return new CustomerDTO();
+        if (id == null) return null;
         return customerRepository.findById(id)
-                .map(Customer::convertToDTO).orElse(new CustomerDTO());
+                .map(Customer::convertToDTO).orElse(null);
     }
 
     @Override
     public CustomerDTO delete(Long id) {
-        if (id == null) return new CustomerDTO();
+        if (id == null) return null;
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()){
             customerRepository.deleteById(id);
             return customer.get().convertToDTO();
         }
-        return new CustomerDTO();
+        return null;
     }
 
     @Override

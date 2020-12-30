@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 public class Option {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "option_generator")
+    @SequenceGenerator(name = "option_generator", sequenceName = "option_seq", allocationSize = 1)
     private Long id;
 
     private String name;

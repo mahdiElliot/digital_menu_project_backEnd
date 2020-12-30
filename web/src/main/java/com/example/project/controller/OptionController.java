@@ -5,7 +5,6 @@ import com.example.project.model.extra.ExtraDTO;
 import com.example.project.model.option.OptionDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.extra.IExtraService;
-import com.example.project.service.location.ILocationService;
 import com.example.project.service.option.IOptionService;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,8 @@ public class OptionController extends BaseController {
     protected final IExtraService extraService;
 
     @Autowired
-    public OptionController(IOptionService optionService, IExtraService extraService, IBusinessService businessService, ILocationService locationService) {
-        super(businessService, locationService);
+    public OptionController(IOptionService optionService, IExtraService extraService, IBusinessService businessService) {
+        super(businessService);
         this.optionService = optionService;
         this.extraService = extraService;
     }

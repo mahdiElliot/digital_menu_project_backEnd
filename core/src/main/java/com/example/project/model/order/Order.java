@@ -17,7 +17,8 @@ import java.util.Set;
 @Table(name = "corder")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_generator")
+    @SequenceGenerator(name = "order_generator", sequenceName = "order_seq", allocationSize = 1)
     private Long id;
 
     private Double tax;

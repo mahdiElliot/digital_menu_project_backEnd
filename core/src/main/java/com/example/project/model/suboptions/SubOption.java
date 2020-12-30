@@ -13,7 +13,8 @@ import javax.persistence.*;
 public class SubOption {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "suboption_generator")
+    @SequenceGenerator(name = "suboption_generator", sequenceName = "suboption_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)

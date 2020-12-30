@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 @Table(name = "extra")
 public class Extra {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "extra_generator")
+    @SequenceGenerator(name = "extra_generator", sequenceName = "extra_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)

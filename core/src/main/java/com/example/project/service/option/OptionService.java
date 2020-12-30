@@ -29,26 +29,26 @@ public class OptionService implements IOptionService {
 
     @Override
     public OptionDTO findByName(String name) {
-        if (name == null) return new OptionDTO();
+        if (name == null) return null;
         return repository.findByName(name).convertToDTO();
     }
 
     @Override
     public OptionDTO findById(Long id) {
-        if (id == null) return new OptionDTO();
+        if (id == null) return null;
         return repository.findById(id)
-                .map(Option::convertToDTO).orElse(new OptionDTO());
+                .map(Option::convertToDTO).orElse(null);
     }
 
     @Override
     public OptionDTO delete(Long id) {
-        if (id == null) return new OptionDTO();
+        if (id == null) return null;
         Optional<Option> item = repository.findById(id);
         if (item.isPresent()) {
             repository.deleteById(id);
             return item.get().convertToDTO();
         }
-        return new OptionDTO();
+        return null;
     }
 
     @Override

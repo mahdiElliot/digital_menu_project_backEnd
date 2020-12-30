@@ -15,7 +15,8 @@ import java.util.Set;
 @Table(name = "pay_method")
 public class PayMethod {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "paymethod_generator")
+    @SequenceGenerator(name = "paymethod_generator", sequenceName = "paymethod_seq", allocationSize = 1)
     private Long id;
 
     private String data;

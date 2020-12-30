@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 @Table(name = "specific_product")
 public class SpecificProduct {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sproduct_generator")
+    @SequenceGenerator(name = "sproduct_generator", sequenceName = "sproduct_seq", allocationSize = 1)
     private Long id;
 
     private String name;

@@ -5,7 +5,6 @@ import com.example.project.model.option.OptionDTO;
 import com.example.project.model.suboptions.SubOptionDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.extra.IExtraService;
-import com.example.project.service.location.ILocationService;
 import com.example.project.service.option.IOptionService;
 import com.example.project.service.suboptions.ISubOptionService;
 import com.example.project.utils.URLUtils;
@@ -22,8 +21,8 @@ public class SubOptionController extends OptionController {
 
     @Autowired
     public SubOptionController(ISubOptionService subOptionService, IOptionService optionService,
-                               IExtraService extraService, IBusinessService businessService, ILocationService locationService) {
-        super(optionService, extraService, businessService, locationService);
+                               IExtraService extraService, IBusinessService businessService) {
+        super(optionService, extraService, businessService);
         this.subOptionService = subOptionService;
     }
 

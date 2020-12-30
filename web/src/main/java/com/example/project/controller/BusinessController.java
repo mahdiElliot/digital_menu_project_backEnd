@@ -2,7 +2,6 @@ package com.example.project.controller;
 
 import com.example.project.model.business.BusinessDTO;
 import com.example.project.service.business.IBusinessService;
-import com.example.project.service.location.ILocationService;
 import com.example.project.utils.URLUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +17,14 @@ import java.util.List;
 public class BusinessController extends BaseController {
 
     @Autowired
-    public BusinessController(IBusinessService businessService, ILocationService locationService) {
-        super(businessService, locationService);
+    public BusinessController(IBusinessService businessService) {
+        super(businessService);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BusinessDTO addBusiness(@Valid @RequestBody BusinessDTO businessDTO) {
-        return businessService.save(businessDTO.convertToBusinessEntity(locationMapper()));
+        return businessService.save(businessDTO.convertToBusinessEntity());
     }
 
     @GetMapping
@@ -46,6 +45,6 @@ public class BusinessController extends BaseController {
     @PutMapping(path = "{id}")
     public BusinessDTO updateBusiness(@PathVariable("id") Long id, @RequestBody BusinessDTO businessDTO) {
         businessDTO.setId(id);
-        return businessService.save(businessDTO.convertToBusinessEntity(locationMapper()));
+        return businessService.save(businessDTO.convertToBusinessEntity());
     }
 }

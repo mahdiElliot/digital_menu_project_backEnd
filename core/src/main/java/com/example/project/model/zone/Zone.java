@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 @Table(name = "zone")
 public class Zone {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "zone_generator")
+    @SequenceGenerator(name = "zone_generator", sequenceName = "zone_seq", allocationSize = 1)
     private Long id;
 
     private double price;

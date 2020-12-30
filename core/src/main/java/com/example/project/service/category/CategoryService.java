@@ -35,26 +35,26 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryDTO findByName(String name) {
-        if (name == null) return new CategoryDTO();
+        if (name == null) return null;
         return categoryRepository.findByName(name).convertToDTO();
     }
 
     @Override
     public CategoryDTO findById(Long id) {
-        if (id == null) return new CategoryDTO();
+        if (id == null) return null;
         return categoryRepository.findById(id)
-                .map(Category::convertToDTO).orElse(new CategoryDTO());
+                .map(Category::convertToDTO).orElse(null);
     }
 
     @Override
     public CategoryDTO delete(Long id) {
-        if (id == null) return new CategoryDTO();
+        if (id == null) return null;
         Optional<Category> menu = categoryRepository.findById(id);
         if (menu.isPresent()) {
             categoryRepository.deleteById(id);
             return menu.get().convertToDTO();
         }
-        return new CategoryDTO();
+        return null;
     }
 
     @Override
