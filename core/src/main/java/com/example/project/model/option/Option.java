@@ -44,12 +44,7 @@ public class Option {
     @JoinColumn(name = "extra_id", nullable = false)
     private Extra extra;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "sproduct_option",
-            joinColumns = {@JoinColumn(name = "option_id")},
-            inverseJoinColumns = {@JoinColumn(name = "sproduct_id")}
-    )
+    @ManyToMany(mappedBy = "options")
     private Set<SpecificProduct> specificProducts = new HashSet<>();
 
     public Option() {

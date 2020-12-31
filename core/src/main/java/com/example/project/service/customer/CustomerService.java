@@ -30,7 +30,8 @@ public class CustomerService implements ICustomerService {
     @Override
     public CustomerDTO findByName(String name) {
         if (name == null) return null;
-        return customerRepository.findByName(name).convertToDTO();
+        return customerRepository.findByName(name)
+                .map(Customer::convertToDTO).orElse(null);
     }
 
     @Override

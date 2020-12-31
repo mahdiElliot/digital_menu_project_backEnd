@@ -30,7 +30,8 @@ public class SpecificProductService implements ISpecificProductService {
     @Override
     public SpecificProductDTO findByName(String name) {
         if (name == null) return null;
-        return repository.findByName(name).convertToDTO();
+        return repository.findByName(name)
+                .map(SpecificProduct::convertToDTO).orElse(null);
     }
 
     @Override

@@ -4,12 +4,14 @@ import com.example.project.model.business.Business;
 import com.example.project.model.customer.Customer;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.specproduct.SpecificProduct;
+import com.example.project.model.specproduct.SpecificProductDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -69,7 +71,9 @@ public class Order {
             businessId = business.getId();
         if (customer != null)
             customerId = customer.getId();
-        return new OrderDTO(
+        Set<SpecificProductDTO> specificProductDTOS =
+                specificProducts.stream().map(SpecificProduct::convertToDTO).collect(Collectors.toSet());
+        OrderDTO orderDTO = new OrderDTO(
                 id,
                 tax,
                 tableNumber,
@@ -78,5 +82,7 @@ public class Order {
                 customerId,
                 payMethod.getId()
         );
+        orderDTO.setSpecificProducts(specificProductDTOS);
+        return orderDTO;
     }
 }

@@ -30,7 +30,8 @@ public class SubOptionService implements ISubOptionService {
     @Override
     public SubOptionDTO findByName(String name) {
         if (name == null) return null;
-        return repository.findByName(name).convertToDTO();
+        return repository.findByName(name)
+                .map(SubOption::convertToDTO).orElse(null);
     }
 
     @Override

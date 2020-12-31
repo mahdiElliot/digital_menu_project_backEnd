@@ -1,14 +1,18 @@
 package com.example.project.model.menu;
 
 import com.example.project.model.business.Business;
+import com.example.project.model.category.Category;
 import com.example.project.model.product.ProductDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -30,7 +34,7 @@ public class MenuDTO {
         super();
     }
 
-    public MenuDTO(long id, String name, boolean enabled, Long business_id, Set<ProductDTO> products) {
+    public MenuDTO(long id, String name, boolean enabled, Long business_id, @Nullable Set<ProductDTO> products) {
         this.id = id;
         this.name = name;
         this.enabled = enabled;
@@ -39,12 +43,18 @@ public class MenuDTO {
     }
 
     public Menu convertToMenuEntity(@NotNull Function<Long, Business> getBusiness) {
-        return new Menu(
-                id,
-                name,
-                enabled,
-                getBusiness.apply(business_id)
-        );
+        Business business = getBusiness.apply(business_id);
+        Menu menu = new Menu(id, name, enabled, business);
+        if (products != null) {
+            Set<Category> categories = business.getCategories();
+            Function<Long, Category> categoryMapper =
+                    id -> categories == null ? null :
+                            categories.stream().
+                                    filter(it -> it.getId().equals(id)).findFirst().orElse(null);
+            menu.setProducts(products.stream()
+                    .map(it -> it.convertToProductEntity(categoryMapper)).collect(Collectors.toSet()));
+        }
+        return menu;
     }
 
 }

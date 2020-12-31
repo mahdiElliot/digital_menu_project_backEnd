@@ -30,7 +30,8 @@ public class ExtraService implements IExtraService {
     @Override
     public ExtraDTO findByName(String name) {
         if (name == null) return null;
-        return extraRepository.findByName(name).convertToDTO();
+        return extraRepository.findByName(name)
+                .map(Extra::convertToDTO).orElse(null);
     }
 
     @Override

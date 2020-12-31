@@ -41,9 +41,6 @@ public class Product {
     @Column(nullable = false)
     private Boolean enabled;
 
-    @OneToMany(mappedBy = "product")
-    private Set<SpecificProduct> specificProducts = new HashSet<>();
-
     @ManyToMany(mappedBy = "products")
     private Set<Menu> menus = new HashSet<>();
 
@@ -79,9 +76,8 @@ public class Product {
             extraDTOS = extras.stream().map(Extra::convertToDTO).collect(Collectors.toSet());
 
         Long categoryId = null;
-        if (category != null)
-            categoryId = category.getId();
-        return new ProductDTO(
+        if (category != null) categoryId = category.getId();
+        ProductDTO productDTO = new ProductDTO(
                 id,
                 price,
                 quantity,
@@ -93,5 +89,7 @@ public class Product {
                 categoryId,
                 extraDTOS
         );
+        if (businesses != null) productDTO.setBusinesses(businesses);
+        return productDTO;
     }
 }

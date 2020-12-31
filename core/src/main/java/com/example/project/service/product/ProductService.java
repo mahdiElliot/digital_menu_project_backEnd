@@ -30,7 +30,8 @@ public class ProductService implements IProductService {
     @Override
     public ProductDTO findByName(String name) {
         if (name == null) return null;
-        return repository.findByName(name).convertToDTO();
+        return repository.findByName(name)
+                .map(Product::convertToDTO).orElse(null);
     }
 
     @Override

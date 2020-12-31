@@ -31,12 +31,13 @@ public class SpecificProduct {
 
     private Double price;
 
-    @ManyToMany(mappedBy = "specificProducts")
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "sproduct_option",
+            joinColumns = {@JoinColumn(name = "option_id")},
+            inverseJoinColumns = {@JoinColumn(name = "sproduct_id")}
+    )
     private Set<Option> options = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
 
     @ManyToMany(mappedBy = "specificProducts")
     private Set<Order> orders = new HashSet<>();
@@ -44,34 +45,25 @@ public class SpecificProduct {
     public SpecificProduct() {
     }
 
-    public SpecificProduct(long id, String name, String comment, int quantity, double price, Product product) {
+    public SpecificProduct(long id, String name, String comment, int quantity, double price) {
         this.id = id;
         this.comment = comment;
         this.quantity = quantity;
         this.price = price;
         this.name = name;
-        this.product = product;
     }
 
     public SpecificProductDTO convertToDTO() {
         Set<OptionDTO> optionDTOS = null;
         if (options != null)
             optionDTOS = options.stream().map(Option::convertToDTO).collect(Collectors.toSet());
-        Set<OrderDTO> orderDTOS = null;
-        if (orders != null)
-            orderDTOS = orders.stream().map(Order::convertToDTO).collect(Collectors.toSet());
-        Long productId = null;
-        if (product != null)
-            productId = product.getId();
         return new SpecificProductDTO(
                 id,
                 name,
                 comment,
                 quantity,
                 price,
-                optionDTOS,
-                productId,
-                orderDTOS
+                optionDTOS
         );
     }
 }

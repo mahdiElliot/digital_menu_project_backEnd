@@ -29,7 +29,8 @@ public class PayMethodService implements IPayMethodService {
     @Override
     public PayMethodDTO findByName(String name) {
         if (name == null) return null;
-        return payMethodRepository.findByName(name).convertToDTO();
+        return payMethodRepository.findByName(name)
+                .map(PayMethod::convertToDTO).orElse(null);
     }
 
     @Override

@@ -4,9 +4,14 @@ import com.example.project.model.menu.Menu;
 import com.example.project.model.menu.MenuDTO;
 import com.example.project.repositories.menu.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,7 +34,8 @@ public class MenuService implements IMenuService {
     @Override
     public MenuDTO findByName(String name) {
         if (name == null) return null;
-        return menuRepository.findByName(name).convertToDTO();
+        return menuRepository.findByName(name)
+                .map(Menu::convertToDTO).orElse(null);
     }
 
     @Override
@@ -41,13 +47,10 @@ public class MenuService implements IMenuService {
 
     @Override
     public MenuDTO delete(Long id) {
-        if (id == null) return null;
-        Optional<Menu> menu = menuRepository.findById(id);
-        if (menu.isPresent()) {
-            menuRepository.deleteById(id);
-            return menu.get().convertToDTO();
-        }
-        return null;
+        MenuDTO menuDTO = findById(id);
+        if (menuDTO == null) return null;
+        menuRepository.deleteById(id);
+        return menuDTO;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class MenuService implements IMenuService {
 
     @Override
     public List<MenuDTO> findAllByBusinessId(Long id) {
-        return (menuRepository.findAllByBusinessId(id))
+        return ((List<Menu>) menuRepository.findAllByBusinessId(id))
                 .stream()
                 .map(Menu::convertToDTO).collect(Collectors.toList());
     }

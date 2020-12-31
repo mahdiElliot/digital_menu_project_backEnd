@@ -9,11 +9,16 @@ import javax.validation.constraints.NotNull;
 @Getter
 public class LocationDTO {
 
+    private long id;
+
     @NotNull
     private Double lat;
 
     @NotNull
     private Double lng;
+
+    @NotNull
+    private Integer zipcode;
 
     @NotNull
     private Integer zoom;
@@ -22,9 +27,21 @@ public class LocationDTO {
         super();
     }
 
-    public LocationDTO(double lat, double lng, int zoom) {
+    public LocationDTO(long id, double lat, double lng, int zipcode, int zoom) {
+        this.id = id;
         this.lat = lat;
         this.lng = lng;
+        this.zipcode = zipcode;
         this.zoom = zoom;
+    }
+
+    public Location convertToLocationEntity() {
+        return new Location(
+                id,
+                lat,
+                lng,
+                zipcode,
+                zoom
+        );
     }
 }

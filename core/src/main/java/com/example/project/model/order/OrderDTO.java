@@ -3,11 +3,17 @@ package com.example.project.model.order;
 import com.example.project.model.business.Business;
 import com.example.project.model.customer.Customer;
 import com.example.project.model.paymethod.PayMethod;
+import com.example.project.model.specproduct.SpecificProduct;
+import com.example.project.model.specproduct.SpecificProductDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -30,6 +36,9 @@ public class OrderDTO {
     @NotNull
     private Long paymethod_id;
 
+    @NotNull
+    Set<SpecificProductDTO> specificProducts;
+
     public OrderDTO() {
         super();
     }
@@ -47,7 +56,7 @@ public class OrderDTO {
     public Order convertToOrderEntity(@NotNull Function<Long, Business> getBusiness,
                                       @NotNull Function<Long, Customer> getCustomer,
                                       @NotNull Function<Long, PayMethod> getPayMethod) {
-        return new Order(
+        Order order = new Order(
                 id,
                 tax,
                 table_number,
@@ -56,5 +65,9 @@ public class OrderDTO {
                 getCustomer.apply(customer_id),
                 getPayMethod.apply(paymethod_id)
         );
+        if (specificProducts != null)
+            order.setSpecificProducts(specificProducts.stream()
+                    .map(SpecificProductDTO::convertToSpecificProductEntity).collect(Collectors.toSet()));
+        return order;
     }
 }

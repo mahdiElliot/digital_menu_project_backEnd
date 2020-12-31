@@ -1,7 +1,13 @@
 package com.example.project.model.business;
 
+import com.example.project.model.category.Category;
+import com.example.project.model.category.CategoryDTO;
+import com.example.project.model.location.Location;
 import com.example.project.model.location.LocationDTO;
 import com.example.project.model.paymethod.PayMethodDTO;
+import com.example.project.model.product.ProductDTO;
+import com.example.project.model.zone.ZoneDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.PrecisionModel;
@@ -13,8 +19,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -42,12 +50,21 @@ public class BusinessDTO {
 
     private Set<PayMethodDTO> payMethods;
 
+    private Set<ZoneDTO> zones;
+
+    private Set<ProductDTO> products;
+
+    @JsonIgnore
+    @Nullable
+    private Set<Category> categories;
+
     public BusinessDTO() {
         super();
     }
 
     public BusinessDTO(long id, @NotNull String name, double service_fee, double tax, @NotNull String logo, boolean enabled,
-                       LocationDTO location, @Nullable Set<PayMethodDTO> payMethods) {
+                       LocationDTO location, @Nullable Set<ZoneDTO> zones,
+                       @Nullable Set<PayMethodDTO> payMethods, @Nullable Set<ProductDTO> products) {
         this.id = id;
         this.name = name;
         this.service_fee = service_fee;
@@ -55,30 +72,26 @@ public class BusinessDTO {
         this.logo = logo;
         this.enabled = enabled;
         this.location = location;
+        this.zones = zones;
         this.payMethods = payMethods;
+        this.products = products;
     }
 
     public Business convertToBusinessEntity() {
-        Geometry geometry = null;
-        try {
-            GeometryFactory fact = new GeometryFactory(new PrecisionModel());
-            geometry = new WKTReader(fact).read("POINT(1 1)");
-            if (location != null) {
-                double lat = location.getLat();
-                double lng = location.getLng();
-                geometry = new WKTReader(fact).read("POINT (" + lng + " " + lat + ")");
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        Location l = null;
+        if (location != null)
+            l = location.convertToLocationEntity();
+        Business business = new Business(id, name, service_fee, tax, logo, enabled, l);
+        if (zones != null && !zones.isEmpty())
+            business.setZones(zones.stream().map(ZoneDTO::convertToZoneEntity).collect(Collectors.toSet()));
+        if (products != null && !products.isEmpty()) {
+            Function<Long, Category> categoryMapper =
+                    id -> categories == null ? null :
+                            categories.stream().
+                                    filter(it -> it.getId().equals(id)).findFirst().orElse(null);
+            business.setProducts(products.stream()
+                    .map(it -> it.convertToProductEntity(categoryMapper)).collect(Collectors.toSet()));
         }
-        return new Business(
-                id,
-                name,
-                service_fee,
-                tax,
-                logo,
-                enabled,
-                geometry
-        );
+        return business;
     }
 }

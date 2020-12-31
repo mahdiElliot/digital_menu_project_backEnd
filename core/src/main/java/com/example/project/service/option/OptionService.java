@@ -30,7 +30,8 @@ public class OptionService implements IOptionService {
     @Override
     public OptionDTO findByName(String name) {
         if (name == null) return null;
-        return repository.findByName(name).convertToDTO();
+        return repository.findByName(name)
+                .map(Option::convertToDTO).orElse(null);
     }
 
     @Override

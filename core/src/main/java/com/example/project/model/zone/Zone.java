@@ -27,12 +27,7 @@ public class Zone {
 
     private Double radius;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "business_zone",
-            joinColumns = {@JoinColumn(name = "zone_id")},
-            inverseJoinColumns = {@JoinColumn(name = "business_id")}
-    )
+    @ManyToMany(mappedBy = "zones")
     Set<Business> businesses = new HashSet<>();
 
     public Zone() {
@@ -46,15 +41,11 @@ public class Zone {
     }
 
     public ZoneDTO convertToDTO() {
-        Set<BusinessDTO> businessDTOS = null;
-        if (businesses != null)
-            businessDTOS = businesses.stream().map(Business::convertToDTO).collect(Collectors.toSet());
         return new ZoneDTO(
                 id,
                 price,
                 enabled,
-                radius,
-                businessDTOS
+                radius
         );
     }
 
