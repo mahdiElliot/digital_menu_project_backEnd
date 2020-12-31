@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -78,10 +79,10 @@ public class ProductDTO {
                 enabled,
                 getCategory.apply(category_id)
         );
-        if (extras != null) {
-            Function<Long, Business> businessMapper =
-                    id -> businesses == null ? null :
-                            businesses.stream().filter(it -> it.getId().equals(id)).findFirst().orElse(null);
+        if (extras != null && !extras.isEmpty()) {
+            Map<Long, Business> map =
+                    businesses == null ? null : businesses.stream().collect(Collectors.toMap(Business::getId, e -> e));
+            Function<Long, Business> businessMapper = id -> map == null ? null : map.get(id);
             product.setExtras(extras.stream()
                     .map(it -> it.convertToExtraEntity(businessMapper)).collect(Collectors.toSet()));
         }

@@ -65,7 +65,7 @@ public class OrderDTO {
                 getCustomer.apply(customer_id),
                 getPayMethod.apply(paymethod_id)
         );
-        if (specificProducts != null)
+        if (specificProducts != null && !specificProducts.isEmpty())
             order.setSpecificProducts(specificProducts.stream()
                     .map(SpecificProductDTO::convertToSpecificProductEntity).collect(Collectors.toSet()));
         return order;

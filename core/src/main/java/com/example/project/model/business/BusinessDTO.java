@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
@@ -85,12 +86,13 @@ public class BusinessDTO {
         if (zones != null && !zones.isEmpty())
             business.setZones(zones.stream().map(ZoneDTO::convertToZoneEntity).collect(Collectors.toSet()));
         if (products != null && !products.isEmpty()) {
-            Function<Long, Category> categoryMapper =
-                    id -> categories == null ? null :
-                            categories.stream().
-                                    filter(it -> it.getId().equals(id)).findFirst().orElse(null);
+            Map<Long, Category> map =
+                    categories == null ? null : categories.stream().collect(Collectors.toMap(Category::getId, e -> e));
+            ;
+            Function<Long, Category> categoryMapper = id -> map == null ? null : map.get(id);
             business.setProducts(products.stream()
                     .map(it -> it.convertToProductEntity(categoryMapper)).collect(Collectors.toSet()));
+
         }
         return business;
     }

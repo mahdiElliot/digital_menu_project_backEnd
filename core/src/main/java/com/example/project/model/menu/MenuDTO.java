@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collector;
@@ -45,12 +46,11 @@ public class MenuDTO {
     public Menu convertToMenuEntity(@NotNull Function<Long, Business> getBusiness) {
         Business business = getBusiness.apply(business_id);
         Menu menu = new Menu(id, name, enabled, business);
-        if (products != null) {
+        if (products != null && !products.isEmpty()) {
             Set<Category> categories = business.getCategories();
-            Function<Long, Category> categoryMapper =
-                    id -> categories == null ? null :
-                            categories.stream().
-                                    filter(it -> it.getId().equals(id)).findFirst().orElse(null);
+            Map<Long, Category> map =
+                    categories == null ? null : categories.stream().collect(Collectors.toMap(Category::getId, e -> e));
+            Function<Long, Category> categoryMapper = id -> map == null ? null : map.get(id);
             menu.setProducts(products.stream()
                     .map(it -> it.convertToProductEntity(categoryMapper)).collect(Collectors.toSet()));
         }
