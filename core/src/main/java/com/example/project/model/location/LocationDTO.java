@@ -1,5 +1,10 @@
 package com.example.project.model.location;
 
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.PrecisionModel;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,12 +41,13 @@ public class LocationDTO {
     }
 
     public Location convertToLocationEntity() {
-        return new Location(
-                id,
-                lat,
-                lng,
-                zipcode,
-                zoom
-        );
+        Geometry location = null;
+        try {
+            GeometryFactory fact = new GeometryFactory(new PrecisionModel());
+            location = new WKTReader(fact).read("POINT (" + lng + " " + lat + ")");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Location(id, zipcode, zoom, location);
     }
 }
