@@ -18,7 +18,6 @@ public class BusinessService implements IBusinessService {
         this.businessRepository = businessRepository;
     }
 
-
     @Override
     public List<BusinessDTO> findAll() {
         return ((List<Business>) businessRepository.findAll())

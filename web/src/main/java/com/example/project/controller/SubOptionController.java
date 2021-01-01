@@ -2,16 +2,22 @@ package com.example.project.controller;
 
 import com.example.project.model.option.Option;
 import com.example.project.model.option.OptionDTO;
+import com.example.project.model.suboptions.SubOption;
 import com.example.project.model.suboptions.SubOptionDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.extra.IExtraService;
 import com.example.project.service.option.IOptionService;
 import com.example.project.service.suboptions.ISubOptionService;
+import com.example.project.utils.FileUploadUtil;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Function;
 
 @RequestMapping(URLUtils.SUBOPTION)
@@ -28,12 +34,18 @@ public class SubOptionController extends OptionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SubOptionDTO addSubOption(@RequestBody SubOptionDTO subOptionDTO) {
+    public SubOptionDTO addSubOption(SubOptionDTO subOptionDTO, @RequestParam("photo") MultipartFile multipartFile) throws IOException {
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        System.out.println(fileName);
         Function<Long, Option> optionMapper =
                 ID -> {
                     OptionDTO optionDTO = optionService.findById(ID);
                     return optionDTO == null ? null : optionDTO.convertToOptionEntity(extraMapper());
                 };
-        return subOptionService.save(subOptionDTO.convertToSubOptionEntity(optionMapper));
+        SubOption subOption = subOptionDTO.convertToSubOptionEntity(optionMapper);
+        String uploadDir = subOptionDTO.getName();
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        subOption.setImage(FileUploadUtil.DIR);
+        return subOptionService.save(subOption);
     }
 }

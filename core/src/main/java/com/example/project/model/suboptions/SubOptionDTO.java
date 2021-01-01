@@ -3,6 +3,7 @@ package com.example.project.model.suboptions;
 import com.example.project.model.option.Option;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ public class SubOptionDTO {
     private long id;
 
     @NotNull
-    private Integer price;
+    private Double price;
 
     @NotNull
     @NotEmpty
@@ -33,7 +34,7 @@ public class SubOptionDTO {
         super();
     }
 
-    public SubOptionDTO(long id, int price, String name, String description, boolean enabled, String image, Long option_id) {
+    public SubOptionDTO(long id, double price, String name, String description, boolean enabled, String image, @Nullable Long option_id) {
         this.id = id;
         this.price = price;
         this.name = name;

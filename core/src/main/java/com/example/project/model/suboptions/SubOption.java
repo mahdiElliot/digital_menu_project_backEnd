@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "suboptions")
-
 public class SubOption {
 
     @Id
@@ -18,7 +17,7 @@ public class SubOption {
     private Long id;
 
     @Column(nullable = false)
-    private Integer price;
+    private Double price;
 
     @Column(nullable = false)
     private String name;
@@ -31,13 +30,13 @@ public class SubOption {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "option_id", nullable = false)
+    @JoinColumn(name = "option_id")
     private Option option;
 
     public SubOption() {
     }
 
-    public SubOption(long id, int price, String name, String description, boolean enabled, String image, Option option) {
+    public SubOption(long id, double price, String name, String description, boolean enabled, String image, Option option) {
         this.id = id;
         this.price = price;
         this.name = name;
