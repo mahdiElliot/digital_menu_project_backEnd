@@ -44,7 +44,7 @@ public class SubOptionController extends OptionController {
         SubOption subOption = subOptionDTO.convertToSubOptionEntity(optionMapper);
         subOption.setImage(fileName);
         SubOptionDTO subOptionDTO2 = subOptionService.save(subOption);
-        String uploadDir = "photos/" + subOptionDTO2.getId();
+        String uploadDir = URLUtils.SUBOPTION + "/" + subOptionDTO2.getId() + "/photos/";
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return subOptionDTO2;
     }
