@@ -30,7 +30,7 @@ public class SubOption {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "option_id")
+    @JoinColumn(name = "option_id", nullable = false)
     private Option option;
 
     public SubOption() {

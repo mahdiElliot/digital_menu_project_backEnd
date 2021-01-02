@@ -6,13 +6,18 @@ import com.example.project.model.product.ProductDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
 import com.example.project.service.product.IProductService;
+import com.example.project.utils.FileUploadUtil;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 @RestController
@@ -30,7 +35,7 @@ public class ProductController extends BaseController {
 
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO addProduct(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @Valid @RequestBody ProductDTO productDTO) {
+    public ProductDTO addProduct(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @Valid ProductDTO productDTO, @RequestParam("photo") MultipartFile multipartFile) throws IOException {
         if (businessService.findById(id) != null && categoryService.findById(id2) != null) {
             productDTO.setCategory_id(id2);
             Function<Long, Category> categoryMapper =
@@ -38,7 +43,12 @@ public class ProductController extends BaseController {
                         CategoryDTO categoryDTO = categoryService.findById(ID);
                         return categoryDTO == null ? null : categoryDTO.convertToCategoryEntity(businessMapper());
                     };
-            return productService.save(productDTO.convertToProductEntity(categoryMapper));
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
+            productDTO.setImages(uploadDir + fileName);
+            ProductDTO productDTO2 = productService.save(productDTO.convertToProductEntity(categoryMapper));
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            return productDTO2;
         }
         return null;
     }

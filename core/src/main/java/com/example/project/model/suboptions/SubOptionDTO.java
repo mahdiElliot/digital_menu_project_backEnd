@@ -34,7 +34,7 @@ public class SubOptionDTO {
         super();
     }
 
-    public SubOptionDTO(long id, double price, String name, String description, boolean enabled, String image, @Nullable Long option_id) {
+    public SubOptionDTO(long id, double price, String name, String description, boolean enabled, String image, Long option_id) {
         this.id = id;
         this.price = price;
         this.name = name;

@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Function;
@@ -34,17 +35,16 @@ public class SubOptionController extends OptionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SubOptionDTO addSubOption(SubOptionDTO subOptionDTO, @RequestParam("photo") MultipartFile multipartFile) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+    public SubOptionDTO addSubOption(@Valid SubOptionDTO subOptionDTO, @RequestParam("photo") MultipartFile multipartFile) throws IOException {
         Function<Long, Option> optionMapper =
                 ID -> {
                     OptionDTO optionDTO = optionService.findById(ID);
                     return optionDTO == null ? null : optionDTO.convertToOptionEntity(extraMapper());
                 };
-        SubOption subOption = subOptionDTO.convertToSubOptionEntity(optionMapper);
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         String uploadDir = URLUtils.SUBOPTION + "/photos/";
-        subOption.setImage(uploadDir + fileName);
-        SubOptionDTO subOptionDTO2 = subOptionService.save(subOption);
+        subOptionDTO.setImage(uploadDir + fileName);
+        SubOptionDTO subOptionDTO2 = subOptionService.save(subOptionDTO.convertToSubOptionEntity(optionMapper));
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return subOptionDTO2;
     }
