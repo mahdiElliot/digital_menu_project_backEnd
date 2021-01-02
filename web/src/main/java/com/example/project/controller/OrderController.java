@@ -9,10 +9,12 @@ import com.example.project.service.business.IBusinessService;
 import com.example.project.service.customer.ICustomerService;
 import com.example.project.service.order.IOrderService;
 import com.example.project.service.paymethod.IPayMethodService;
+import com.example.project.utils.ErrorUtils;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -58,11 +60,17 @@ public class OrderController extends BaseController {
 
     @GetMapping(path = "{id}")
     public OrderDTO getOrder(@PathVariable("id") Long id) {
-        return orderService.findById(id);
+        OrderDTO orderDTO = orderService.findById(id);
+        if (orderDTO == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorUtils.NOT_FOUND);
+        return orderDTO;
     }
 
     @DeleteMapping(path = "{id}")
     public OrderDTO deleteOrder(@PathVariable("id") Long id) {
-        return orderService.delete(id);
+        OrderDTO orderDTO = orderService.delete(id);
+        if (orderDTO == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorUtils.NOT_FOUND);
+        return orderDTO;
     }
 }

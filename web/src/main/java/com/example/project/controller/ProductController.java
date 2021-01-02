@@ -6,6 +6,7 @@ import com.example.project.model.product.ProductDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
 import com.example.project.service.product.IProductService;
+import com.example.project.utils.ErrorUtils;
 import com.example.project.utils.FileUploadUtil;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -50,7 +52,7 @@ public class ProductController extends BaseController {
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
             return productDTO2;
         }
-        return null;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
     }
 
     @GetMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
@@ -58,7 +60,7 @@ public class ProductController extends BaseController {
         if (businessService.findById(id) != null && categoryService.findById(id) != null)
             return productService.findAllByCategoryId(id2);
 
-        return null;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
     }
 
 }
