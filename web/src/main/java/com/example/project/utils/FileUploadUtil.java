@@ -15,7 +15,7 @@ public class FileUploadUtil {
 
     public static void saveFile(String uploadDir, String fileName,
                                 MultipartFile multipartFile) throws IOException {
-        DIR = "core/src/main/resources/photos/";
+        DIR = "web/src/main/resources/public/";
         Path uploadPath = Paths.get(DIR + uploadDir);
 
         if (!Files.exists(uploadPath)) {

@@ -36,16 +36,16 @@ public class SubOptionController extends OptionController {
     @ResponseStatus(HttpStatus.CREATED)
     public SubOptionDTO addSubOption(SubOptionDTO subOptionDTO, @RequestParam("photo") MultipartFile multipartFile) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        System.out.println(fileName);
         Function<Long, Option> optionMapper =
                 ID -> {
                     OptionDTO optionDTO = optionService.findById(ID);
                     return optionDTO == null ? null : optionDTO.convertToOptionEntity(extraMapper());
                 };
         SubOption subOption = subOptionDTO.convertToSubOptionEntity(optionMapper);
-        String uploadDir = subOptionDTO.getName();
+        subOption.setImage(fileName);
+        SubOptionDTO subOptionDTO2 = subOptionService.save(subOption);
+        String uploadDir = "photos/" + subOptionDTO2.getId();
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        subOption.setImage(FileUploadUtil.DIR);
-        return subOptionService.save(subOption);
+        return subOptionDTO2;
     }
 }
