@@ -42,9 +42,9 @@ public class SubOptionController extends OptionController {
                     return optionDTO == null ? null : optionDTO.convertToOptionEntity(extraMapper());
                 };
         SubOption subOption = subOptionDTO.convertToSubOptionEntity(optionMapper);
-        subOption.setImage(fileName);
+        String uploadDir = URLUtils.SUBOPTION + "/photos/";
+        subOption.setImage(uploadDir + fileName);
         SubOptionDTO subOptionDTO2 = subOptionService.save(subOption);
-        String uploadDir = URLUtils.SUBOPTION + "/" + subOptionDTO2.getId() + "/photos/";
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return subOptionDTO2;
     }

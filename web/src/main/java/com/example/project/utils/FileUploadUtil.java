@@ -11,11 +11,10 @@ import java.nio.file.StandardCopyOption;
 
 public class FileUploadUtil {
 
-    public static String DIR = "";
 
     public static void saveFile(String uploadDir, String fileName,
                                 MultipartFile multipartFile) throws IOException {
-        DIR = "web/src/main/resources/public";
+        String DIR = "web/src/main/resources/public";
         Path uploadPath = Paths.get(DIR + uploadDir);
 
         if (!Files.exists(uploadPath)) {
