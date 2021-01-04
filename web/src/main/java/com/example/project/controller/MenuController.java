@@ -1,6 +1,9 @@
 package com.example.project.controller;
 
+import com.example.project.model.business.Business;
+import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.menu.MenuDTO;
+import com.example.project.model.menu.MenuDTOReceive;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.menu.IMenuService;
 import com.example.project.utils.ErrorUtils;
@@ -28,15 +31,16 @@ public class MenuController extends BaseController {
     @ResponseStatus(HttpStatus.CREATED)
     public MenuDTO addMenu(
             @PathVariable("id") Long id,
-            @Valid @RequestBody MenuDTO menuDTO,
+            @Valid @RequestBody MenuDTOReceive menuDTO,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
 
-        if (businessService.findById(id) != null) {
+        BusinessDTO businessDTO = businessService.findById(id);
+        if (businessDTO != null) {
             menuDTO.setBusiness_id(id);
-            return menuService.save(menuDTO.convertToMenuEntity(businessMapper()));
+            return menuService.save(menuDTO.convertToMenuEntity(businessDTO.convertToBusinessEntity()));
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business " + ErrorUtils.NOT_FOUND);
     }
