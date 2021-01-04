@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
-public class SpecificProductReceive {
+public class SpecificProductDTOReceive {
     private long id;
 
     @NotNull
@@ -38,7 +38,7 @@ public class SpecificProductReceive {
 
     private Set<Long> options;
 
-    public SpecificProductReceive() {
+    public SpecificProductDTOReceive() {
         super();
     }
 

@@ -5,6 +5,7 @@ import com.example.project.model.customer.CustomerDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.product.Product;
 import com.example.project.model.specproduct.SpecificProductDTO;
+import com.example.project.model.specproduct.SpecificProductDTOReceive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,7 +40,7 @@ public class OrderDTOReceive {
 
     @NotNull
     @NotEmpty
-    Set<SpecificProductDTO> specificProducts;
+    Set<SpecificProductDTOReceive> specificProducts;
 
     public OrderDTOReceive() {
         super();
