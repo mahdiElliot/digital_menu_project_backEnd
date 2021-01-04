@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
@@ -22,9 +23,10 @@ public class ProductDTO {
     private long id;
 
     @NotNull
-    private Integer price;
+    private Double price;
 
     @NotNull
+    @Min(1)
     private Integer quantity;
 
     @NotNull
@@ -53,7 +55,7 @@ public class ProductDTO {
         super();
     }
 
-    public ProductDTO(long id, int price, int quantity, String name, String description, String images,
+    public ProductDTO(long id, double price, int quantity, String name, String description, String images,
                       boolean inventoried, boolean enabled, Long category_id, @Nullable Set<ExtraDTO> extras) {
         this.id = id;
         this.price = price;

@@ -25,8 +25,6 @@ public class CategoryDTO {
     @NotNull
     private Boolean enabled;
 
-    @NotNull
-    @NotEmpty
     private String image;
 
     private Long business_id;

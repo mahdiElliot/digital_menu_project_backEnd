@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Geometry;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -29,6 +30,7 @@ public class Location {
     @JsonSerialize(using = GeometrySerializer.class)
     @JsonDeserialize(using = GeometryDeserializer.class)
     @Column(name = "geometry")
+    @Type(type = "com.vividsolutions.jts.geom.Geometry")
     private Geometry location;
 
     @OneToOne(mappedBy = "location")

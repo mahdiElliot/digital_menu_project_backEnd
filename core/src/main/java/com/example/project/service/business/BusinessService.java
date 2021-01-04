@@ -2,7 +2,9 @@ package com.example.project.service.business;
 
 import com.example.project.model.business.Business;
 import com.example.project.model.business.BusinessDTO;
+import com.example.project.model.location.Location;
 import com.example.project.repositories.business.BusinessRepository;
+import com.example.project.repositories.location.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

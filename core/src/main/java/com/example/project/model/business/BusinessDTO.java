@@ -8,6 +8,7 @@ import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.product.ProductDTO;
 import com.example.project.model.zone.ZoneDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.PrecisionModel;
@@ -40,8 +41,6 @@ public class BusinessDTO {
 
     private Double tax;
 
-    @NotEmpty
-    @NotNull
     private String logo;
 
     @NotNull
@@ -88,7 +87,6 @@ public class BusinessDTO {
         if (products != null && !products.isEmpty()) {
             Map<Long, Category> map =
                     categories == null ? null : categories.stream().collect(Collectors.toMap(Category::getId, e -> e));
-            ;
             Function<Long, Category> categoryMapper = id -> map == null ? null : map.get(id);
             business.setProducts(products.stream()
                     .map(it -> it.convertToProductEntity(categoryMapper)).collect(Collectors.toSet()));

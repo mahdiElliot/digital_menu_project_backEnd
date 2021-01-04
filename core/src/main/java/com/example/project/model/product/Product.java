@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,8 +27,10 @@ public class Product {
     @SequenceGenerator(name = "product_generator", sequenceName = "product_seq", allocationSize = 1)
     private Long id;
 
-    private Integer price;
+    private Double price;
 
+    @NotNull
+    @Min(1)
     private Integer quantity;
 
     private String name;
@@ -54,10 +58,13 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private Set<Business> businesses = new HashSet<>();
 
+    @OneToMany(mappedBy = "product")
+    private Set<SpecificProduct> products = new HashSet<>();
+
     public Product() {
     }
 
-    public Product(long id, int price, int quantity, String name, String description, String images,
+    public Product(long id, double price, int quantity, String name, String description, String images,
                    boolean inventoried, boolean enabled, Category category) {
         this.id = id;
         this.price = price;

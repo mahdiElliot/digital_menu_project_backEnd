@@ -11,7 +11,6 @@ public class URLUtils {
     public final static String EXTRA = "/extra";
     public final static String ZONE = "/zone";
     public final static String CUSTOMER = "/customer";
-    public final static String LOCATION = "/location";
     public final static String PAYMETHOD = "/paymethod";
 
 }

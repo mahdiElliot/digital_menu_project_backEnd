@@ -1,7 +1,9 @@
 package com.example.project.service.order;
 
+import com.example.project.model.customer.Customer;
 import com.example.project.model.order.Order;
 import com.example.project.model.order.OrderDTO;
+import com.example.project.repositories.customer.CustomerRepository;
 import com.example.project.repositories.order.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,12 @@ import java.util.stream.Collectors;
 public class OrderService implements IOrderService {
 
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, CustomerRepository customerRepository) {
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -52,6 +56,9 @@ public class OrderService implements IOrderService {
 
     @Override
     public OrderDTO save(Order order) {
+        Customer customer = order.getCustomer();
+        customer = customerRepository.save(customer);
+        order.setCustomer(customer);
         return orderRepository.save(order).convertToDTO();
     }
 }

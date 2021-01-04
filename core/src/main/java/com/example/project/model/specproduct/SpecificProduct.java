@@ -42,15 +42,20 @@ public class SpecificProduct {
     @ManyToMany(mappedBy = "specificProducts")
     private Set<Order> orders = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
     public SpecificProduct() {
     }
 
-    public SpecificProduct(long id, String name, String comment, int quantity, double price) {
+    public SpecificProduct(long id, String name, String comment, int quantity, double price, Product product) {
         this.id = id;
         this.comment = comment;
         this.quantity = quantity;
         this.price = price;
         this.name = name;
+        this.product = product;
     }
 
     public SpecificProductDTO convertToDTO() {
@@ -63,6 +68,7 @@ public class SpecificProduct {
                 comment,
                 quantity,
                 price,
+                product.getId(),
                 optionDTOS
         );
     }

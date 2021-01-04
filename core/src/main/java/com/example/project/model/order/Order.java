@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,6 +40,7 @@ public class Order {
     private Customer customer;
 
     @NotNull
+    @NotEmpty
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "order_sproduct",

@@ -6,6 +6,7 @@ import com.example.project.repositories.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +42,7 @@ public class ProductService implements IProductService {
                 .map(Product::convertToDTO).orElse(null);
     }
 
+    @Transactional
     @Override
     public ProductDTO delete(Long id) {
         if (id == null) return null;
@@ -52,6 +54,7 @@ public class ProductService implements IProductService {
         return null;
     }
 
+    @Transactional
     @Override
     public ProductDTO save(Product product) {
         return repository.save(product).convertToDTO();

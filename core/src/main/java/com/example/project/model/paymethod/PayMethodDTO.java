@@ -23,6 +23,7 @@ public class PayMethodDTO {
     @NotNull
     private Boolean enabled;
 
+    @NotNull
     Long business_id;
 
     public PayMethodDTO() {

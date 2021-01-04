@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,11 +27,13 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
+    @NotEmpty
+    @NotNull
+    @Email
     private String email;
 
     private String phoneNumber;
 
-    @NotNull
     @OneToMany(mappedBy = "customer")
     private Set<Order> orders = new HashSet<>();
 

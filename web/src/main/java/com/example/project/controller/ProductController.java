@@ -1,7 +1,10 @@
 package com.example.project.controller;
 
+import com.example.project.model.business.Business;
+import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.category.Category;
 import com.example.project.model.category.CategoryDTO;
+import com.example.project.model.product.Product;
 import com.example.project.model.product.ProductDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
@@ -18,9 +21,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RestController
 public class ProductController extends BaseController {
@@ -35,10 +41,11 @@ public class ProductController extends BaseController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
+    @PostMapping(path = URLUtils.BUSINESS + "/{b_id}" + URLUtils.CATEGORY + "/{c_id}" + URLUtils.PRODUCT)
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO addProduct(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @Valid ProductDTO productDTO, @RequestParam("photo") MultipartFile multipartFile) throws IOException {
-        if (businessService.findById(id) != null && categoryService.findById(id2) != null) {
+    public ProductDTO addProduct(@PathVariable("b_id") Long id, @PathVariable("c_id") Long id2, @Valid ProductDTO productDTO, @RequestParam("photo") MultipartFile multipartFile) throws IOException {
+        BusinessDTO businessDTO = businessService.findById(id);
+        if (businessDTO != null && categoryService.findById(id2) != null) {
             productDTO.setCategory_id(id2);
             Function<Long, Category> categoryMapper =
                     ID -> {
@@ -49,6 +56,9 @@ public class ProductController extends BaseController {
             String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
             productDTO.setImages(uploadDir + fileName);
             ProductDTO productDTO2 = productService.save(productDTO.convertToProductEntity(categoryMapper));
+            businessDTO.getProducts().add(productDTO2);
+            Business business = businessDTO.convertToBusinessEntity();
+            businessDTO = businessService.save(business);
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
             return productDTO2;
         }
@@ -58,7 +68,8 @@ public class ProductController extends BaseController {
     @GetMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
     public List<ProductDTO> getAllProducts(@PathVariable("id") Long id, @PathVariable("id2") Long id2) {
         if (businessService.findById(id) != null && categoryService.findById(id) != null)
-            return productService.findAllByCategoryId(id2);
+            return productService.findAllByCategoryId(id2)
+                    .stream().filter(it -> it.getQuantity() > 0).collect(Collectors.toList());
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
     }
