@@ -39,8 +39,11 @@ public class MenuDTOReceive {
                         business.getProducts().stream().collect(Collectors.toMap(Product::getId, e -> e));
         if (map != null) {
             Set<Product> productSet = new HashSet<>();
-            for (Long id : products)
-                productSet.add(map.get(id));
+            for (Long id : products) {
+                Product product = map.get(id);
+                if (product != null)
+                    productSet.add(product);
+            }
             menu.setProducts(productSet);
         }
         return menu;

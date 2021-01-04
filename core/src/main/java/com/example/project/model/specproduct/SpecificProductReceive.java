@@ -1,23 +1,23 @@
 package com.example.project.model.specproduct;
 
 import com.example.project.model.extra.Extra;
-import com.example.project.model.option.OptionDTO;
+import com.example.project.model.option.Option;
 import com.example.project.model.product.Product;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Setter
 @Getter
-public class SpecificProductDTO {
-
+public class SpecificProductReceive {
     private long id;
 
     @NotNull
@@ -36,21 +36,10 @@ public class SpecificProductDTO {
     @NotNull
     private Long product_id;
 
-    private Set<OptionDTO> options;
+    private Set<Long> options;
 
-    public SpecificProductDTO() {
+    public SpecificProductReceive() {
         super();
-    }
-
-    public SpecificProductDTO(long id, String name, String comment, int quantity, double price,
-                              Long product_id, @Nullable Set<OptionDTO> options) {
-        this.id = id;
-        this.name = name;
-        this.comment = comment;
-        this.quantity = quantity;
-        this.price = price;
-        this.options = options;
-        this.product_id = product_id;
     }
 
     public SpecificProduct convertToSpecificProductEntity(@NotNull Function<Long, Product> getProduct) {
@@ -58,9 +47,17 @@ public class SpecificProductDTO {
         price = product.getPrice();
         SpecificProduct specificProduct = new SpecificProduct(id, name, comment, quantity, price, product);
         if (options != null && !options.isEmpty()) {
-            Function<Long, Extra> extraMapper = id -> null;
-            specificProduct.setOptions(options.stream()
-                    .map(it -> it.convertToOptionEntity(extraMapper)).collect(Collectors.toSet()));
+            Set<Extra> extras = product.getExtras();
+            Set<Option> optionSet = new HashSet<>();
+            for (Extra extra : extras) {
+                if (extra.getOptions() == null) continue;
+                Map<Long, Option> map = extra.getOptions().stream().collect(Collectors.toMap(Option::getId, e -> e));
+                for (Long id : options) {
+                    Option option = map.get(id);
+                    if (option != null) optionSet.add(option);
+                }
+            }
+            specificProduct.setOptions(optionSet);
         }
         return specificProduct;
     }
