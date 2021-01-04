@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.category.CategoryDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
@@ -42,12 +43,14 @@ public class CategoryController extends BaseController {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
 
-        if (businessService.findById(id) != null) {
+        BusinessDTO businessDTO = businessService.findById(id);
+        if (businessDTO != null) {
             categoryDTO.setBusiness_id(id);
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/photos/";
             categoryDTO.setImage(uploadDir + fileName);
-            CategoryDTO categoryDTO2 = categoryService.save(categoryDTO.convertToCategoryEntity(businessMapper()));
+            CategoryDTO categoryDTO2 =
+                    categoryService.save(categoryDTO.convertToCategoryEntity(businessDTO.convertToBusinessEntity()));
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
             return categoryDTO2;
         }

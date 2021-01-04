@@ -81,7 +81,7 @@ public class BusinessDTO {
                     categories == null ? null : categories.stream().collect(Collectors.toMap(Category::getId, e -> e));
             Function<Long, Category> categoryMapper = id -> map == null ? null : map.get(id);
             business.setProducts(products.stream()
-                    .map(it -> it.convertToProductEntity(categoryMapper)).collect(Collectors.toSet()));
+                    .map(it -> it.convertToProductEntity(categoryMapper.apply(it.getCategory_id()))).collect(Collectors.toSet()));
 
         }
         return business;

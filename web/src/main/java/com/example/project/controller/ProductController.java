@@ -23,7 +23,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
@@ -52,19 +51,17 @@ public class ProductController extends BaseController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
 
         BusinessDTO businessDTO = businessService.findById(id);
-        if (businessDTO != null && categoryService.findById(id2) != null) {
+        CategoryDTO categoryDTO = categoryService.findById(id2);
+        if (businessDTO != null && categoryDTO != null) {
             productDTO.setCategory_id(id2);
-            Function<Long, Category> categoryMapper =
-                    ID -> {
-                        CategoryDTO categoryDTO = categoryService.findById(ID);
-                        return categoryDTO == null ? null : categoryDTO.convertToCategoryEntity(businessMapper());
-                    };
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
             productDTO.setImages(uploadDir + fileName);
-            ProductDTO productDTO2 = productService.save(productDTO.convertToProductEntity(categoryMapper));
-            businessDTO.getProducts().add(productDTO2);
             Business business = businessDTO.convertToBusinessEntity();
+            ProductDTO productDTO2 =
+                    productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
+            businessDTO.getProducts().add(productDTO2);
+            business = businessDTO.convertToBusinessEntity();
             businessDTO = businessService.save(business);
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
             return productDTO2;

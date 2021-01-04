@@ -45,14 +45,7 @@ public class CategoryDTO {
         this.products = products;
     }
 
-    public Category convertToCategoryEntity(@NotNull Function<Long, Business> getBusiness) {
-        return new Category(
-                id,
-                name,
-                rank,
-                enabled,
-                image,
-                getBusiness.apply(business_id)
-        );
+    public Category convertToCategoryEntity(Business business) {
+        return new Category(id, name, rank, enabled, image, business);
     }
 }

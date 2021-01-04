@@ -69,7 +69,7 @@ public class ProductDTO {
         this.extras = extras;
     }
 
-    public Product convertToProductEntity(@NotNull Function<Long, Category> getCategory) {
+    public Product convertToProductEntity(Category category) {
         Product product = new Product(
                 id,
                 price,
@@ -79,7 +79,7 @@ public class ProductDTO {
                 images,
                 inventoried,
                 enabled,
-                getCategory.apply(category_id)
+                category
         );
         if (extras != null && !extras.isEmpty()) {
             Map<Long, Business> map =
