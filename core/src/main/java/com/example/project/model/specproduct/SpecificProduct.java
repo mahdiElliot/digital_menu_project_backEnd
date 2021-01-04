@@ -3,7 +3,6 @@ package com.example.project.model.specproduct;
 import com.example.project.model.option.Option;
 import com.example.project.model.option.OptionDTO;
 import com.example.project.model.order.Order;
-import com.example.project.model.order.OrderDTO;
 import com.example.project.model.product.Product;
 import lombok.Getter;
 import lombok.Setter;

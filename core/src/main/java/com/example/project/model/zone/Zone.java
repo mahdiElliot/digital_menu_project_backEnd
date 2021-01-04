@@ -1,14 +1,12 @@
 package com.example.project.model.zone;
 
 import com.example.project.model.business.Business;
-import com.example.project.model.business.BusinessDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Setter
 @Getter

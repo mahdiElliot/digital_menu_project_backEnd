@@ -1,6 +1,5 @@
 package com.example.project.model.customer;
 
-import com.example.project.model.order.Order;
 import com.example.project.model.order.OrderDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Setter
 @Getter

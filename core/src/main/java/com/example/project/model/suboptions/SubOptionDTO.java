@@ -3,7 +3,6 @@ package com.example.project.model.suboptions;
 import com.example.project.model.option.Option;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

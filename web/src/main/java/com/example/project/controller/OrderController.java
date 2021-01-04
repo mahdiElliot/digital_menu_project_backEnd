@@ -1,7 +1,6 @@
 package com.example.project.controller;
 
 
-import com.example.project.model.business.Business;
 import com.example.project.model.order.Order;
 import com.example.project.model.order.OrderDTO;
 import com.example.project.model.order.OrderDTOReceive;
@@ -9,8 +8,6 @@ import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.product.Product;
 import com.example.project.model.specproduct.SpecificProduct;
-import com.example.project.model.specproduct.SpecificProductDTO;
-import com.example.project.repositories.business.BusinessRepository;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.order.IOrderService;
 import com.example.project.service.paymethod.IPayMethodService;
@@ -19,6 +16,7 @@ import com.example.project.utils.ErrorUtils;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -46,7 +44,10 @@ public class OrderController extends BaseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDTO addOrder(@Valid @RequestBody OrderDTOReceive orderDTO) {
+    public OrderDTO addOrder(@Valid @RequestBody OrderDTOReceive orderDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+
         Function<Long, PayMethod> payMethodMapper =
                 ID -> {
                     PayMethodDTO payMethodDTO = payMethodService.findById(ID);

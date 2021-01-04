@@ -1,26 +1,18 @@
 package com.example.project.model.business;
 
 import com.example.project.model.category.Category;
-import com.example.project.model.category.CategoryDTO;
 import com.example.project.model.location.Location;
 import com.example.project.model.location.LocationDTO;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.product.ProductDTO;
 import com.example.project.model.zone.ZoneDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.PrecisionModel;
-import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jts.io.WKTReader;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;

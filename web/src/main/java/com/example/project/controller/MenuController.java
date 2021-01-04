@@ -7,6 +7,7 @@ import com.example.project.utils.ErrorUtils;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,7 +26,14 @@ public class MenuController extends BaseController {
 
     @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.MENU)
     @ResponseStatus(HttpStatus.CREATED)
-    public MenuDTO addMenu(@PathVariable("id") Long id, @Valid @RequestBody MenuDTO menuDTO) {
+    public MenuDTO addMenu(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody MenuDTO menuDTO,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+
         if (businessService.findById(id) != null) {
             menuDTO.setBusiness_id(id);
             return menuService.save(menuDTO.convertToMenuEntity(businessMapper()));

@@ -1,7 +1,5 @@
 package com.example.project.model.business;
 
-import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer;
-import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
 import com.example.project.model.category.Category;
 import com.example.project.model.extra.Extra;
 import com.example.project.model.location.Location;
@@ -14,16 +12,11 @@ import com.example.project.model.product.Product;
 import com.example.project.model.product.ProductDTO;
 import com.example.project.model.zone.Zone;
 import com.example.project.model.zone.ZoneDTO;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.vividsolutions.jts.geom.Geometry;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 

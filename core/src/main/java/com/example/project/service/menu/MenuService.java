@@ -4,15 +4,9 @@ import com.example.project.model.menu.Menu;
 import com.example.project.model.menu.MenuDTO;
 import com.example.project.repositories.menu.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Service;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

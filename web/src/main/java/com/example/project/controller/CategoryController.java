@@ -1,17 +1,15 @@
 package com.example.project.controller;
 
-import com.example.project.model.business.Business;
-import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.category.CategoryDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
 import com.example.project.utils.ErrorUtils;
 import com.example.project.utils.FileUploadUtil;
 import com.example.project.utils.URLUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,7 +33,15 @@ public class CategoryController extends BaseController {
 
     @PostMapping(path = URLUtils.BUSINESS + "/{b_id}" + URLUtils.CATEGORY)
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDTO addCategory(@PathVariable(name = "b_id") Long id, @Valid CategoryDTO categoryDTO, @RequestParam("photo") MultipartFile multipartFile) throws IOException {
+    public CategoryDTO addCategory(
+            @PathVariable(name = "b_id") Long id,
+            @Valid CategoryDTO categoryDTO,
+            @RequestParam("photo") MultipartFile multipartFile,
+            BindingResult bindingResult
+    ) throws IOException {
+        if (bindingResult.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+
         if (businessService.findById(id) != null) {
             categoryDTO.setBusiness_id(id);
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

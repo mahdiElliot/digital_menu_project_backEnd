@@ -1,11 +1,9 @@
 package com.example.project.model.zone;
 
-import com.example.project.model.business.BusinessDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @Setter
 @Getter
