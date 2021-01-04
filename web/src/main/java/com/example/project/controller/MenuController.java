@@ -76,11 +76,20 @@ public class MenuController extends BaseController {
     }
 
     @PutMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.MENU + "/{id2}")
-    public MenuDTO updateMenu(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @Valid @RequestBody MenuDTO menuDTO) {
-        if (businessService.findById(id) != null) {
+    public MenuDTO updateMenu(
+            @PathVariable("id") Long id,
+            @PathVariable("id2") Long id2,
+            @Valid @RequestBody MenuDTOReceive menuDTO,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+
+        BusinessDTO businessDTO = businessService.findById(id);
+        if (businessDTO != null) {
             menuDTO.setBusiness_id(id);
             menuDTO.setId(id2);
-            return menuService.save(menuDTO.convertToMenuEntity(businessMapper()));
+            return menuService.save(menuDTO.convertToMenuEntity(businessDTO.convertToBusinessEntity()));
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business " + ErrorUtils.NOT_FOUND);
     }
