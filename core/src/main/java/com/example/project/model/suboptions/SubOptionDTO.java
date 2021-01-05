@@ -43,7 +43,7 @@ public class SubOptionDTO {
         this.option_id = option_id;
     }
 
-    public SubOption convertToSubOptionEntity(@NotNull Function<Long, Option> getOption) {
+    public SubOption convertToSubOptionEntity(Option option) {
         return new SubOption(
                 id,
                 price,
@@ -51,7 +51,7 @@ public class SubOptionDTO {
                 description,
                 enabled,
                 image,
-                getOption.apply(option_id)
+                option
         );
     }
 }

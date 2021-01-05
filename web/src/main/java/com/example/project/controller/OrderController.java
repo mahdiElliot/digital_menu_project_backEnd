@@ -1,9 +1,10 @@
 package com.example.project.controller;
 
 
+import com.example.project.model.business.Business;
 import com.example.project.model.order.Order;
 import com.example.project.model.order.OrderDTO;
-import com.example.project.model.order.OrderDTOReceive;
+import com.example.project.model.order.RequestOrderDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.product.Product;
@@ -42,18 +43,23 @@ public class OrderController extends BaseController {
         this.productService = productService;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public OrderDTO addOrder(@Valid @RequestBody OrderDTOReceive orderDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
-
-        Function<Long, PayMethod> payMethodMapper =
+    private Function<Long, PayMethod> payMethodMapper(Business business) {
+        return
                 ID -> {
                     PayMethodDTO payMethodDTO = payMethodService.findById(ID);
-                    return payMethodDTO == null ? null : payMethodDTO.convertToPayMethodEntity(businessMapper());
+                    if (payMethodDTO == null)
+                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "pay method " + ErrorUtils.NOT_FOUND);
+                    return payMethodDTO.convertToPayMethodEntity(business);
                 };
-        Order order = orderDTO.convertToOrderEntity(businessMapper(), payMethodMapper);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderDTO addOrder(@Valid @RequestBody RequestOrderDTO orderDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+        Business business = businessMapper().apply(orderDTO.getBusiness_id());
+        Order order = orderDTO.convertToOrderEntity(business, payMethodMapper(business).apply(orderDTO.getPaymethod_id()));
         Set<SpecificProduct> specificProducts = order.getSpecificProducts();
         for (SpecificProduct purchase : specificProducts) {
             int quantity = purchase.getQuantity();

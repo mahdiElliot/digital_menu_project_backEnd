@@ -1,5 +1,7 @@
 package com.example.project.controller;
 
+import com.example.project.model.business.Business;
+import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.paymethod.IPayMethodService;
@@ -28,10 +30,8 @@ public class PayMethodController extends BaseController {
     public PayMethodDTO addPayMethod(@PathVariable(name = "id") Long id, @Valid @RequestBody PayMethodDTO payMethodDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
-        if (businessService.findById(id) != null) {
-            payMethodDTO.setBusiness_id(id);
-            return payMethodService.save(payMethodDTO.convertToPayMethodEntity(businessMapper()));
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorUtils.NOT_FOUND);
+        payMethodDTO.setBusiness_id(id);
+        Business business = businessMapper().apply(id);
+        return payMethodService.save(payMethodDTO.convertToPayMethodEntity(business));
     }
 }

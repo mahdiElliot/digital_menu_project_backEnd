@@ -41,13 +41,13 @@ public class ExtraDTO {
         this.options = options;
     }
 
-    public Extra convertToExtraEntity(@NotNull Function<Long, Business> getBusiness) {
+    public Extra convertToExtraEntity(Business business) {
         return new Extra(
                 id,
                 name,
                 description,
                 enabled,
-                getBusiness.apply(business_id)
+                business
         );
     }
 }

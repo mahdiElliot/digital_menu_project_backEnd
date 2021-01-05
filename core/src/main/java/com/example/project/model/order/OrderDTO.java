@@ -55,9 +55,9 @@ public class OrderDTO {
         this.paymethod_id = paymethod_id;
     }
 
-    public Order convertToOrderEntity(@NotNull Function<Long, Business> getBusiness,
-                                      @NotNull Function<Long, Customer> getCustomer,
-                                      @NotNull Function<Long, PayMethod> getPayMethod) {
+    public Order convertToOrderEntity(@org.jetbrains.annotations.NotNull Function<Long, Business> getBusiness,
+                                      @org.jetbrains.annotations.NotNull Function<Long, Customer> getCustomer,
+                                      @org.jetbrains.annotations.NotNull Function<Long, PayMethod> getPayMethod) {
         Business business = getBusiness.apply(business_id);
         Order order = new Order(
                 id,
@@ -74,7 +74,7 @@ public class OrderDTO {
                     products == null ? null : products.stream().collect(Collectors.toMap(Product::getId, e -> e));
             Function<Long, Product> productMapper = id -> map == null ? null : map.get(id);
             order.setSpecificProducts(specificProducts.stream()
-                    .map(it -> it.convertToSpecificProductEntity(productMapper)).collect(Collectors.toSet()));
+                    .map(it -> it.convertToSpecificProductEntity(productMapper.apply(it.getId()))).collect(Collectors.toSet()));
         }
         return order;
     }

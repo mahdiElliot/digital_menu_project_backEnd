@@ -53,14 +53,13 @@ public class SpecificProductDTO {
         this.product_id = product_id;
     }
 
-    public SpecificProduct convertToSpecificProductEntity(@NotNull Function<Long, Product> getProduct) {
-        Product product = getProduct.apply(product_id);
-        price = product.getPrice();
+    public SpecificProduct convertToSpecificProductEntity(Product product) {
+        if (product != null)
+            price = product.getPrice();
         SpecificProduct specificProduct = new SpecificProduct(id, name, comment, quantity, price, product);
         if (options != null && !options.isEmpty()) {
-            Function<Long, Extra> extraMapper = id -> null;
             specificProduct.setOptions(options.stream()
-                    .map(it -> it.convertToOptionEntity(extraMapper)).collect(Collectors.toSet()));
+                    .map(it -> it.convertToOptionEntity(null)).collect(Collectors.toSet()));
         }
         return specificProduct;
     }

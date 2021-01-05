@@ -4,8 +4,7 @@ import com.example.project.model.business.Business;
 import com.example.project.model.customer.CustomerDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.product.Product;
-import com.example.project.model.specproduct.SpecificProductDTO;
-import com.example.project.model.specproduct.SpecificProductDTOReceive;
+import com.example.project.model.specproduct.RequestSpecificProductDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
-public class OrderDTOReceive {
+public class RequestOrderDTO {
     private long id;
 
     @NotNull
@@ -40,15 +39,13 @@ public class OrderDTOReceive {
 
     @NotNull
     @NotEmpty
-    Set<SpecificProductDTOReceive> specificProducts;
+    Set<RequestSpecificProductDTO> specificProducts;
 
-    public OrderDTOReceive() {
+    public RequestOrderDTO() {
         super();
     }
 
-    public Order convertToOrderEntity(@NotNull Function<Long, Business> getBusiness,
-                                      @NotNull Function<Long, PayMethod> getPayMethod) {
-        Business business = getBusiness.apply(business_id);
+    public Order convertToOrderEntity(Business business, PayMethod payMethod) {
         Order order = new Order(
                 id,
                 tax,
@@ -56,13 +53,12 @@ public class OrderDTOReceive {
                 comment,
                 business,
                 customer.convertToCustomerEntity(),
-                getPayMethod.apply(paymethod_id)
+                payMethod
         );
         Set<Product> products = business.getProducts();
         Map<Long, Product> map = products.stream().collect(Collectors.toMap(Product::getId, e -> e));
-        Function<Long, Product> productMapper = map::get;
         order.setSpecificProducts(specificProducts.stream()
-                .map(it -> it.convertToSpecificProductEntity(productMapper)).collect(Collectors.toSet()));
+                .map(it -> it.convertToSpecificProductEntity(map.get(it.getId()))).collect(Collectors.toSet()));
         return order;
     }
 }

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
-public class SpecificProductDTOReceive {
+public class RequestSpecificProductDTO {
     private long id;
 
     @NotNull
@@ -38,12 +38,11 @@ public class SpecificProductDTOReceive {
 
     private Set<Long> options;
 
-    public SpecificProductDTOReceive() {
+    public RequestSpecificProductDTO() {
         super();
     }
 
-    public SpecificProduct convertToSpecificProductEntity(@NotNull Function<Long, Product> getProduct) {
-        Product product = getProduct.apply(product_id);
+    public SpecificProduct convertToSpecificProductEntity(Product product) {
         price = product.getPrice();
         SpecificProduct specificProduct = new SpecificProduct(id, name, comment, quantity, price, product);
         if (options != null && !options.isEmpty()) {

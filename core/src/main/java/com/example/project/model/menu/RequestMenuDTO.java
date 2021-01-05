@@ -10,11 +10,12 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Setter
 @Getter
-public class MenuDTOReceive {
+public class RequestMenuDTO {
     private long id;
 
     @NotEmpty
@@ -28,7 +29,7 @@ public class MenuDTOReceive {
 
     private Set<Long> products;
 
-    public MenuDTOReceive() {
+    public RequestMenuDTO() {
         super();
     }
 

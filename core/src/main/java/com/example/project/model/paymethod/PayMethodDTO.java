@@ -23,7 +23,6 @@ public class PayMethodDTO {
     @NotNull
     private Boolean enabled;
 
-    @NotNull
     Long business_id;
 
     public PayMethodDTO() {
@@ -38,13 +37,13 @@ public class PayMethodDTO {
         this.business_id = business_id;
     }
 
-    public PayMethod convertToPayMethodEntity(@NotNull Function<Long, Business> getBusiness) {
+    public PayMethod convertToPayMethodEntity(Business business) {
         return new PayMethod(
                 id,
                 data,
                 name,
                 enabled,
-                getBusiness.apply(business_id)
+                business
         );
     }
 }

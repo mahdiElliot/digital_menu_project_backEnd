@@ -42,8 +42,7 @@ public class MenuDTO {
         this.products = products;
     }
 
-    public Menu convertToMenuEntity(@NotNull Function<Long, Business> getBusiness) {
-        Business business = getBusiness.apply(business_id);
+    public Menu convertToMenuEntity(Business business) {
         Menu menu = new Menu(id, name, enabled, business);
         if (products != null && !products.isEmpty()) {
             Set<Category> categories = business.getCategories();

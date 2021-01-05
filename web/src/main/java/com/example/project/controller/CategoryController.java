@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import com.example.project.model.business.Business;
 import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.category.CategoryDTO;
 import com.example.project.service.business.IBusinessService;
@@ -16,11 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.io.DataInput;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 
 @RestController
 public class CategoryController extends BaseController {
@@ -42,19 +41,15 @@ public class CategoryController extends BaseController {
     ) throws IOException {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
-
-        BusinessDTO businessDTO = businessService.findById(id);
-        if (businessDTO != null) {
-            categoryDTO.setBusiness_id(id);
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/photos/";
-            categoryDTO.setImage(uploadDir + fileName);
-            CategoryDTO categoryDTO2 =
-                    categoryService.save(categoryDTO.convertToCategoryEntity(businessDTO.convertToBusinessEntity()));
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-            return categoryDTO2;
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business " + ErrorUtils.NOT_FOUND);
+        Business business = businessMapper().apply(id);
+        categoryDTO.setBusiness_id(id);
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/photos/";
+        categoryDTO.setImage(uploadDir + fileName);
+        CategoryDTO categoryDTO2 =
+                categoryService.save(categoryDTO.convertToCategoryEntity(business));
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        return categoryDTO2;
     }
 
     @GetMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY)

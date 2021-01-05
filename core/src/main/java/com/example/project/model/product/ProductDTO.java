@@ -86,7 +86,7 @@ public class ProductDTO {
                     businesses == null ? null : businesses.stream().collect(Collectors.toMap(Business::getId, e -> e));
             Function<Long, Business> businessMapper = id -> map == null ? null : map.get(id);
             product.setExtras(extras.stream()
-                    .map(it -> it.convertToExtraEntity(businessMapper)).collect(Collectors.toSet()));
+                    .map(it -> it.convertToExtraEntity(businessMapper.apply(it.getId()))).collect(Collectors.toSet()));
         }
         return product;
     }

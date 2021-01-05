@@ -50,7 +50,7 @@ public class OptionDTO {
         this.extra_id = extra_id;
     }
 
-    public Option convertToOptionEntity(@NotNull Function<Long, Extra> getExtra) {
+    public Option convertToOptionEntity(Extra extra) {
         return new Option(
                 id,
                 name,
@@ -58,7 +58,7 @@ public class OptionDTO {
                 max,
                 enabled,
                 image,
-                getExtra.apply(extra_id)
+                extra
         );
     }
 }

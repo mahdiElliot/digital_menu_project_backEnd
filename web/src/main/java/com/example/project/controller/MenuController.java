@@ -3,7 +3,7 @@ package com.example.project.controller;
 import com.example.project.model.business.Business;
 import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.menu.MenuDTO;
-import com.example.project.model.menu.MenuDTOReceive;
+import com.example.project.model.menu.RequestMenuDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.menu.IMenuService;
 import com.example.project.utils.ErrorUtils;
@@ -31,18 +31,15 @@ public class MenuController extends BaseController {
     @ResponseStatus(HttpStatus.CREATED)
     public MenuDTO addMenu(
             @PathVariable("id") Long id,
-            @Valid @RequestBody MenuDTOReceive menuDTO,
+            @Valid @RequestBody RequestMenuDTO menuDTO,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
 
-        BusinessDTO businessDTO = businessService.findById(id);
-        if (businessDTO != null) {
-            menuDTO.setBusiness_id(id);
-            return menuService.save(menuDTO.convertToMenuEntity(businessDTO.convertToBusinessEntity()));
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business " + ErrorUtils.NOT_FOUND);
+        Business business = businessMapper().apply(id);
+        menuDTO.setBusiness_id(id);
+        return menuService.save(menuDTO.convertToMenuEntity(business));
     }
 
     @GetMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.MENU)
@@ -79,18 +76,15 @@ public class MenuController extends BaseController {
     public MenuDTO updateMenu(
             @PathVariable("id") Long id,
             @PathVariable("id2") Long id2,
-            @Valid @RequestBody MenuDTOReceive menuDTO,
+            @Valid @RequestBody RequestMenuDTO menuDTO,
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+        Business business = businessMapper().apply(id);
+        menuDTO.setBusiness_id(id);
+        menuDTO.setId(id2);
+        return menuService.save(menuDTO.convertToMenuEntity(business));
 
-        BusinessDTO businessDTO = businessService.findById(id);
-        if (businessDTO != null) {
-            menuDTO.setBusiness_id(id);
-            menuDTO.setId(id2);
-            return menuService.save(menuDTO.convertToMenuEntity(businessDTO.convertToBusinessEntity()));
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business " + ErrorUtils.NOT_FOUND);
     }
 }
