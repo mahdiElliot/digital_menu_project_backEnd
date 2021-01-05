@@ -1,7 +1,6 @@
 package com.example.project.controller;
 
 import com.example.project.model.business.Business;
-import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.paymethod.IPayMethodService;
