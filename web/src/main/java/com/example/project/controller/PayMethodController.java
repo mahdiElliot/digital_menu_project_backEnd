@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
-@RequestMapping(URLUtils.PAYMETHOD)
 @RestController
 public class PayMethodController extends BaseController {
     private final IPayMethodService payMethodService;
@@ -24,12 +23,15 @@ public class PayMethodController extends BaseController {
         this.payMethodService = payMethodService;
     }
 
-    @PostMapping
+    @PostMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.PAYMETHOD)
     @ResponseStatus(HttpStatus.CREATED)
-    public PayMethodDTO addPayMethod(@Valid @RequestBody PayMethodDTO payMethodDTO, BindingResult bindingResult) {
+    public PayMethodDTO addPayMethod(@PathVariable(name = "id") Long id, @Valid @RequestBody PayMethodDTO payMethodDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
-
-        return payMethodService.save(payMethodDTO.convertToPayMethodEntity(businessMapper()));
+        if (businessService.findById(id) != null) {
+            payMethodDTO.setBusiness_id(id);
+            return payMethodService.save(payMethodDTO.convertToPayMethodEntity(businessMapper()));
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorUtils.NOT_FOUND);
     }
 }
