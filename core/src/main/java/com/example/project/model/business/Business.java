@@ -37,7 +37,6 @@ public class Business {
 
     private Double tax;
 
-    @Column(nullable = false, unique = true)
     private String logo;
 
     @Column(nullable = false)

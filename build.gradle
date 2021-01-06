@@ -16,7 +16,6 @@ allprojects {
 }
 
 subprojects {
-	apply plugin: 'war'
 	apply plugin: 'java'
 	apply plugin: 'eclipse'
 	apply plugin: 'io.spring.dependency-management'
