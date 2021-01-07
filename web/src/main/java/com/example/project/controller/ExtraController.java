@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import com.example.project.model.business.Business;
 import com.example.project.model.extra.ExtraDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.extra.IExtraService;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping(URLUtils.EXTRA)
 @RestController
 public class ExtraController extends BaseController {
     private final IExtraService extraService;
@@ -19,9 +19,11 @@ public class ExtraController extends BaseController {
         this.extraService = extraService;
     }
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public ExtraDTO addExtra(@RequestBody ExtraDTO extraDTO) {
-//        return extraService.save(extraDTO.convertToExtraEntity(businessMapper()));
-//    }
+    @PostMapping(path = URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ExtraDTO addExtra(@PathVariable("b_id") Long id, @RequestBody ExtraDTO extraDTO) {
+        extraDTO.setBusiness_id(id);
+        Business business = businessMapper().apply(id);
+        return extraService.save(extraDTO.convertToExtraEntity(business));
+    }
 }

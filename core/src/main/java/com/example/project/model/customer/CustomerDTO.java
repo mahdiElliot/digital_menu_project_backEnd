@@ -16,11 +16,9 @@ public class CustomerDTO {
     private long id;
 
     @NotEmpty
-    @NotNull
     private String name;
 
     @NotEmpty
-    @NotNull
     @Email
     private String email;
 

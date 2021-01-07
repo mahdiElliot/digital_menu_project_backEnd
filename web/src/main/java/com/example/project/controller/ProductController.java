@@ -3,6 +3,7 @@ package com.example.project.controller;
 import com.example.project.model.business.Business;
 import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.category.CategoryDTO;
+import com.example.project.model.extra.ExtraDTO;
 import com.example.project.model.product.ProductDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.category.ICategoryService;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -70,11 +72,22 @@ public class ProductController extends BaseController {
 
     @GetMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
     public List<ProductDTO> getAllProducts(@PathVariable("id") Long id, @PathVariable("id2") Long id2) {
-        if (businessService.findById(id) != null && categoryService.findById(id) != null)
+        if (businessService.findById(id) != null && categoryService.findById(id2) != null)
             return productService.findAllByCategoryId(id2)
                     .stream().filter(it -> it.getQuantity() > 0).collect(Collectors.toList());
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
+    }
+
+    @PutMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT + "/{id3}")
+    public ProductDTO update(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @PathVariable("id3") Long id3, @RequestBody ProductDTO productDTO) {
+        Business business = businessMapper().apply(id);
+        CategoryDTO categoryDTO = categoryService.findById(id2);
+        if (categoryDTO != null) {
+            productDTO.setId(id3);
+            return productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category " + ErrorUtils.NOT_FOUND);
     }
 
 }

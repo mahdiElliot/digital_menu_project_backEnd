@@ -5,13 +5,16 @@ import com.example.project.model.product.ProductDTO;
 import com.example.project.repositories.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(isolation = Isolation.SERIALIZABLE)
 public class ProductService implements IProductService {
 
     private final ProductRepository repository;
@@ -54,7 +57,6 @@ public class ProductService implements IProductService {
         return null;
     }
 
-    @Transactional
     @Override
     public ProductDTO save(Product product) {
         return repository.save(product).convertToDTO();

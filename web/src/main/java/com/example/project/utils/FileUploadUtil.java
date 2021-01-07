@@ -14,7 +14,7 @@ public class FileUploadUtil {
 
     public static void saveFile(String uploadDir, String fileName,
                                 MultipartFile multipartFile) throws IOException {
-        String DIR = "public";
+        String DIR = "./public";
         Path uploadPath = Paths.get(DIR + uploadDir);
 //        Path uploadPath = Paths.get(uploadDir);
 
