@@ -5,10 +5,10 @@ import com.example.project.model.category.Category;
 import com.example.project.model.extra.ExtraDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class ProductDTO {
 
     private long id;
@@ -26,10 +27,8 @@ public class ProductDTO {
     private Double price;
 
     @NotNull
-    @Min(1)
     private Integer quantity;
 
-    @NotNull
     @NotEmpty
     private String name;
 
@@ -51,10 +50,6 @@ public class ProductDTO {
     @Nullable
     private Set<Business> businesses;
 
-    public ProductDTO() {
-        super();
-    }
-
     public ProductDTO(long id, double price, int quantity, String name, String description, String images,
                       boolean inventoried, boolean enabled, Long category_id, @Nullable Set<ExtraDTO> extras) {
         this.id = id;
@@ -70,17 +65,8 @@ public class ProductDTO {
     }
 
     public Product convertToProductEntity(Category category) {
-        Product product = new Product(
-                id,
-                price,
-                quantity,
-                name,
-                description,
-                images,
-                inventoried,
-                enabled,
-                category
-        );
+        Product product = new Product(id, price, quantity, name, description, images, inventoried, enabled, category);
+
         if (extras != null && !extras.isEmpty()) {
             Map<Long, Business> map =
                     businesses == null ? null : businesses.stream().collect(Collectors.toMap(Business::getId, e -> e));

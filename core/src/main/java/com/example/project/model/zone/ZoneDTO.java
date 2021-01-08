@@ -1,12 +1,16 @@
 package com.example.project.model.zone;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ZoneDTO {
     private long id;
 
@@ -18,24 +22,7 @@ public class ZoneDTO {
 
     private Double radius;
 
-
-    public ZoneDTO() {
-        super();
-    }
-
-    public ZoneDTO(long id, double price, boolean enabled, double radius) {
-        this.id = id;
-        this.price = price;
-        this.enabled = enabled;
-        this.radius = radius;
-    }
-
     public Zone convertToZoneEntity() {
-        return new Zone(
-                id,
-                price,
-                enabled,
-                radius
-        );
+        return new Zone(id, price, enabled, radius);
     }
 }

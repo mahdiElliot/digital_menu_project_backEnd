@@ -13,6 +13,7 @@ import com.example.project.model.product.ProductDTO;
 import com.example.project.model.zone.Zone;
 import com.example.project.model.zone.ZoneDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "business")
 public class Business {
@@ -41,6 +43,10 @@ public class Business {
 
     @Column(nullable = false)
     private Boolean enabled;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
 
     @OneToMany(mappedBy = "business")
     private Set<Menu> menus = new HashSet<>();
@@ -72,13 +78,6 @@ public class Business {
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
     private Set<Product> products = new HashSet<>();
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
-    private Location location;
-
-    public Business() {
-    }
 
     public Business(long id, String name, double serviceFee, double tax, String logo, boolean enabled,
                     Location location) {

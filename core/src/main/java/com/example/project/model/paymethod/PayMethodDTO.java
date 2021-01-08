@@ -1,22 +1,23 @@
 package com.example.project.model.paymethod;
 
 import com.example.project.model.business.Business;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.function.Function;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PayMethodDTO {
 
     private long id;
 
     private String data;
 
-    @NotNull
     @NotEmpty
     private String name;
 
@@ -25,25 +26,7 @@ public class PayMethodDTO {
 
     Long business_id;
 
-    public PayMethodDTO() {
-        super();
-    }
-
-    public PayMethodDTO(long id, String data, String name, boolean enabled, Long business_id) {
-        this.id = id;
-        this.data = data;
-        this.name = name;
-        this.enabled = enabled;
-        this.business_id = business_id;
-    }
-
     public PayMethod convertToPayMethodEntity(Business business) {
-        return new PayMethod(
-                id,
-                data,
-                name,
-                enabled,
-                business
-        );
+        return new PayMethod(id, data, name, enabled, business);
     }
 }

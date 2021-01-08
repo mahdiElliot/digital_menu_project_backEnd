@@ -3,8 +3,8 @@ package com.example.project.model.paymethod;
 import com.example.project.model.business.Business;
 import com.example.project.model.order.Order;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +12,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "pay_method")
 public class PayMethod {
     @Id
@@ -34,9 +35,6 @@ public class PayMethod {
     @OneToMany(mappedBy = "payMethod")
     private Set<Order> orders = new HashSet<>();
 
-    public PayMethod() {
-    }
-
     public PayMethod(long id, String data, String name, boolean enabled, Business business) {
         this.id = id;
         this.data = data;
@@ -49,12 +47,6 @@ public class PayMethod {
         Long businessId = null;
         if (business != null)
             businessId = business.getId();
-        return new PayMethodDTO(
-                id,
-                data,
-                name,
-                enabled,
-                businessId
-        );
+        return new PayMethodDTO(id, data, name, enabled, businessId);
     }
 }

@@ -1,22 +1,24 @@
 package com.example.project.model.suboptions;
 
 import com.example.project.model.option.Option;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.function.Function;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SubOptionDTO {
     private long id;
 
     @NotNull
     private Double price;
 
-    @NotNull
     @NotEmpty
     private String name;
 
@@ -29,29 +31,7 @@ public class SubOptionDTO {
 
     private Long option_id;
 
-    public SubOptionDTO() {
-        super();
-    }
-
-    public SubOptionDTO(long id, double price, String name, String description, boolean enabled, String image, Long option_id) {
-        this.id = id;
-        this.price = price;
-        this.name = name;
-        this.description = description;
-        this.enabled = enabled;
-        this.image = image;
-        this.option_id = option_id;
-    }
-
     public SubOption convertToSubOptionEntity(Option option) {
-        return new SubOption(
-                id,
-                price,
-                name,
-                description,
-                enabled,
-                image,
-                option
-        );
+        return new SubOption(id, price, name, description, enabled, image, option);
     }
 }

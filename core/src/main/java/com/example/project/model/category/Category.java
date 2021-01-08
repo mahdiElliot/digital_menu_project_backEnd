@@ -4,6 +4,7 @@ import com.example.project.model.business.Business;
 import com.example.project.model.product.Product;
 import com.example.project.model.product.ProductDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "category")
 public class Category {
@@ -38,9 +40,6 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<Product> products = new HashSet<>();
 
-    public Category() {
-    }
-
     public Category(long id, String name, int rank, boolean enabled, String image, Business business) {
         this.id = id;
         this.name = name;
@@ -59,14 +58,6 @@ public class Category {
         if (products != null)
             productDTOS = products.stream().map(Product::convertToDTO).collect(Collectors.toSet());
 
-        return new CategoryDTO(
-                id,
-                name,
-                rank,
-                enabled,
-                image,
-                businessId,
-                productDTOS
-        );
+        return new CategoryDTO(id, name, rank, enabled, image, businessId, productDTOS);
     }
 }

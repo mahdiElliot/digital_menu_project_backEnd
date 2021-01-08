@@ -5,6 +5,7 @@ import com.example.project.model.option.OptionDTO;
 import com.example.project.model.order.Order;
 import com.example.project.model.product.Product;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "specific_product")
 public class SpecificProduct {
@@ -26,6 +28,7 @@ public class SpecificProduct {
 
     private String comment;
 
+    @Column(nullable = false)
     private Integer quantity;
 
     private Double price;
@@ -45,9 +48,6 @@ public class SpecificProduct {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    public SpecificProduct() {
-    }
-
     public SpecificProduct(long id, String name, String comment, int quantity, double price, Product product) {
         this.id = id;
         this.comment = comment;
@@ -61,14 +61,7 @@ public class SpecificProduct {
         Set<OptionDTO> optionDTOS = null;
         if (options != null)
             optionDTOS = options.stream().map(Option::convertToDTO).collect(Collectors.toSet());
-        return new SpecificProductDTO(
-                id,
-                name,
-                comment,
-                quantity,
-                price,
-                product.getId(),
-                optionDTOS
-        );
+
+        return new SpecificProductDTO(id, name, comment, quantity, price, product.getId(), optionDTOS);
     }
 }

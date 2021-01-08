@@ -8,6 +8,7 @@ import com.example.project.model.product.ProductDTO;
 import com.example.project.model.zone.ZoneDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,12 +21,12 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class BusinessDTO {
 
     private long id;
 
     @NotEmpty
-    @NotNull
     private String name;
 
     @NotNull
@@ -50,11 +51,7 @@ public class BusinessDTO {
     @Nullable
     private Set<Category> categories;
 
-    public BusinessDTO() {
-        super();
-    }
-
-    public BusinessDTO(long id, @NotNull String name, double service_fee, double tax, @NotNull String logo, boolean enabled,
+    public BusinessDTO(long id, String name, double service_fee, double tax, String logo, boolean enabled,
                        LocationDTO location, @Nullable Set<ZoneDTO> zones,
                        @Nullable Set<PayMethodDTO> payMethods, @Nullable Set<ProductDTO> products) {
         this.id = id;

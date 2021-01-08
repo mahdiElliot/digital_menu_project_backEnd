@@ -7,9 +7,7 @@ import com.example.project.model.specproduct.SpecificProduct;
 import com.example.project.model.specproduct.SpecificProductDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,8 +37,6 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @NotNull
-    @NotEmpty
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "order_sproduct",
@@ -52,9 +48,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "paymethod_id", nullable = false)
     private PayMethod payMethod;
-
-    public Order() {
-    }
 
     public Order(long id, double tax, int tableNumber, String comment, Business business, Customer customer, PayMethod payMethod) {
         this.id = id;
@@ -75,15 +68,8 @@ public class Order {
             customerId = customer.getId();
         Set<SpecificProductDTO> specificProductDTOS =
                 specificProducts.stream().map(SpecificProduct::convertToDTO).collect(Collectors.toSet());
-        OrderDTO orderDTO = new OrderDTO(
-                id,
-                tax,
-                tableNumber,
-                comment,
-                businessId,
-                customerId,
-                payMethod.getId()
-        );
+
+        OrderDTO orderDTO = new OrderDTO(id, tax, tableNumber, comment, businessId, customerId, payMethod.getId());
         orderDTO.setSpecificProducts(specificProductDTOS);
         return orderDTO;
     }

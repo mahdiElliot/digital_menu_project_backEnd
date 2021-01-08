@@ -4,6 +4,7 @@ import com.example.project.model.business.Business;
 import com.example.project.model.product.Product;
 import com.example.project.model.product.ProductDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "menu")
 public class Menu {
     @Id
@@ -39,10 +41,6 @@ public class Menu {
     )
     private Set<Product> products = new HashSet<>();
 
-
-    public Menu() {
-    }
-
     public Menu(long id, String name, boolean enabled, Business business) {
         this.id = id;
         this.name = name;
@@ -58,12 +56,7 @@ public class Menu {
         Long businessId = null;
         if (business != null)
             businessId = business.getId();
-        return new MenuDTO(
-                id,
-                name,
-                enabled,
-                businessId,
-                productDTOS
-        );
+
+        return new MenuDTO(id, name, enabled, businessId, productDTOS);
     }
 }

@@ -4,6 +4,7 @@ import com.example.project.model.extra.Extra;
 import com.example.project.model.option.Option;
 import com.example.project.model.product.Product;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Min;
@@ -12,15 +13,14 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class RequestSpecificProductDTO {
     private long id;
 
-    @NotNull
     @NotEmpty
     private String name;
 
@@ -37,10 +37,6 @@ public class RequestSpecificProductDTO {
     private Long product_id;
 
     private Set<Long> options;
-
-    public RequestSpecificProductDTO() {
-        super();
-    }
 
     public SpecificProduct convertToSpecificProductEntity(Product product) {
         price = product.getPrice();

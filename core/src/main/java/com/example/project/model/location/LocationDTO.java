@@ -5,13 +5,17 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class LocationDTO {
 
     private long id;
@@ -22,23 +26,10 @@ public class LocationDTO {
     @NotNull
     private Double lng;
 
-    @NotNull
     private Integer zipcode;
 
     @NotNull
     private Integer zoom;
-
-    public LocationDTO() {
-        super();
-    }
-
-    public LocationDTO(long id, double lat, double lng, int zipcode, int zoom) {
-        this.id = id;
-        this.lat = lat;
-        this.lng = lng;
-        this.zipcode = zipcode;
-        this.zoom = zoom;
-    }
 
     public Location convertToLocationEntity() {
         Geometry location = null;

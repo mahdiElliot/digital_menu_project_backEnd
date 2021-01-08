@@ -3,8 +3,8 @@ package com.example.project.model.customer;
 
 import com.example.project.model.order.Order;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -28,7 +29,6 @@ public class Customer {
     private String name;
 
     @NotEmpty
-    @NotNull
     @Email
     private String email;
 
@@ -36,9 +36,6 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private Set<Order> orders = new HashSet<>();
-
-    public Customer() {
-    }
 
     public Customer(Long id, String name, String email, String phoneNumber) {
         this.id = id;

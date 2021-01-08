@@ -7,17 +7,17 @@ import com.example.project.model.extra.ExtraDTO;
 import com.example.project.model.menu.Menu;
 import com.example.project.model.specproduct.SpecificProduct;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "product")
 public class Product {
@@ -29,8 +29,7 @@ public class Product {
 
     private Double price;
 
-    @NotNull
-    @Min(1)
+    @Column(nullable = false)
     private Integer quantity;
 
     private String name;
@@ -61,9 +60,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private Set<SpecificProduct> products = new HashSet<>();
 
-    public Product() {
-    }
-
     public Product(long id, double price, int quantity, String name, String description, String images,
                    boolean inventoried, boolean enabled, Category category) {
         this.id = id;
@@ -84,18 +80,9 @@ public class Product {
 
         Long categoryId = null;
         if (category != null) categoryId = category.getId();
-        ProductDTO productDTO = new ProductDTO(
-                id,
-                price,
-                quantity,
-                name,
-                description,
-                images,
-                inventoried,
-                enabled,
-                categoryId,
-                extraDTOS
-        );
+
+        ProductDTO productDTO =
+                new ProductDTO(id, price, quantity, name, description, images, inventoried, enabled, categoryId, extraDTOS);
         if (businesses != null) productDTO.setBusinesses(businesses);
         return productDTO;
     }

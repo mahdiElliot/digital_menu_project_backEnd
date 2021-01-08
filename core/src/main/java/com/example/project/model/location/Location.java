@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Geometry;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "location")
 public class Location {
 
@@ -36,9 +38,6 @@ public class Location {
     @OneToOne(mappedBy = "location")
     private Business business;
 
-    public Location() {
-    }
-
     public Location(long id, int zipcode, int zoom, Geometry location) {
         this.id = id;
         this.zipcode = zipcode;
@@ -49,8 +48,6 @@ public class Location {
     public LocationDTO convertToDTO() {
         double lat = location.getCoordinate().y;
         double lng = location.getCoordinate().x;
-        return new LocationDTO(
-                id, lat, lng, zipcode, zoom
-        );
+        return new LocationDTO(id, lat, lng, zipcode, zoom);
     }
 }

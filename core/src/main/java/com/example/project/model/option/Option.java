@@ -6,6 +6,7 @@ import com.example.project.model.specproduct.SpecificProduct;
 import com.example.project.model.suboptions.SubOption;
 import com.example.project.model.suboptions.SubOptionDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "option")
 public class Option {
 
@@ -47,9 +49,6 @@ public class Option {
     @ManyToMany(mappedBy = "options")
     private Set<SpecificProduct> specificProducts = new HashSet<>();
 
-    public Option() {
-    }
-
     public Option(long id, String name, int min, int max, boolean enabled, String image, Extra extra) {
         this.id = id;
         this.name = name;
@@ -68,15 +67,7 @@ public class Option {
         Long extraId = null;
         if (extra != null)
             extraId = extra.getId();
-        return new OptionDTO(
-                id,
-                name,
-                min,
-                max,
-                enabled,
-                image,
-                subOptionDTOS,
-                extraId
-        );
+
+        return new OptionDTO(id, name, min, max, enabled, image, subOptionDTOS, extraId);
     }
 }

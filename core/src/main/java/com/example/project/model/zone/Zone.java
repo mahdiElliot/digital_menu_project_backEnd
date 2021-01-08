@@ -2,6 +2,7 @@ package com.example.project.model.zone;
 
 import com.example.project.model.business.Business;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "zone")
 public class Zone {
@@ -28,9 +30,6 @@ public class Zone {
     @ManyToMany(mappedBy = "zones")
     Set<Business> businesses = new HashSet<>();
 
-    public Zone() {
-    }
-
     public Zone(long id, double price, boolean enabled, double radius) {
         this.id = id;
         this.price = price;
@@ -39,12 +38,6 @@ public class Zone {
     }
 
     public ZoneDTO convertToDTO() {
-        return new ZoneDTO(
-                id,
-                price,
-                enabled,
-                radius
-        );
+        return new ZoneDTO(id, price, enabled, radius);
     }
-
 }

@@ -5,6 +5,7 @@ import com.example.project.model.option.Option;
 import com.example.project.model.option.OptionDTO;
 import com.example.project.model.product.Product;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "extra")
 public class Extra {
@@ -45,9 +47,6 @@ public class Extra {
     )
     private Set<Product> products = new HashSet<>();
 
-    public Extra() {
-    }
-
     public Extra(long id, String name, String description, boolean enabled, Business business) {
         this.id = id;
         this.name = name;
@@ -63,13 +62,6 @@ public class Extra {
         Long businessId = null;
         if (business != null)
             businessId = business.getId();
-        return new ExtraDTO(
-                id,
-                name,
-                description,
-                enabled,
-                businessId,
-                optionDTOS
-        );
+        return new ExtraDTO(id, name, description, enabled, businessId, optionDTOS);
     }
 }
