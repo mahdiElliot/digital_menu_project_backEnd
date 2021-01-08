@@ -36,7 +36,8 @@ public class BusinessController extends BaseController {
     public BusinessDTO addBusiness(
             @Valid BusinessDTO businessDTO,
             @RequestParam("img_logo") MultipartFile multipartFile,
-            @RequestParam("loc") String location, BindingResult bindingResult
+            @RequestParam("loc") String location,
+            BindingResult bindingResult
     ) throws IOException {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
