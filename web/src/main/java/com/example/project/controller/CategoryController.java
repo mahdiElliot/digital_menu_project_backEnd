@@ -38,17 +38,7 @@ public class CategoryController extends BaseController {
             @RequestParam("photo") MultipartFile multipartFile,
             BindingResult bindingResult
     ) throws IOException {
-        if (bindingResult.hasErrors())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
-        Business business = businessMapper().apply(id);
-        categoryDTO.setBusiness_id(id);
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/photos/";
-        categoryDTO.setImage(uploadDir + fileName);
-        CategoryDTO categoryDTO2 =
-                categoryService.save(categoryDTO.convertToCategoryEntity(business));
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        return categoryDTO2;
+        return saveUpdate(id, categoryDTO, multipartFile, bindingResult);
     }
 
     @GetMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY)
@@ -78,5 +68,31 @@ public class CategoryController extends BaseController {
             return categoryDTO;
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business " + ErrorUtils.NOT_FOUND);
+    }
+
+    @PutMapping(path = URLUtils.BUSINESS + "/{b_id}" + URLUtils.CATEGORY + "/{c_id}")
+    public CategoryDTO updateCategory(
+            @PathVariable(name = "b_id") Long id,
+            @PathVariable(name = "c_id") Long id2,
+            @Valid CategoryDTO categoryDTO,
+            @RequestParam("photo") MultipartFile multipartFile,
+            BindingResult bindingResult
+    ) throws IOException {
+        categoryDTO.setId(id2);
+        return saveUpdate(id, categoryDTO, multipartFile, bindingResult);
+    }
+
+    private CategoryDTO saveUpdate(Long id, CategoryDTO categoryDTO, MultipartFile multipartFile, BindingResult bindingResult) throws IOException {
+        if (bindingResult.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+        Business business = businessMapper().apply(id);
+        categoryDTO.setBusiness_id(id);
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/photos/";
+        categoryDTO.setImage(uploadDir + fileName);
+        CategoryDTO categoryDTO2 =
+                categoryService.save(categoryDTO.convertToCategoryEntity(business));
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        return categoryDTO2;
     }
 }

@@ -66,8 +66,8 @@ public class Business {
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "business_zone",
-            joinColumns = {@JoinColumn(name = "zone_id")},
-            inverseJoinColumns = {@JoinColumn(name = "business_id")}
+            joinColumns = {@JoinColumn(name = "business_id")},
+            inverseJoinColumns = {@JoinColumn(name = "zone_id")}
     )
     private Set<Zone> zones = new HashSet<>();
 

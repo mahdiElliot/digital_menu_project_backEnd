@@ -2,10 +2,12 @@ package com.example.project.controller;
 
 import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.location.LocationDTO;
+import com.example.project.model.zone.ZoneDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.utils.ErrorUtils;
 import com.example.project.utils.FileUploadUtil;
 import com.example.project.utils.URLUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Slf4j
 @RequestMapping(URLUtils.BUSINESS)
@@ -37,22 +40,10 @@ public class BusinessController extends BaseController {
             @Valid BusinessDTO businessDTO,
             @RequestParam("img_logo") MultipartFile multipartFile,
             @RequestParam("loc") String location,
+            @RequestParam("Zone") String zones,
             BindingResult bindingResult
     ) throws IOException {
-        if (bindingResult.hasErrors())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
-
-        if (!location.isBlank()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            LocationDTO locationDTO = objectMapper.readValue(location, LocationDTO.class);
-            businessDTO.setLocation(locationDTO);
-        }
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        String uploadDir = URLUtils.BUSINESS + "/photos/";
-        businessDTO.setLogo(uploadDir + fileName);
-        BusinessDTO businessDTO2 = businessService.save(businessDTO.convertToBusinessEntity());
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        return businessDTO2;
+        return saveUpdate(businessDTO, multipartFile, location, zones, bindingResult);
     }
 
     @GetMapping
@@ -76,9 +67,40 @@ public class BusinessController extends BaseController {
         return businessDTO;
     }
 
-    @PutMapping(path = "{id}")
-    public BusinessDTO updateBusiness(@PathVariable("id") Long id, @Valid @RequestBody BusinessDTO businessDTO) {
+    @PutMapping(path = "/{id}")
+    public BusinessDTO updateBusiness(
+            @PathVariable("id") Long id,
+            @Valid BusinessDTO businessDTO,
+            @RequestParam("img_logo") MultipartFile multipartFile,
+            @RequestParam("loc") String location,
+            @RequestParam("Zone") String zones,
+            BindingResult bindingResult
+    ) throws IOException {
         businessDTO.setId(id);
-        return businessService.save(businessDTO.convertToBusinessEntity());
+        return saveUpdate(businessDTO, multipartFile, location, zones, bindingResult);
+    }
+
+    private BusinessDTO saveUpdate(BusinessDTO businessDTO, MultipartFile multipartFile, String location, String zones, BindingResult bindingResult) throws IOException {
+        if (bindingResult.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+
+        if (!zones.isBlank()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Set<ZoneDTO> zoneSet = objectMapper.readValue(zones, new TypeReference<>() {
+            });
+            businessDTO.setZones(zoneSet);
+        }
+
+        if (!location.isBlank()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            LocationDTO locationDTO = objectMapper.readValue(location, LocationDTO.class);
+            businessDTO.setLocation(locationDTO);
+        }
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String uploadDir = URLUtils.BUSINESS + "/photos/";
+        businessDTO.setLogo(uploadDir + fileName);
+        BusinessDTO businessDTO2 = businessService.save(businessDTO.convertToBusinessEntity());
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        return businessDTO2;
     }
 }

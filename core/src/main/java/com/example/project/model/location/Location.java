@@ -31,7 +31,7 @@ public class Location {
 
     @JsonSerialize(using = GeometrySerializer.class)
     @JsonDeserialize(using = GeometryDeserializer.class)
-    @Column(name = "geometry")
+    @Column(name = "geometry", unique = true)
     @Type(type = "com.vividsolutions.jts.geom.Geometry")
     private Geometry location;
 
