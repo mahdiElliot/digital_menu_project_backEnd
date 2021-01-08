@@ -72,6 +72,23 @@ public class SubOptionController extends BaseController {
             @Valid SubOptionDTO subOptionDTO,
             @RequestParam("photo") MultipartFile multipartFile
     ) throws IOException {
+        return saveUpdate(id, id2, id3, subOptionDTO, multipartFile);
+    }
+
+    @PutMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION + "/{o_id}" + URLUtils.SUBOPTION + "/{s_id}")
+    public SubOptionDTO updateSubOption(
+            @PathVariable(name = "b_id") Long id,
+            @PathVariable(name = "e_id") Long id2,
+            @PathVariable(name = "o_id") Long id3,
+            @PathVariable(name = "s_id") Long id4,
+            @Valid SubOptionDTO subOptionDTO,
+            @RequestParam("photo") MultipartFile multipartFile
+    ) throws IOException {
+        subOptionDTO.setId(id4);
+        return saveUpdate(id, id2, id3, subOptionDTO, multipartFile);
+    }
+
+    private SubOptionDTO saveUpdate(Long id, Long id2, Long id3, @Valid SubOptionDTO subOptionDTO, MultipartFile multipartFile) throws IOException {
         Business business = businessMapper().apply(id);
         Extra extra = extraMapper(business).apply(id2);
         subOptionDTO.setOption_id(id3);

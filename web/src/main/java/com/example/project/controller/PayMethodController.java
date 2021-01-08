@@ -33,4 +33,19 @@ public class PayMethodController extends BaseController {
         Business business = businessMapper().apply(id);
         return payMethodService.save(payMethodDTO.convertToPayMethodEntity(business));
     }
+
+    @PutMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.PAYMETHOD + "/{id2}")
+    public PayMethodDTO updatePayMethod(
+            @PathVariable(name = "id") Long id,
+            @PathVariable(name = "id2") Long id2,
+            @Valid @RequestBody PayMethodDTO payMethodDTO,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+        payMethodDTO.setBusiness_id(id);
+        Business business = businessMapper().apply(id);
+        payMethodDTO.setId(id2);
+        return payMethodService.save(payMethodDTO.convertToPayMethodEntity(business));
+    }
 }

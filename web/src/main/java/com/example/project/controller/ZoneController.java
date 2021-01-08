@@ -22,4 +22,10 @@ public class ZoneController {
     public ZoneDTO addZone(@RequestBody ZoneDTO zoneDTO) {
         return zoneService.save(zoneDTO.convertToZoneEntity());
     }
+
+    @PutMapping(path = "/{id}")
+    public ZoneDTO updateZone(@PathVariable Long id, @RequestBody ZoneDTO zoneDTO) {
+        zoneDTO.setId(id);
+        return zoneService.save(zoneDTO.convertToZoneEntity());
+    }
 }

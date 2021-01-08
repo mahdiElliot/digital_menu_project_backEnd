@@ -26,4 +26,12 @@ public class ExtraController extends BaseController {
         Business business = businessMapper().apply(id);
         return extraService.save(extraDTO.convertToExtraEntity(business));
     }
+
+    @PutMapping(path = URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{id}")
+    public ExtraDTO updateExtra(@PathVariable("b_id") Long bId, @PathVariable("id") Long id, @RequestBody ExtraDTO extraDTO) {
+        extraDTO.setBusiness_id(bId);
+        Business business = businessMapper().apply(id);
+        extraDTO.setId(id);
+        return extraService.save(extraDTO.convertToExtraEntity(business));
+    }
 }
