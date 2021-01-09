@@ -51,4 +51,9 @@ public class BusinessService implements IBusinessService {
     public BusinessDTO save(Business business) {
         return businessRepository.save(business).convertToDTO();
     }
+
+    @Override
+    public BusinessDTO update(Business business) {
+        return businessRepository.update(business).convertToDTO();
+    }
 }

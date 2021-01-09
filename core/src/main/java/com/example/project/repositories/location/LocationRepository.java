@@ -12,4 +12,6 @@ public interface LocationRepository {
     void deleteById(Long id);
 
     Location save(Location location);
+
+    Location update(Location location);
 }

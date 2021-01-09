@@ -38,12 +38,13 @@ public class BusinessController extends BaseController {
     @ResponseStatus(HttpStatus.CREATED)
     public BusinessDTO addBusiness(
             @Valid BusinessDTO businessDTO,
-            @RequestParam("img_logo") MultipartFile multipartFile,
-            @RequestParam("loc") String location,
-            @RequestParam("Zone") String zones,
+            @RequestParam(name = "img_logo", required = false) MultipartFile multipartFile,
+            @RequestParam(name = "loc", required = false) String location,
+            @RequestParam(name = "zone", required = false) String zones,
             BindingResult bindingResult
     ) throws IOException {
-        return saveUpdate(businessDTO, multipartFile, location, zones, bindingResult);
+        businessDTO.setId(0);
+        return saveUpdate(businessDTO, multipartFile, location, zones, bindingResult, false);
     }
 
     @GetMapping
@@ -71,35 +72,38 @@ public class BusinessController extends BaseController {
     public BusinessDTO updateBusiness(
             @PathVariable("id") Long id,
             @Valid BusinessDTO businessDTO,
-            @RequestParam("img_logo") MultipartFile multipartFile,
-            @RequestParam("loc") String location,
-            @RequestParam("Zone") String zones,
+            @RequestParam(name = "img_logo", required = false) MultipartFile multipartFile,
+            @RequestParam(name = "loc", required = false) String location,
+            @RequestParam(name = "zone", required = false) String zones,
             BindingResult bindingResult
     ) throws IOException {
         businessDTO.setId(id);
-        return saveUpdate(businessDTO, multipartFile, location, zones, bindingResult);
+        return saveUpdate(businessDTO, multipartFile, location, zones, bindingResult, true);
     }
 
-    private BusinessDTO saveUpdate(BusinessDTO businessDTO, MultipartFile multipartFile, String location, String zones, BindingResult bindingResult) throws IOException {
+    private BusinessDTO saveUpdate(BusinessDTO businessDTO, MultipartFile multipartFile, String location, String zones, BindingResult bindingResult, boolean update) throws IOException {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
 
-        if (!zones.isBlank()) {
+        if (zones != null && !zones.isBlank()) {
             ObjectMapper objectMapper = new ObjectMapper();
             Set<ZoneDTO> zoneSet = objectMapper.readValue(zones, new TypeReference<>() {
             });
             businessDTO.setZones(zoneSet);
         }
 
-        if (!location.isBlank()) {
+        if (location != null && !location.isBlank()) {
             ObjectMapper objectMapper = new ObjectMapper();
             LocationDTO locationDTO = objectMapper.readValue(location, LocationDTO.class);
             businessDTO.setLocation(locationDTO);
         }
+
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         String uploadDir = URLUtils.BUSINESS + "/photos/";
         businessDTO.setLogo(uploadDir + fileName);
-        BusinessDTO businessDTO2 = businessService.save(businessDTO.convertToBusinessEntity());
+        BusinessDTO businessDTO2 = update ?
+                businessService.update(businessDTO.convertToBusinessEntity()) :
+                businessService.save(businessDTO.convertToBusinessEntity());
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return businessDTO2;
     }

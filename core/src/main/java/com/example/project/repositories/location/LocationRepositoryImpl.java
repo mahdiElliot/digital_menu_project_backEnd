@@ -112,4 +112,15 @@ public class LocationRepositoryImpl implements LocationRepository {
             location.setId(Objects.requireNonNull(generatedKeyHolder.getKey()).longValue());
         return location;
     }
+
+    @Override
+    public Location update(Location location) {
+        String sql = "UPDATE location SET  " +
+                "zipcode=?, zoom=?, geometry=st_geometryfromtext(?,4326)";
+        int effectedRows = jdbcTemplate.update(sql,
+                location.getZipcode(), location.getZoom(), location.getLocation().toString()
+        );
+        if (effectedRows == 0) return null;
+        return location;
+    }
 }
