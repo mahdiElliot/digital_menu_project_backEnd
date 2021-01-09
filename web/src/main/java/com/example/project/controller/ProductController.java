@@ -53,6 +53,7 @@ public class ProductController extends BaseController {
 
         BusinessDTO businessDTO = businessService.findById(id);
         CategoryDTO categoryDTO = categoryService.findById(id2);
+        productDTO.setId(0);
         if (businessDTO != null && categoryDTO != null) {
             productDTO.setCategory_id(id2);
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

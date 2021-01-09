@@ -38,6 +38,7 @@ public class MenuController extends BaseController {
 
         Business business = businessMapper().apply(id);
         menuDTO.setBusiness_id(id);
+        menuDTO.setId(0);
         return menuService.save(menuDTO.convertToMenuEntity(business));
     }
 
@@ -84,6 +85,5 @@ public class MenuController extends BaseController {
         menuDTO.setBusiness_id(id);
         menuDTO.setId(id2);
         return menuService.save(menuDTO.convertToMenuEntity(business));
-
     }
 }

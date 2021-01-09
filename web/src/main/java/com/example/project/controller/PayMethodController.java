@@ -30,6 +30,7 @@ public class PayMethodController extends BaseController {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
         payMethodDTO.setBusiness_id(id);
+        payMethodDTO.setId(0);
         Business business = businessMapper().apply(id);
         return payMethodService.save(payMethodDTO.convertToPayMethodEntity(business));
     }

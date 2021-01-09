@@ -52,6 +52,7 @@ public class OptionController extends BaseController {
             @Valid OptionDTO optionDTO,
             @RequestParam("photo") MultipartFile multipartFile
     ) throws IOException {
+        optionDTO.setId(0);
         return saveUpdate(id, id2, optionDTO, multipartFile);
     }
 

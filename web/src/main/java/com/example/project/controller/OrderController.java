@@ -58,6 +58,7 @@ public class OrderController extends BaseController {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
         Business business = businessMapper().apply(orderDTO.getBusiness_id());
+        orderDTO.setId(0);
         Order order = orderDTO.convertToOrderEntity(business, payMethodMapper(business).apply(orderDTO.getPaymethod_id()));
         Set<SpecificProduct> specificProducts = order.getSpecificProducts();
         for (SpecificProduct purchase : specificProducts) {

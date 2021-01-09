@@ -38,6 +38,7 @@ public class CategoryController extends BaseController {
             @RequestParam("photo") MultipartFile multipartFile,
             BindingResult bindingResult
     ) throws IOException {
+        categoryDTO.setId(0);
         return saveUpdate(id, categoryDTO, multipartFile, bindingResult);
     }
 

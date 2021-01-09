@@ -85,6 +85,7 @@ public class SubOptionController extends BaseController {
             @RequestParam("photo") MultipartFile multipartFile
     ) throws IOException {
         subOptionDTO.setId(id4);
+        subOptionDTO.setId(0);
         return saveUpdate(id, id2, id3, subOptionDTO, multipartFile);
     }
 
