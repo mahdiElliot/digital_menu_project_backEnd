@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = URLUtils.BASE)
 @RestController
 public class ExtraController extends BaseController {
     private final IExtraService extraService;

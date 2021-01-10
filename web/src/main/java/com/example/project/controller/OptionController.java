@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Function;
 
+@CrossOrigin(origins = URLUtils.BASE)
 @RestController
 public class OptionController extends BaseController {
     protected final IOptionService optionService;
