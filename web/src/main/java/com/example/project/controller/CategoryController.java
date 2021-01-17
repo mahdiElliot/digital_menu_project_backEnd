@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-@CrossOrigin(origins = URLUtils.BASE)
 @RestController
 public class CategoryController extends BaseController {
     private final ICategoryService categoryService;
@@ -39,7 +38,6 @@ public class CategoryController extends BaseController {
             @RequestParam("photo") MultipartFile multipartFile,
             BindingResult bindingResult
     ) throws IOException {
-        categoryDTO.setId(0);
         return saveUpdate(id, categoryDTO, multipartFile, bindingResult);
     }
 
@@ -89,12 +87,16 @@ public class CategoryController extends BaseController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
         Business business = businessMapper().apply(id);
         categoryDTO.setBusiness_id(id);
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/photos/";
-        categoryDTO.setImage(uploadDir + fileName);
-        CategoryDTO categoryDTO2 =
-                categoryService.save(categoryDTO.convertToCategoryEntity(business));
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        return categoryDTO2;
+        if (multipartFile != null) {
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/photos/";
+            categoryDTO.setImage(uploadDir + fileName);
+            CategoryDTO categoryDTO2 =
+                    categoryService.save(categoryDTO.convertToCategoryEntity(business));
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            return categoryDTO2;
+        }
+        return categoryService.save(categoryDTO.convertToCategoryEntity(business));
+
     }
 }

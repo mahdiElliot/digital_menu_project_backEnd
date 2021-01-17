@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = URLUtils.BASE)
 @RestController
 public class MenuController extends BaseController {
     private final IMenuService menuService;
@@ -39,7 +38,6 @@ public class MenuController extends BaseController {
 
         Business business = businessMapper().apply(id);
         menuDTO.setBusiness_id(id);
-        menuDTO.setId(0);
         return menuService.save(menuDTO.convertToMenuEntity(business));
     }
 

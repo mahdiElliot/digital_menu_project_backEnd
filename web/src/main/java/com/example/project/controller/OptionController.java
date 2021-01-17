@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Function;
 
-@CrossOrigin(origins = URLUtils.BASE)
 @RestController
 public class OptionController extends BaseController {
     protected final IOptionService optionService;
@@ -53,7 +52,6 @@ public class OptionController extends BaseController {
             @Valid OptionDTO optionDTO,
             @RequestParam("photo") MultipartFile multipartFile
     ) throws IOException {
-        optionDTO.setId(0);
         return saveUpdate(id, id2, optionDTO, multipartFile);
     }
 
@@ -73,11 +71,14 @@ public class OptionController extends BaseController {
         Business business = businessMapper().apply(id);
         optionDTO.setExtra_id(id2);
         Extra extra = extraMapper(business).apply(id2);
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.EXTRA + "/" + id2 + URLUtils.OPTION + "/photos/";
-        optionDTO.setImage(uploadDir + fileName);
-        OptionDTO optionDTO2 = optionService.save(optionDTO.convertToOptionEntity(extra));
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        return optionDTO2;
+        if (multipartFile != null) {
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.EXTRA + "/" + id2 + URLUtils.OPTION + "/photos/";
+            optionDTO.setImage(uploadDir + fileName);
+            OptionDTO optionDTO2 = optionService.save(optionDTO.convertToOptionEntity(extra));
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            return optionDTO2;
+        }
+        return optionService.save(optionDTO.convertToOptionEntity(extra));
     }
 }

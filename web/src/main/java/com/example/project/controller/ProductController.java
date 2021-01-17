@@ -26,7 +26,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = URLUtils.BASE)
 @RestController
 public class ProductController extends BaseController {
     private final IProductService productService;
@@ -54,19 +53,27 @@ public class ProductController extends BaseController {
 
         BusinessDTO businessDTO = businessService.findById(id);
         CategoryDTO categoryDTO = categoryService.findById(id2);
-        productDTO.setId(0);
         if (businessDTO != null && categoryDTO != null) {
             productDTO.setCategory_id(id2);
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
-            productDTO.setImages(uploadDir + fileName);
+            if (multipartFile != null) {
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+                String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
+                productDTO.setImages(uploadDir + fileName);
+                Business business = businessDTO.convertToBusinessEntity();
+                ProductDTO productDTO2 =
+                        productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
+                businessDTO.getProducts().add(productDTO2);
+                business = businessDTO.convertToBusinessEntity();
+                businessDTO = businessService.save(business);
+                FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+                return productDTO2;
+            }
             Business business = businessDTO.convertToBusinessEntity();
             ProductDTO productDTO2 =
                     productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
             businessDTO.getProducts().add(productDTO2);
             business = businessDTO.convertToBusinessEntity();
             businessDTO = businessService.save(business);
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
             return productDTO2;
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);

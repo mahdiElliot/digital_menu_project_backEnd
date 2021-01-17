@@ -26,7 +26,6 @@ import java.util.Set;
 
 @Slf4j
 @RequestMapping(URLUtils.BUSINESS)
-@CrossOrigin(origins = URLUtils.BASE)
 @RestController
 public class BusinessController extends BaseController {
 
@@ -44,7 +43,6 @@ public class BusinessController extends BaseController {
             @RequestParam(name = "zone", required = false) String zones,
             BindingResult bindingResult
     ) throws IOException {
-        businessDTO.setId(0);
         return saveUpdate(businessDTO, multipartFile, location, zones, bindingResult, false);
     }
 
@@ -98,14 +96,18 @@ public class BusinessController extends BaseController {
             LocationDTO locationDTO = objectMapper.readValue(location, LocationDTO.class);
             businessDTO.setLocation(locationDTO);
         }
-
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        String uploadDir = URLUtils.BUSINESS + "/photos/";
-        businessDTO.setLogo(uploadDir + fileName);
-        BusinessDTO businessDTO2 = update ?
+        if (multipartFile != null) {
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            String uploadDir = URLUtils.BUSINESS + "/photos/";
+            businessDTO.setLogo(uploadDir + fileName);
+            BusinessDTO businessDTO2 = update ?
+                    businessService.update(businessDTO.convertToBusinessEntity()) :
+                    businessService.save(businessDTO.convertToBusinessEntity());
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            return businessDTO2;
+        }
+        return update ?
                 businessService.update(businessDTO.convertToBusinessEntity()) :
                 businessService.save(businessDTO.convertToBusinessEntity());
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        return businessDTO2;
     }
 }

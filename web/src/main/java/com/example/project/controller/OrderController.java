@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-@CrossOrigin(origins = URLUtils.BASE)
 @RequestMapping(URLUtils.ORDER)
 @RestController
 public class OrderController extends BaseController {
@@ -59,7 +58,6 @@ public class OrderController extends BaseController {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
         Business business = businessMapper().apply(orderDTO.getBusiness_id());
-        orderDTO.setId(0);
         Order order = orderDTO.convertToOrderEntity(business, payMethodMapper(business).apply(orderDTO.getPaymethod_id()));
         Set<SpecificProduct> specificProducts = order.getSpecificProducts();
         for (SpecificProduct purchase : specificProducts) {
