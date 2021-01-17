@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = URLUtils.BASE)
 public class MenuController extends BaseController {
     private final IMenuService menuService;
 

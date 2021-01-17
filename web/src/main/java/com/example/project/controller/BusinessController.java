@@ -25,6 +25,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Slf4j
+@CrossOrigin(origins = URLUtils.BASE)
 @RequestMapping(URLUtils.BUSINESS)
 @RestController
 public class BusinessController extends BaseController {

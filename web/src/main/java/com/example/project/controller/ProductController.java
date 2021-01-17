@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = URLUtils.BASE)
 public class ProductController extends BaseController {
     private final IProductService productService;
     private final ICategoryService categoryService;

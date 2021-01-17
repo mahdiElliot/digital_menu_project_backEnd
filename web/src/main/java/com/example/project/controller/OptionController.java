@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 @RestController
+@CrossOrigin(origins = URLUtils.BASE)
 public class OptionController extends BaseController {
     protected final IOptionService optionService;
     protected final IExtraService extraService;

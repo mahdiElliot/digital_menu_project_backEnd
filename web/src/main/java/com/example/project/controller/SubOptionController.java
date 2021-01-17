@@ -28,6 +28,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 @RestController
+@CrossOrigin(origins = URLUtils.BASE)
 public class SubOptionController extends BaseController {
     private final ISubOptionService subOptionService;
     private final IOptionService optionService;

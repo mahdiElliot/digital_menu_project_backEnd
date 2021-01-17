@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 @RestController
+@CrossOrigin(origins = URLUtils.BASE)
 public class PayMethodController extends BaseController {
     private final IPayMethodService payMethodService;
 

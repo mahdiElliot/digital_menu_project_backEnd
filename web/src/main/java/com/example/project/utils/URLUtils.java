@@ -1,7 +1,7 @@
 package com.example.project.utils;
 
 public class URLUtils {
-    public final static String BASE = "http://ilaman.amnpardazan.com:8888";
+    public final static String BASE = "http://localhost:3000";
     public final static String BUSINESS = "/business";
     public final static String MENU = "/menus";
     public final static String ORDER = "/order";

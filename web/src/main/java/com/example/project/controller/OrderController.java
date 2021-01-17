@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 @RequestMapping(URLUtils.ORDER)
+@CrossOrigin(origins = URLUtils.BASE)
 @RestController
 public class OrderController extends BaseController {
 
