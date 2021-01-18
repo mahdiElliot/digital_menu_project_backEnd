@@ -56,4 +56,11 @@ public class ExtraService implements IExtraService {
     public ExtraDTO save(Extra extra) {
         return extraRepository.save(extra).convertToDTO();
     }
+
+    @Override
+    public List<ExtraDTO> findExtrasByBusinessId(Long id) {
+        return ((List<Extra>) extraRepository.findExtrasByBusinessId(id))
+                .stream()
+                .map(Extra::convertToDTO).collect(Collectors.toList());
+    }
 }

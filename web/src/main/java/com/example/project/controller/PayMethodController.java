@@ -31,7 +31,6 @@ public class PayMethodController extends BaseController {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
         payMethodDTO.setBusiness_id(id);
-        payMethodDTO.setId(0);
         Business business = businessMapper().apply(id);
         return payMethodService.save(payMethodDTO.convertToPayMethodEntity(business));
     }
@@ -50,4 +49,11 @@ public class PayMethodController extends BaseController {
         payMethodDTO.setId(id2);
         return payMethodService.save(payMethodDTO.convertToPayMethodEntity(business));
     }
+
+    @DeleteMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.PAYMETHOD + "/{id2}")
+    public PayMethodDTO deletePayMethod(@PathVariable(name = "id") Long id, @PathVariable(name = "id2") Long id2) {
+        Business business = businessMapper().apply(id);
+        return payMethodService.delete(id2);
+    }
+
 }
