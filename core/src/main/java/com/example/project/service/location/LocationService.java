@@ -6,6 +6,7 @@ import com.example.project.repositories.location.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,16 @@ public class LocationService implements ILocationService {
     public List<LocationDTO> findAll() {
         return ((List<Location>) locationRepository.findAll())
                 .stream().map(Location::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LocationDTO> findNearests(LocationDTO locationDTO, double distance) {
+        List<Location> all = (List<Location>) locationRepository.findAll();
+        Location location = locationDTO.convertToLocationEntity();
+        return all.stream()
+                .filter(loc ->
+                        loc.getLocation().distance(location.getLocation()) * 6371000 * Math.PI / 180 < distance && !loc.getId().equals(location.getId()))
+                .map(Location::convertToDTO).collect(Collectors.toList());
     }
 
     @Override

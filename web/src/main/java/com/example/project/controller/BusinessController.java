@@ -4,6 +4,7 @@ import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.location.LocationDTO;
 import com.example.project.model.zone.ZoneDTO;
 import com.example.project.service.business.IBusinessService;
+import com.example.project.service.location.ILocationService;
 import com.example.project.utils.ErrorUtils;
 import com.example.project.utils.FileUploadUtil;
 import com.example.project.utils.URLUtils;
@@ -30,9 +31,12 @@ import java.util.Set;
 @RestController
 public class BusinessController extends BaseController {
 
+    private final ILocationService locationService;
+
     @Autowired
-    public BusinessController(IBusinessService businessService) {
+    public BusinessController(IBusinessService businessService, ILocationService locationService) {
         super(businessService);
+        this.locationService = locationService;
     }
 
     @PostMapping
@@ -110,5 +114,13 @@ public class BusinessController extends BaseController {
         return update ?
                 businessService.update(businessDTO.convertToBusinessEntity()) :
                 businessService.save(businessDTO.convertToBusinessEntity());
+    }
+
+    @GetMapping(path = "{id}/nearests/{distance}")
+    public List<LocationDTO> nearestBusinesses(@PathVariable("id") Long id, @PathVariable("distance") double distance) {
+        BusinessDTO businessDTO = businessService.findById(id);
+        if (businessDTO == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ErrorUtils.NOT_FOUND);
+        return locationService.findNearests(businessDTO.getLocation(), distance);
     }
 }

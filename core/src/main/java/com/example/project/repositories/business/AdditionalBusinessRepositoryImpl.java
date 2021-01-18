@@ -24,36 +24,37 @@ public class AdditionalBusinessRepositoryImpl implements AdditionalBusinessRepos
 
     @Override
     public Business update(Business business) {
-        String sql = "UPDATE business SET name=?, service_fee=?, tax=?, logo=?, enabled=?";
-        if (business.getLocation() != null) {
-            sql += ", location_id=? WHERE id=?";
-            locationRepository.update(business.getLocation());
-            int r = jdbcTemplate.update(sql,
-                    business.getName(), business.getServiceFee(),
-                    business.getTax(), business.getLogo(),
-                    business.getEnabled(), business.getLocation().getId(), business.getId());
-            if (r == 0) return null;
-        } else {
-            sql += " WHERE id=?";
-            int r = jdbcTemplate.update(sql,
-                    business.getName(), business.getServiceFee(), business.getTax(), business.getLogo(),
-                    business.getEnabled(), business.getId());
-            if (r == 0) return null;
-        }
-
-        if (!business.getZones().isEmpty()) {
-            Set<Zone> zones = new HashSet<>();
-            for (Zone zone : business.getZones()) {
-                Zone zone1 = zoneRepository.save(zone);
-                if (!zone.getId().equals(zone1.getId())) {
-                    sql = "INSERT INTO business_zone VALUES (?, ?)";
-                    int r = jdbcTemplate.update(sql, business.getId(), zone1.getId());
-                    if (r == 0) return null;
-                }
-                zones.add(zone1);
-            }
-            business.setZones(zones);
-        }
-        return business;
+//        String sql = "UPDATE business SET name=?, service_fee=?, tax=?, logo=?, enabled=?";
+//        if (business.getLocation() != null) {
+//            sql += ", location_id=? WHERE id=?";
+//            locationRepository.update(business.getLocation());
+//            int r = jdbcTemplate.update(sql,
+//                    business.getName(), business.getServiceFee(),
+//                    business.getTax(), business.getLogo(),
+//                    business.getEnabled(), business.getLocation().getId(), business.getId());
+//            if (r == 0) return null;
+//        } else {
+//            sql += " WHERE id=?";
+//            int r = jdbcTemplate.update(sql,
+//                    business.getName(), business.getServiceFee(), business.getTax(), business.getLogo(),
+//                    business.getEnabled(), business.getId());
+//            if (r == 0) return null;
+//        }
+//
+//        if (!business.getZones().isEmpty()) {
+//            Set<Zone> zones = new HashSet<>();
+//            for (Zone zone : business.getZones()) {
+//                Zone zone1 = zoneRepository.save(zone);
+//                if (!zone.getId().equals(zone1.getId())) {
+//                    sql = "INSERT INTO business_zone VALUES (?, ?)";
+//                    int r = jdbcTemplate.update(sql, business.getId(), zone1.getId());
+//                    if (r == 0) return null;
+//                }
+//                zones.add(zone1);
+//            }
+//            business.setZones(zones);
+//        }
+//        return business;
+        return null;
     }
 }
