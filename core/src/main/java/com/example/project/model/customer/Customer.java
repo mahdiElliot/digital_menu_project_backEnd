@@ -34,7 +34,7 @@ public class Customer {
 
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
     public Customer(Long id, String name, String email, String phoneNumber) {

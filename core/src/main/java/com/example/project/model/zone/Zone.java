@@ -27,7 +27,7 @@ public class Zone {
 
     private Double radius;
 
-    @ManyToMany(mappedBy = "zones")
+    @ManyToMany(mappedBy = "zones", cascade = CascadeType.ALL)
     Set<Business> businesses = new HashSet<>();
 
     public Zone(long id, double price, boolean enabled, double radius) {

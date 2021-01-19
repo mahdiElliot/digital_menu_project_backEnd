@@ -37,7 +37,7 @@ public class Category {
     @JoinColumn(name = "business_id", nullable = false)
     private Business business;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Product> products = new HashSet<>();
 
     public Category(long id, String name, int rank, boolean enabled, String image, Business business) {

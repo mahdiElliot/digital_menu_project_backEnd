@@ -39,14 +39,14 @@ public class Option {
 
     private String image;
 
-    @OneToMany(mappedBy = "option")
+    @OneToMany(mappedBy = "option", cascade = CascadeType.ALL)
     private Set<SubOption> subOptions = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "extra_id", nullable = false)
     private Extra extra;
 
-    @ManyToMany(mappedBy = "options")
+    @ManyToMany(mappedBy = "options", cascade = CascadeType.ALL)
     private Set<SpecificProduct> specificProducts = new HashSet<>();
 
     public Option(long id, String name, int min, int max, boolean enabled, String image, Extra extra) {

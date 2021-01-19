@@ -44,20 +44,25 @@ public class Product {
     @Column(nullable = false)
     private Boolean enabled;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private Set<Menu> menus = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "product_info",
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "extra_id")}
+    )
     private Set<Extra> extras = new HashSet<>();
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private Set<Business> businesses = new HashSet<>();
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<SpecificProduct> products = new HashSet<>();
 
     public Product(long id, double price, int quantity, String name, String description, String images,

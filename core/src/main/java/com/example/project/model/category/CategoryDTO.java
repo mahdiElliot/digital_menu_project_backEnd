@@ -36,4 +36,16 @@ public class CategoryDTO {
     public Category convertToCategoryEntity(Business business) {
         return new Category(id, name, rank, enabled, image, business);
     }
+
+    @Override
+    public String toString() {
+        return "CategoryDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rank=" + rank +
+                ", enabled=" + enabled +
+                ", image='" + image + '\'' +
+                ", business_id=" + business_id +
+                '}';
+    }
 }

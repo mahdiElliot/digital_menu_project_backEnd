@@ -41,7 +41,7 @@ public class SpecificProduct {
     )
     private Set<Option> options = new HashSet<>();
 
-    @ManyToMany(mappedBy = "specificProducts")
+    @ManyToMany(mappedBy = "specificProducts", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
     @ManyToOne

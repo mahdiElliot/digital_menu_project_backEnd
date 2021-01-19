@@ -36,15 +36,10 @@ public class Extra {
     @JoinColumn(name = "business_id", nullable = false)
     private Business business;
 
-    @OneToMany(mappedBy = "extra")
+    @OneToMany(mappedBy = "extra", cascade = CascadeType.ALL)
     private Set<Option> options = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "product_info",
-            joinColumns = {@JoinColumn(name = "extra_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")}
-    )
+    @ManyToMany(mappedBy = "extras", cascade = CascadeType.ALL)
     private Set<Product> products = new HashSet<>();
 
     public Extra(long id, String name, String description, boolean enabled, Business business) {

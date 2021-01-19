@@ -54,7 +54,6 @@ public class ProductController extends BaseController {
             @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
             BindingResult bindingResult
     ) throws IOException {
-        System.out.println(bindingResult.hasErrors());
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
 
@@ -137,6 +136,14 @@ public class ProductController extends BaseController {
             return productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category " + ErrorUtils.NOT_FOUND);
+    }
+
+    @DeleteMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT + "/{id3}")
+    public ProductDTO delete(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @PathVariable("id3") Long id3) {
+        if (businessService.findById(id) != null && categoryService.findById(id2) != null) {
+            return productService.delete(id3);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
     }
 
 }

@@ -48,19 +48,19 @@ public class Business {
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
-    @OneToMany(mappedBy = "business")
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private Set<Menu> menus = new HashSet<>();
 
-    @OneToMany(mappedBy = "business")
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
-    @OneToMany(mappedBy = "business")
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private Set<Category> categories = new HashSet<>();
 
-    @OneToMany(mappedBy = "business")
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private Set<Extra> extras = new HashSet<>();
 
-    @OneToMany(mappedBy = "business")
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private Set<PayMethod> payMethods = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.ALL})
