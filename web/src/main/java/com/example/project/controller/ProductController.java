@@ -46,7 +46,7 @@ public class ProductController extends BaseController {
             @PathVariable("b_id") Long id,
             @PathVariable("c_id") Long id2,
             @Valid ProductDTO productDTO,
-            @RequestParam("photo") MultipartFile multipartFile,
+            @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
             BindingResult bindingResult
     ) throws IOException {
         if (bindingResult.hasErrors())

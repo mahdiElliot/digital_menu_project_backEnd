@@ -36,7 +36,7 @@ public class CategoryController extends BaseController {
     public CategoryDTO addCategory(
             @PathVariable(name = "b_id") Long id,
             @Valid CategoryDTO categoryDTO,
-            @RequestParam("photo") MultipartFile multipartFile,
+            @RequestParam(name = "photo", required = false) MultipartFile multipartFile,
             BindingResult bindingResult
     ) throws IOException {
         return saveUpdate(id, categoryDTO, multipartFile, bindingResult);
