@@ -87,15 +87,6 @@ public class ProductController extends BaseController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
     }
 
-    private Set<ExtraDTO> convertExtraToJson(String extras) throws JsonProcessingException {
-        if (extras != null && !extras.isBlank()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(extras, new TypeReference<>() {
-            });
-        }
-        return Collections.emptySet();
-    }
-
     @GetMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT)
     public List<ProductDTO> getAllProducts(@PathVariable("id") Long id, @PathVariable("id2") Long id2) {
         if (businessService.findById(id) != null && categoryService.findById(id2) != null)
@@ -146,4 +137,12 @@ public class ProductController extends BaseController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
     }
 
+    private Set<ExtraDTO> convertExtraToJson(String extras) throws JsonProcessingException {
+        if (extras != null && !extras.isBlank()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(extras, new TypeReference<>() {
+            });
+        }
+        return Collections.emptySet();
+    }
 }
