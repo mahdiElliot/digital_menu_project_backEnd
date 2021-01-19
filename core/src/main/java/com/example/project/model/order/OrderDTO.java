@@ -1,6 +1,6 @@
 package com.example.project.model.order;
 
-import com.example.project.model.specproduct.SpecificProductDTO;
+import com.example.project.model.specproduct.PurchaseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,7 +36,7 @@ public class OrderDTO {
     private Date created_at;
 
     @NotEmpty
-    Set<SpecificProductDTO> specificProducts;
+    Set<PurchaseDTO> specificProducts;
 
     public OrderDTO(long id, double tax, int table_number, String comment, Long business_id, Long customer_id, Long paymethod_id, Date created_at) {
         this.id = id;

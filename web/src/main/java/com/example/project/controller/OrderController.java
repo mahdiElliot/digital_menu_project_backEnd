@@ -7,7 +7,7 @@ import com.example.project.model.order.RequestOrderDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.product.Product;
-import com.example.project.model.specproduct.SpecificProduct;
+import com.example.project.model.specproduct.Purchase;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.order.IOrderService;
 import com.example.project.service.paymethod.IPayMethodService;
@@ -60,8 +60,8 @@ public class OrderController extends BaseController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
         Business business = businessMapper().apply(orderDTO.getBusiness_id());
         Order order = orderDTO.convertToOrderEntity(business, payMethodMapper(business).apply(orderDTO.getPaymethod_id()));
-        Set<SpecificProduct> specificProducts = order.getSpecificProducts();
-        for (SpecificProduct purchase : specificProducts) {
+        Set<Purchase> purchases = order.getPurchases();
+        for (Purchase purchase : purchases) {
             int quantity = purchase.getQuantity();
             Product product = purchase.getProduct();
 

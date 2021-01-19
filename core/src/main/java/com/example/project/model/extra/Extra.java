@@ -59,4 +59,15 @@ public class Extra {
             businessId = business.getId();
         return new ExtraDTO(id, name, description, enabled, businessId, optionDTOS);
     }
+
+    @Override
+    public String toString() {
+        return "Extra{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", enabled=" + enabled +
+                ", business=" + business.getId() +
+                '}';
+    }
 }

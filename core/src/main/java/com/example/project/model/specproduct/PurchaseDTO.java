@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpecificProductDTO {
+public class PurchaseDTO {
 
     private long id;
 
@@ -33,6 +33,8 @@ public class SpecificProductDTO {
 
     @NotNull
     private Long product_id;
+
+    private Long order_id;
 
     private Set<OptionDTO> options;
 }

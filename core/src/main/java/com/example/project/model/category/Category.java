@@ -60,4 +60,16 @@ public class Category {
 
         return new CategoryDTO(id, name, rank, enabled, image, businessId, productDTOS);
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rank=" + rank +
+                ", enabled=" + enabled +
+                ", image='" + image + '\'' +
+                ", business=" + business.getId() +
+                '}';
+    }
 }

@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "specific_product")
-public class SpecificProduct {
+@Table(name = "purchase")
+public class Purchase {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sproduct_generator")
-    @SequenceGenerator(name = "sproduct_generator", sequenceName = "sproduct_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "purchase_generator")
+    @SequenceGenerator(name = "purchase_generator", sequenceName = "purchase_seq", allocationSize = 1)
     private Long id;
 
     private String name;
@@ -35,33 +35,35 @@ public class SpecificProduct {
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
-            name = "sproduct_option",
+            name = "purchase_option",
             joinColumns = {@JoinColumn(name = "option_id")},
-            inverseJoinColumns = {@JoinColumn(name = "sproduct_id")}
+            inverseJoinColumns = {@JoinColumn(name = "purchase_id")}
     )
     private Set<Option> options = new HashSet<>();
 
-    @ManyToMany(mappedBy = "specificProducts", cascade = CascadeType.ALL)
-    private Set<Order> orders = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    public SpecificProduct(long id, String name, String comment, int quantity, double price, Product product) {
+    public Purchase(long id, String name, String comment, int quantity, double price, Product product, Order order) {
         this.id = id;
         this.comment = comment;
         this.quantity = quantity;
         this.price = price;
         this.name = name;
         this.product = product;
+        this.order = order;
     }
 
-    public SpecificProductDTO convertToDTO() {
+    public PurchaseDTO convertToDTO() {
         Set<OptionDTO> optionDTOS = null;
         if (options != null)
             optionDTOS = options.stream().map(Option::convertToDTO).collect(Collectors.toSet());
 
-        return new SpecificProductDTO(id, name, comment, quantity, price, product.getId(), optionDTOS);
+        return new PurchaseDTO(id, name, comment, quantity, price, product.getId(), order.getId(), optionDTOS);
     }
 }

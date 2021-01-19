@@ -1,5 +1,6 @@
 package com.example.project.service.product;
 
+import com.example.project.model.extra.Extra;
 import com.example.project.model.product.Product;
 import com.example.project.model.product.ProductDTO;
 import com.example.project.repositories.product.ProductRepository;

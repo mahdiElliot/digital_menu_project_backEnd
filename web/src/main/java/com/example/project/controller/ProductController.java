@@ -57,32 +57,19 @@ public class ProductController extends BaseController {
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
 
-        BusinessDTO businessDTO = businessService.findById(id);
+        Business business = businessMapper().apply(id);
         CategoryDTO categoryDTO = categoryService.findById(id2);
-        if (businessDTO != null && categoryDTO != null) {
+        if (business != null && categoryDTO != null) {
             productDTO.setCategory_id(id2);
+            productDTO.setBusiness_id(id);
             productDTO.setExtras(convertExtraToJson(extras));
 
             if (multipartFile != null) {
                 String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
                 String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
                 productDTO.setImages(uploadDir + fileName);
-                Business business = businessDTO.convertToBusinessEntity();
-                ProductDTO productDTO2 =
-                        productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
-                businessDTO.getProducts().add(productDTO2);
-                business = businessDTO.convertToBusinessEntity();
-                businessDTO = businessService.save(business);
-                FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-                return productDTO2;
             }
-            Business business = businessDTO.convertToBusinessEntity();
-            ProductDTO productDTO2 =
-                    productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
-            businessDTO.getProducts().add(productDTO2);
-            business = businessDTO.convertToBusinessEntity();
-            businessDTO = businessService.save(business);
-            return productDTO2;
+            return productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
     }
@@ -107,27 +94,27 @@ public class ProductController extends BaseController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "business or category " + ErrorUtils.NOT_FOUND);
     }
 
-    @PutMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT + "/{id3}")
-    public ProductDTO update(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @PathVariable("id3") Long id3, @RequestParam(name = "photo", required = false) MultipartFile multipartFile, @Valid ProductDTO productDTO,
-                             @RequestParam(name = "extra", required = false) String extras, BindingResult bindingResult) throws JsonProcessingException {
-        if (bindingResult.hasErrors())
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
-
-        Business business = businessMapper().apply(id);
-        CategoryDTO categoryDTO = categoryService.findById(id2);
-        if (categoryDTO != null) {
-            productDTO.setId(id3);
-            productDTO.setCategory_id(id2);
-            productDTO.setExtras(convertExtraToJson(extras));
-            if (multipartFile != null) {
-                String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-                String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
-                productDTO.setImages(uploadDir + fileName);
-            }
-            return productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category " + ErrorUtils.NOT_FOUND);
-    }
+//    @PutMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT + "/{id3}")
+//    public ProductDTO update(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @PathVariable("id3") Long id3, @RequestParam(name = "photo", required = false) MultipartFile multipartFile, @Valid ProductDTO productDTO,
+//                             @RequestParam(name = "extra", required = false) String extras, BindingResult bindingResult) throws JsonProcessingException {
+//        if (bindingResult.hasErrors())
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
+//
+//        Business business = businessMapper().apply(id);
+//        CategoryDTO categoryDTO = categoryService.findById(id2);
+//        if (categoryDTO != null) {
+//            productDTO.setId(id3);
+//            productDTO.setCategory_id(id2);
+//            productDTO.setExtras(convertExtraToJson(extras));
+//            if (multipartFile != null) {
+//                String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+//                String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
+//                productDTO.setImages(uploadDir + fileName);
+//            }
+//            return productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
+//        }
+//        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "category " + ErrorUtils.NOT_FOUND);
+//    }
 
     @DeleteMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.CATEGORY + "/{id2}" + URLUtils.PRODUCT + "/{id3}")
     public ProductDTO delete(@PathVariable("id") Long id, @PathVariable("id2") Long id2, @PathVariable("id3") Long id3) {

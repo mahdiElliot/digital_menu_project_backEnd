@@ -5,7 +5,7 @@ import com.example.project.model.category.Category;
 import com.example.project.model.extra.Extra;
 import com.example.project.model.extra.ExtraDTO;
 import com.example.project.model.menu.Menu;
-import com.example.project.model.specproduct.SpecificProduct;
+import com.example.project.model.specproduct.Purchase;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -59,14 +59,15 @@ public class Product {
     )
     private Set<Extra> extras = new HashSet<>();
 
-    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
-    private Set<Business> businesses = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "business_id", nullable = false)
+    private Business business;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<SpecificProduct> products = new HashSet<>();
+    private Set<Purchase> products = new HashSet<>();
 
     public Product(long id, double price, int quantity, String name, String description, String images,
-                   boolean inventoried, boolean enabled, Category category) {
+                   boolean inventoried, boolean enabled, Category category, Business business) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;
@@ -76,6 +77,7 @@ public class Product {
         this.inventoried = inventoried;
         this.enabled = enabled;
         this.category = category;
+        this.business = business;
     }
 
     public ProductDTO convertToDTO() {
@@ -86,9 +88,26 @@ public class Product {
         Long categoryId = null;
         if (category != null) categoryId = category.getId();
 
+        Long businessId = null;
+        if (business != null) businessId = business.getId();
+
         ProductDTO productDTO =
-                new ProductDTO(id, price, quantity, name, description, images, inventoried, enabled, categoryId, extraDTOS);
-        if (businesses != null) productDTO.setBusinesses(businesses);
+                new ProductDTO(id, price, quantity, name, description, images, inventoried, enabled, categoryId, businessId, extraDTOS);
         return productDTO;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", images='" + images + '\'' +
+                ", inventoried=" + inventoried +
+                ", enabled=" + enabled +
+                ", business=" + business +
+                '}';
     }
 }

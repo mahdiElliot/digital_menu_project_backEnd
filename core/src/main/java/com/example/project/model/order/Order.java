@@ -3,9 +3,10 @@ package com.example.project.model.order;
 import com.example.project.model.business.Business;
 import com.example.project.model.customer.Customer;
 import com.example.project.model.paymethod.PayMethod;
-import com.example.project.model.specproduct.SpecificProduct;
-import com.example.project.model.specproduct.SpecificProductDTO;
+import com.example.project.model.specproduct.Purchase;
+import com.example.project.model.specproduct.PurchaseDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "corder")
 public class Order {
     @Id
@@ -40,13 +42,8 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "order_sproduct",
-            joinColumns = {@JoinColumn(name = "order_id")},
-            inverseJoinColumns = {@JoinColumn(name = "sproduct_id")}
-    )
-    private Set<SpecificProduct> specificProducts = new HashSet<>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private Set<Purchase> purchases = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "paymethod_id", nullable = false)
@@ -72,11 +69,11 @@ public class Order {
             businessId = business.getId();
         if (customer != null)
             customerId = customer.getId();
-        Set<SpecificProductDTO> specificProductDTOS =
-                specificProducts.stream().map(SpecificProduct::convertToDTO).collect(Collectors.toSet());
+        Set<PurchaseDTO> purchaseDTOS =
+                purchases.stream().map(Purchase::convertToDTO).collect(Collectors.toSet());
 
         OrderDTO orderDTO = new OrderDTO(id, tax, tableNumber, comment, businessId, customerId, payMethod.getId(), created_at);
-        orderDTO.setSpecificProducts(specificProductDTOS);
+        orderDTO.setSpecificProducts(purchaseDTOS);
         return orderDTO;
     }
 }

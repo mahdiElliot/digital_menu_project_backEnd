@@ -71,12 +71,7 @@ public class Business {
     )
     private Set<Zone> zones = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "business_products",
-            joinColumns = {@JoinColumn(name = "business_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")}
-    )
+    @OneToMany(mappedBy = "business", cascade = CascadeType.ALL)
     private Set<Product> products = new HashSet<>();
 
     public Business(long id, String name, double serviceFee, double tax, String logo, boolean enabled,
@@ -107,6 +102,18 @@ public class Business {
                 locationDTO, zoneDTOs, payMethodDTOS, productDTOS);
         if (categories != null) businessDTO.setCategories(categories);
         return businessDTO;
+    }
+
+    @Override
+    public String toString() {
+        return "Business{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", serviceFee=" + serviceFee +
+                ", tax=" + tax +
+                ", logo='" + logo + '\'' +
+                ", enabled=" + enabled +
+                '}';
     }
 }
 

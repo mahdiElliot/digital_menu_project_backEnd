@@ -2,6 +2,7 @@ package com.example.project.model.specproduct;
 
 import com.example.project.model.extra.Extra;
 import com.example.project.model.option.Option;
+import com.example.project.model.order.Order;
 import com.example.project.model.product.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @NoArgsConstructor
-public class RequestSpecificProductDTO {
+public class RequestPurchaseDTO {
     private long id;
 
     @NotEmpty
@@ -36,11 +37,12 @@ public class RequestSpecificProductDTO {
     @NotNull
     private Long product_id;
 
+    private Long order_id;
+
     private Set<Long> options;
 
-    public SpecificProduct convertToSpecificProductEntity(Product product) {
-        price = product.getPrice();
-        SpecificProduct specificProduct = new SpecificProduct(id, name, comment, quantity, price, product);
+    public Purchase convertToPurchaseEntity(Product product, Order order) {
+        Purchase purchase = new Purchase(id, name, comment, quantity, price, product, order);
         if (options != null && !options.isEmpty()) {
             Set<Extra> extras = product.getExtras();
             Set<Option> optionSet = new HashSet<>();
@@ -52,8 +54,8 @@ public class RequestSpecificProductDTO {
                     if (option != null) optionSet.add(option);
                 }
             }
-            specificProduct.setOptions(optionSet);
+            purchase.setOptions(optionSet);
         }
-        return specificProduct;
+        return purchase;
     }
 }

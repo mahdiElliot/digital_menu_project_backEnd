@@ -4,7 +4,7 @@ import com.example.project.model.business.Business;
 import com.example.project.model.customer.CustomerDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.product.Product;
-import com.example.project.model.specproduct.RequestSpecificProductDTO;
+import com.example.project.model.specproduct.RequestPurchaseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,14 +38,17 @@ public class RequestOrderDTO {
     private Long paymethod_id;
 
     @NotEmpty
-    Set<RequestSpecificProductDTO> specificProducts;
+    Set<RequestPurchaseDTO> purchases;
 
     public Order convertToOrderEntity(Business business, PayMethod payMethod) {
         Order order = new Order(id, tax, table_number, comment, business, customer.convertToCustomerEntity(), payMethod);
         Set<Product> products = business.getProducts();
         Map<Long, Product> map = products.stream().collect(Collectors.toMap(Product::getId, e -> e));
-        order.setSpecificProducts(specificProducts.stream()
-                .map(it -> it.convertToSpecificProductEntity(map.get(it.getId()))).collect(Collectors.toSet()));
+        Map<Long, Order> orderMap = business.getOrders().stream().collect(Collectors.toMap(Order::getId, e -> e));
+
+        order.setPurchases(purchases.stream()
+                .map(it -> it.convertToPurchaseEntity(map.get(it.getId()), orderMap.get(it.getId())))
+                .collect(Collectors.toSet()));
         return order;
     }
 }
