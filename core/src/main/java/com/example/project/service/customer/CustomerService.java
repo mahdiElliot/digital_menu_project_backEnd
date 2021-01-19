@@ -56,4 +56,18 @@ public class CustomerService implements ICustomerService {
     public CustomerDTO save(Customer customer) {
         return customerRepository.save(customer).convertToDTO();
     }
+
+    @Override
+    public List<CustomerDTO> findCustomersOrderedInBusiness(Long businessId) {
+        return ((List<Customer>) customerRepository.findCustomersOrderedInBusiness(businessId))
+                .stream()
+                .map(Customer::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CustomerDTO> findCustomersOrderedInBusinessByTableNumber(Long businessId, Integer tableNumber) {
+        return ((List<Customer>) customerRepository.findCustomersOrderedInBusinessByTableNumber(businessId, tableNumber))
+                .stream()
+                .map(Customer::convertToDTO).collect(Collectors.toList());
+    }
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping(URLUtils.CUSTOMER)
 @RestController
 public class CustomerController {
@@ -21,5 +23,15 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDTO addCustomer(@RequestBody CustomerDTO customerDTO) {
         return customerService.save(customerDTO.convertToCustomerEntity());
+    }
+
+    @GetMapping(path = "/business/{id}/customers-ordered")
+    public List<CustomerDTO> findCustomersOrderedInBusiness(@PathVariable Long id) {
+        return customerService.findCustomersOrderedInBusiness(id);
+    }
+
+    @GetMapping(path = "/business/{id}/customers-ordered/{tableNum}")
+    public List<CustomerDTO> findCustomersOrderedInBusinessByTableNumber(@PathVariable Long id, @PathVariable Integer tableNum) {
+        return customerService.findCustomersOrderedInBusinessByTableNumber(id, tableNum);
     }
 }

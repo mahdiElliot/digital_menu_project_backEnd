@@ -7,7 +7,10 @@ import com.example.project.model.specproduct.SpecificProduct;
 import com.example.project.model.specproduct.SpecificProductDTO;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,6 +52,9 @@ public class Order {
     @JoinColumn(name = "paymethod_id", nullable = false)
     private PayMethod payMethod;
 
+    @CreationTimestamp
+    private Date created_at;
+
     public Order(long id, double tax, int tableNumber, String comment, Business business, Customer customer, PayMethod payMethod) {
         this.id = id;
         this.tax = tax;
@@ -69,7 +75,7 @@ public class Order {
         Set<SpecificProductDTO> specificProductDTOS =
                 specificProducts.stream().map(SpecificProduct::convertToDTO).collect(Collectors.toSet());
 
-        OrderDTO orderDTO = new OrderDTO(id, tax, tableNumber, comment, businessId, customerId, payMethod.getId());
+        OrderDTO orderDTO = new OrderDTO(id, tax, tableNumber, comment, businessId, customerId, payMethod.getId(), created_at);
         orderDTO.setSpecificProducts(specificProductDTOS);
         return orderDTO;
     }
