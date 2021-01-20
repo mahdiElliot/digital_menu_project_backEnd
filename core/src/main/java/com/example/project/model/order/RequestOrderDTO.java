@@ -4,7 +4,7 @@ import com.example.project.model.business.Business;
 import com.example.project.model.customer.CustomerDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.product.Product;
-import com.example.project.model.specproduct.RequestPurchaseDTO;
+import com.example.project.model.purchase.RequestPurchaseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

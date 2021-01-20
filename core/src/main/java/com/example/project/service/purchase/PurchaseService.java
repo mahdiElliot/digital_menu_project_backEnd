@@ -1,7 +1,7 @@
 package com.example.project.service.purchase;
 
-import com.example.project.model.specproduct.Purchase;
-import com.example.project.model.specproduct.PurchaseDTO;
+import com.example.project.model.purchase.Purchase;
+import com.example.project.model.purchase.PurchaseDTO;
 import com.example.project.repositories.purchase.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

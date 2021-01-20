@@ -2,7 +2,7 @@ package com.example.project.model.option;
 
 
 import com.example.project.model.extra.Extra;
-import com.example.project.model.specproduct.Purchase;
+import com.example.project.model.purchase.Purchase;
 import com.example.project.model.suboptions.SubOption;
 import com.example.project.model.suboptions.SubOptionDTO;
 import lombok.Getter;

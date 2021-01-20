@@ -1,4 +1,4 @@
-package com.example.project.model.specproduct;
+package com.example.project.model.purchase;
 
 import com.example.project.model.extra.Extra;
 import com.example.project.model.option.Option;

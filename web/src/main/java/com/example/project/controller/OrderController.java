@@ -7,7 +7,7 @@ import com.example.project.model.order.RequestOrderDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.product.Product;
-import com.example.project.model.specproduct.Purchase;
+import com.example.project.model.purchase.Purchase;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.order.IOrderService;
 import com.example.project.service.paymethod.IPayMethodService;

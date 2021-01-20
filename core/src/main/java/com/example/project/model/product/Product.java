@@ -5,7 +5,7 @@ import com.example.project.model.category.Category;
 import com.example.project.model.extra.Extra;
 import com.example.project.model.extra.ExtraDTO;
 import com.example.project.model.menu.Menu;
-import com.example.project.model.specproduct.Purchase;
+import com.example.project.model.purchase.Purchase;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

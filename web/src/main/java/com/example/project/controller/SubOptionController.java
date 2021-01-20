@@ -24,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -76,6 +77,14 @@ public class SubOptionController extends BaseController {
         return saveUpdate(id, id2, id3, subOptionDTO, multipartFile);
     }
 
+    @GetMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION + "/{o_id}" + URLUtils.SUBOPTION)
+    public List<SubOptionDTO> getAll(@PathVariable(name = "b_id") Long id, @PathVariable(name = "e_id") Long id2, @PathVariable(name = "o_id") Long id3) {
+        Business business = businessMapper().apply(id);
+        Extra extra = extraMapper(business).apply(id2);
+        Option option = optionMapper(extra).apply(id3);
+        return subOptionService.findAll();
+    }
+
     @PutMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION + "/{o_id}" + URLUtils.SUBOPTION + "/{s_id}")
     public SubOptionDTO updateSubOption(
             @PathVariable(name = "b_id") Long id,
@@ -92,7 +101,7 @@ public class SubOptionController extends BaseController {
     private SubOptionDTO saveUpdate(Long id, Long id2, Long id3, @Valid SubOptionDTO subOptionDTO, MultipartFile multipartFile) throws IOException {
         Business business = businessMapper().apply(id);
         Extra extra = extraMapper(business).apply(id2);
-        subOptionDTO.setOption_id(id3);
+        Option option = optionMapper(extra).apply(id3);
         if (multipartFile != null) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             String uploadDir = URLUtils.SUBOPTION + "/photos/";

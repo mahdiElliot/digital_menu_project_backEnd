@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -54,6 +55,23 @@ public class OptionController extends BaseController {
             @RequestParam("photo") MultipartFile multipartFile
     ) throws IOException {
         return saveUpdate(id, id2, optionDTO, multipartFile);
+    }
+
+    @GetMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION)
+    public List<OptionDTO> getAll(@PathVariable(name = "b_id") Long id, @PathVariable(name = "e_id") Long id2) {
+        Business business = businessMapper().apply(id);
+        Extra extra = extraMapper(business).apply(id2);
+        return optionService.findAll();
+    }
+
+    @GetMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION + "/{o_id}")
+    public OptionDTO getOption(@PathVariable(name = "b_id") Long id, @PathVariable(name = "e_id") Long id2, @PathVariable(name = "o_id") Long id3) {
+        Business business = businessMapper().apply(id);
+        Extra extra = extraMapper(business).apply(id2);
+        OptionDTO optionDTO = optionService.findById(id3);
+        if (optionDTO == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "option " + ErrorUtils.NOT_FOUND);
+        return optionDTO;
     }
 
     @PutMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION + "/{o_id}")

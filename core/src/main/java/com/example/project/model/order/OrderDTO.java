@@ -1,6 +1,6 @@
 package com.example.project.model.order;
 
-import com.example.project.model.specproduct.PurchaseDTO;
+import com.example.project.model.purchase.PurchaseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
