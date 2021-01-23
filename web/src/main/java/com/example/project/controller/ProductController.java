@@ -68,6 +68,9 @@ public class ProductController extends BaseController {
                 String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
                 String uploadDir = URLUtils.BUSINESS + "/" + id + URLUtils.CATEGORY + "/" + id2 + URLUtils.PRODUCT + "/photos/";
                 productDTO.setImages(uploadDir + fileName);
+                ProductDTO productDTO1 = productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
+                FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+                return productDTO1;
             }
             return productService.save(productDTO.convertToProductEntity(categoryDTO.convertToCategoryEntity(business)));
         }
