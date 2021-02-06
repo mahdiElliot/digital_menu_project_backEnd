@@ -34,7 +34,7 @@ public class RequestPurchaseDTO {
     private Set<RequestOptionDTO> options;
 
     public Purchase convertToPurchaseEntity(Product product, Order order) {
-        Purchase purchase = new Purchase(id, comment, quantity, price, product, order);
+        Purchase purchase = new Purchase(id, product.getName(), comment, quantity, price, product, order);
         if (options != null && !options.isEmpty()) {
             List<Object> infos = new ArrayList<>();
             ObjectMapper objectMapper = new ObjectMapper();

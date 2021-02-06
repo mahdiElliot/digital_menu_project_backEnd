@@ -31,7 +31,7 @@ public class Order {
 
     private String comment;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Integer tableNumber;
 
     @ManyToOne
