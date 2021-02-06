@@ -1,6 +1,5 @@
 package com.example.project.model.purchase;
 
-import com.example.project.model.option.OptionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.Setter;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -18,9 +16,6 @@ import java.util.Set;
 public class PurchaseDTO {
 
     private long id;
-
-    @NotEmpty
-    private String name;
 
     private String comment;
 
@@ -36,5 +31,5 @@ public class PurchaseDTO {
 
     private Long order_id;
 
-    private Set<OptionDTO> options;
+    private String jsonOptions;
 }

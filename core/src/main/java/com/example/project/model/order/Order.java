@@ -73,7 +73,7 @@ public class Order {
                 purchases.stream().map(Purchase::convertToDTO).collect(Collectors.toSet());
 
         OrderDTO orderDTO = new OrderDTO(id, tax, tableNumber, comment, businessId, customerId, payMethod.getId(), created_at);
-        orderDTO.setSpecificProducts(purchaseDTOS);
+        orderDTO.setPurchases(purchaseDTOS);
         return orderDTO;
     }
 }

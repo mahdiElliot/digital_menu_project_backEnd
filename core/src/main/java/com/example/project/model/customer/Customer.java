@@ -25,11 +25,8 @@ public class Customer {
     @SequenceGenerator(name = "customer_generator", sequenceName = "customer_seq", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
-    @NotEmpty
-    @Email
     private String email;
 
     private String phoneNumber;

@@ -16,10 +16,8 @@ public class CustomerDTO {
 
     private long id;
 
-    @NotEmpty
     private String name;
 
-    @NotEmpty
     private String email;
 
     private String phone_number;
@@ -28,5 +26,15 @@ public class CustomerDTO {
 
     public Customer convertToCustomerEntity() {
         return new Customer(id, name, email, phone_number);
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                '}';
     }
 }

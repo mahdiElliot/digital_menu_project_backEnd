@@ -52,7 +52,7 @@ public class OptionController extends BaseController {
             @PathVariable(name = "b_id") Long id,
             @PathVariable(name = "e_id") Long id2,
             @Valid OptionDTO optionDTO,
-            @RequestParam("photo") MultipartFile multipartFile
+            @RequestParam(name = "photo", required = false) MultipartFile multipartFile
     ) throws IOException {
         return saveUpdate(id, id2, optionDTO, multipartFile);
     }
@@ -80,7 +80,7 @@ public class OptionController extends BaseController {
             @PathVariable(name = "e_id") Long id2,
             @PathVariable(name = "o_id") Long id3,
             @Valid OptionDTO optionDTO,
-            @RequestParam("photo") MultipartFile multipartFile
+            @RequestParam(name = "photo", required = false) MultipartFile multipartFile
     ) throws IOException {
         optionDTO.setId(id3);
         return saveUpdate(id, id2, optionDTO, multipartFile);

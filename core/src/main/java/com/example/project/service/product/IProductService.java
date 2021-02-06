@@ -9,4 +9,6 @@ import java.util.List;
 public interface IProductService extends IService<Product, ProductDTO, Long> {
 
     List<ProductDTO> findAllByCategoryId(Long id);
+
+    Product findProductById(Long id);
 }

@@ -46,6 +46,12 @@ public class ProductService implements IProductService {
                 .map(Product::convertToDTO).orElse(null);
     }
 
+    @Override
+    public Product findProductById(Long id) {
+        if (id == null) return null;
+        return repository.findById(id).orElse(null);
+    }
+
     @Transactional
     @Override
     public ProductDTO delete(Long id) {

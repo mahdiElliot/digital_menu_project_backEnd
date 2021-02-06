@@ -7,11 +7,13 @@ import com.example.project.model.order.RequestOrderDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.product.Product;
-import com.example.project.model.purchase.Purchase;
+import com.example.project.model.purchase.PurchaseDTO;
+import com.example.project.model.purchase.RequestPurchaseDTO;
 import com.example.project.service.business.IBusinessService;
 import com.example.project.service.order.IOrderService;
 import com.example.project.service.paymethod.IPayMethodService;
 import com.example.project.service.product.IProductService;
+import com.example.project.service.purchase.IPurchaseService;
 import com.example.project.utils.ErrorUtils;
 import com.example.project.utils.URLUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 @RequestMapping(URLUtils.ORDER)
@@ -33,14 +34,16 @@ public class OrderController extends BaseController {
     private final IOrderService orderService;
     private final IPayMethodService payMethodService;
     private final IProductService productService;
+    private final IPurchaseService purchaseService;
 
     @Autowired
     public OrderController(IOrderService orderService, IBusinessService businessService, IPayMethodService payMethodService,
-                           IProductService productService) {
+                           IProductService productService, IPurchaseService purchaseService) {
         super(businessService);
         this.orderService = orderService;
         this.payMethodService = payMethodService;
         this.productService = productService;
+        this.purchaseService = purchaseService;
     }
 
     private Function<Long, PayMethod> payMethodMapper(Business business) {
@@ -56,21 +59,35 @@ public class OrderController extends BaseController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDTO addOrder(@Valid @RequestBody RequestOrderDTO orderDTO, BindingResult bindingResult) {
+        System.out.println(orderDTO);
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
         Business business = businessMapper().apply(orderDTO.getBusiness_id());
         Order order = orderDTO.convertToOrderEntity(business, payMethodMapper(business).apply(orderDTO.getPaymethod_id()));
-        Set<Purchase> purchases = order.getPurchases();
-        for (Purchase purchase : purchases) {
+        Set<RequestPurchaseDTO> purchases = orderDTO.getPurchases();
+        Map<Long, Product> products = new HashMap<>();
+        for (RequestPurchaseDTO purchase : purchases) {
             int quantity = purchase.getQuantity();
-            Product product = purchase.getProduct();
-
+            Product product = productService.findProductById(purchase.getProduct_id());
             if (quantity >= product.getQuantity())
                 throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, "quantity more than existing one");
             product.setQuantity(product.getQuantity() - quantity);
-            productService.save(product);
+            products.put(purchase.getProduct_id(), product);
         }
-        return orderService.save(order);
+
+        OrderDTO ordered = orderService.save(order);
+        order.setId(ordered.getId());
+        for (Map.Entry<Long, Product> p : products.entrySet()) {
+            productService.save(p.getValue());
+        }
+        Set<PurchaseDTO> finalPurchases = new HashSet<>();
+        for (RequestPurchaseDTO purchase : purchases) {
+            finalPurchases.add(purchaseService.save(
+                    purchase.convertToPurchaseEntity(products.get(purchase.getProduct_id()), order)
+            ));
+        }
+        ordered.setPurchases(finalPurchases);
+        return ordered;
     }
 
     @GetMapping

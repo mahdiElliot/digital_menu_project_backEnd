@@ -2,7 +2,6 @@ package com.example.project.model.option;
 
 
 import com.example.project.model.extra.Extra;
-import com.example.project.model.purchase.Purchase;
 import com.example.project.model.suboptions.SubOption;
 import com.example.project.model.suboptions.SubOptionDTO;
 import lombok.Getter;
@@ -45,9 +44,6 @@ public class Option {
     @ManyToOne
     @JoinColumn(name = "extra_id", nullable = false)
     private Extra extra;
-
-    @ManyToMany(mappedBy = "options", cascade = CascadeType.ALL)
-    private Set<Purchase> purchases = new HashSet<>();
 
     public Option(long id, String name, int min, int max, boolean enabled, String image, Extra extra) {
         this.id = id;

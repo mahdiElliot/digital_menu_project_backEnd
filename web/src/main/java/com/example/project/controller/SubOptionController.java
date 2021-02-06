@@ -72,7 +72,7 @@ public class SubOptionController extends BaseController {
             @PathVariable(name = "e_id") Long id2,
             @PathVariable(name = "o_id") Long id3,
             @Valid SubOptionDTO subOptionDTO,
-            @RequestParam("photo") MultipartFile multipartFile
+            @RequestParam(name = "photo", required = false) MultipartFile multipartFile
     ) throws IOException {
         return saveUpdate(id, id2, id3, subOptionDTO, multipartFile);
     }
@@ -92,7 +92,7 @@ public class SubOptionController extends BaseController {
             @PathVariable(name = "o_id") Long id3,
             @PathVariable(name = "s_id") Long id4,
             @Valid SubOptionDTO subOptionDTO,
-            @RequestParam("photo") MultipartFile multipartFile
+            @RequestParam(name = "photo", required = false) MultipartFile multipartFile
     ) throws IOException {
         subOptionDTO.setId(id4);
         return saveUpdate(id, id2, id3, subOptionDTO, multipartFile);

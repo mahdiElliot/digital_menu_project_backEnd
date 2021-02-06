@@ -36,7 +36,7 @@ public class OrderDTO {
     private Date created_at;
 
     @NotEmpty
-    Set<PurchaseDTO> specificProducts;
+    Set<PurchaseDTO> purchases;
 
     public OrderDTO(long id, double tax, int table_number, String comment, Long business_id, Long customer_id, Long paymethod_id, Date created_at) {
         this.id = id;

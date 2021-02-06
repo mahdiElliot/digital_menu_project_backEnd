@@ -2,9 +2,10 @@ package com.example.project.utils;
 
 public class URLUtils {
     public final static String BASE = "http://localhost:3000";
-    public final static String BUSINESS = "/business";
+    public final static String API = "/api";
+    public final static String BUSINESS = API + "/business";
     public final static String MENU = "/menus";
-    public final static String ORDER = "/order";
+    public final static String ORDER = API + "/orders";
     public final static String CATEGORY = "/categories";
     public final static String PRODUCT = "/products";
     public final static String OPTION = "/option";

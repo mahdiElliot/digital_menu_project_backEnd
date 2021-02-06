@@ -1,29 +1,23 @@
 package com.example.project.model.purchase;
 
-import com.example.project.model.extra.Extra;
-import com.example.project.model.option.Option;
+
+import com.example.project.model.option.RequestOptionDTO;
 import com.example.project.model.order.Order;
 import com.example.project.model.product.Product;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
 public class RequestPurchaseDTO {
     private long id;
-
-    @NotEmpty
-    private String name;
 
     private String comment;
 
@@ -37,25 +31,32 @@ public class RequestPurchaseDTO {
     @NotNull
     private Long product_id;
 
-    private Long order_id;
-
-    private Set<Long> options;
+    private Set<RequestOptionDTO> options;
 
     public Purchase convertToPurchaseEntity(Product product, Order order) {
-        Purchase purchase = new Purchase(id, name, comment, quantity, price, product, order);
+        Purchase purchase = new Purchase(id, comment, quantity, price, product, order);
         if (options != null && !options.isEmpty()) {
-            Set<Extra> extras = product.getExtras();
-            Set<Option> optionSet = new HashSet<>();
-            for (Extra extra : extras) {
-                if (extra.getOptions() == null) continue;
-                Map<Long, Option> map = extra.getOptions().stream().collect(Collectors.toMap(Option::getId, e -> e));
-                for (Long id : options) {
-                    Option option = map.get(id);
-                    if (option != null) optionSet.add(option);
+            List<Object> infos = new ArrayList<>();
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> info = new HashMap<>();
+            String json = "";
+            try {
+                for (RequestOptionDTO option : options) {
+                    info.put("option_id", option.getId());
+                    info.put("suboptions", option.getSubOptions());
+                    json = objectMapper.writeValueAsString(info);
+                    infos.add(json);
+                    info.clear();
                 }
+                info.put("options", infos);
+                json = objectMapper.writeValueAsString(info);
+                purchase.setJsonOptions(json);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            purchase.setOptions(optionSet);
         }
         return purchase;
     }
 }
+
+//{options: [{option_id: 1, suboptions: [2,3, 4]},{option_id: 2, suboptions: [3, 7 , 8]}]}

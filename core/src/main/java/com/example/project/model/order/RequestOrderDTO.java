@@ -20,8 +20,7 @@ import java.util.stream.Collectors;
 public class RequestOrderDTO {
     private long id;
 
-    @NotNull
-    private Double tax;
+    private double tax;
 
     @NotNull
     private Integer table_number;
@@ -37,18 +36,23 @@ public class RequestOrderDTO {
     @NotNull
     private Long paymethod_id;
 
-    @NotEmpty
     Set<RequestPurchaseDTO> purchases;
 
     public Order convertToOrderEntity(Business business, PayMethod payMethod) {
-        Order order = new Order(id, tax, table_number, comment, business, customer.convertToCustomerEntity(), payMethod);
-        Set<Product> products = business.getProducts();
-        Map<Long, Product> map = products.stream().collect(Collectors.toMap(Product::getId, e -> e));
-        Map<Long, Order> orderMap = business.getOrders().stream().collect(Collectors.toMap(Order::getId, e -> e));
+        return new Order(id, tax, table_number, comment, business, customer.convertToCustomerEntity(), payMethod);
+    }
 
-        order.setPurchases(purchases.stream()
-                .map(it -> it.convertToPurchaseEntity(map.get(it.getId()), orderMap.get(it.getId())))
-                .collect(Collectors.toSet()));
-        return order;
+    @Override
+    public String toString() {
+        return "RequestOrderDTO{" +
+                "id=" + id +
+                ", tax=" + tax +
+                ", table_number=" + table_number +
+                ", comment='" + comment + '\'' +
+                ", business_id=" + business_id +
+                ", customer=" + customer +
+                ", paymethod_id=" + paymethod_id +
+                ", purchases=" + purchases +
+                '}';
     }
 }
