@@ -2,9 +2,12 @@ package com.example.project.model.purchase;
 
 import com.example.project.model.order.Order;
 import com.example.project.model.product.Product;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 
@@ -13,6 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "purchase")
+@TypeDef(typeClass = JsonBinaryType.class, name = "jsonb")
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "purchase_generator")
@@ -34,6 +38,8 @@ public class Purchase {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private String jsonOptions;
 
     public Purchase(long id, String comment, int quantity, double price, Product product, Order order) {

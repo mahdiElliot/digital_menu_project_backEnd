@@ -10,5 +10,7 @@ dependencies {
     compile "com.bedatadriven:jackson-datatype-jts:2.4"
     compile "org.wololo:jts2geojson:0.11.0"
     implementation('org.postgresql:postgresql')
+    compile group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '1.1.1'
+//Thanks for using https://jar-download.com
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
 }

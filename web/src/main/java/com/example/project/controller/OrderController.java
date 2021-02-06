@@ -59,7 +59,6 @@ public class OrderController extends BaseController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDTO addOrder(@Valid @RequestBody RequestOrderDTO orderDTO, BindingResult bindingResult) {
-        System.out.println(orderDTO);
         if (bindingResult.hasErrors())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ErrorUtils.NULL_EMPTY);
         Business business = businessMapper().apply(orderDTO.getBusiness_id());
