@@ -58,7 +58,7 @@ public class ProductService implements IProductService {
         if (id == null) return null;
         Optional<Product> item = repository.findById(id);
         if (item.isPresent()) {
-            repository.deleteById(id);
+            repository.delete(id);
             return item.get().convertToDTO();
         }
         return null;

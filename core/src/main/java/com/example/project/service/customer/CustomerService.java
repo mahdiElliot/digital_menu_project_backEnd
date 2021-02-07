@@ -46,7 +46,7 @@ public class CustomerService implements ICustomerService {
         if (id == null) return null;
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()){
-            customerRepository.deleteById(id);
+            customerRepository.delete(id);
             return customer.get().convertToDTO();
         }
         return null;

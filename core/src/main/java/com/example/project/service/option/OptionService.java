@@ -46,7 +46,7 @@ public class OptionService implements IOptionService {
         if (id == null) return null;
         Optional<Option> item = repository.findById(id);
         if (item.isPresent()) {
-            repository.deleteById(id);
+            repository.delete(id);
             return item.get().convertToDTO();
         }
         return null;

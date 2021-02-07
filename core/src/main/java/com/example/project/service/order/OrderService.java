@@ -48,7 +48,7 @@ public class OrderService implements IOrderService {
         if (id == null) return null;
         Optional<Order> order = orderRepository.findById(id);
         if (order.isPresent()) {
-            orderRepository.deleteById(id);
+            orderRepository.delete(id);
             return order.get().convertToDTO();
         }
         return null;

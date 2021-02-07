@@ -12,6 +12,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins(URLUtils.BASE);
+        registry.addMapping("/**")
+                .allowedOrigins(URLUtils.BASE, URLUtils.BASE2, URLUtils.BASE3, URLUtils.BASE4, URLUtils.BASE5, URLUtils.BASE6, URLUtils.BASE7);
     }
 }

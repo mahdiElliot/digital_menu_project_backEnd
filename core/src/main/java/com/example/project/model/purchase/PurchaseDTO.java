@@ -19,6 +19,8 @@ public class PurchaseDTO {
 
     private long id;
 
+    private String name;
+
     private String comment;
 
     @NotNull

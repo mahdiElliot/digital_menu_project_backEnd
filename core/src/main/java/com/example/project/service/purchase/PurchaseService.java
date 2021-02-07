@@ -46,7 +46,7 @@ public class PurchaseService implements IPurchaseService {
         if (id == null) return null;
         Optional<Purchase> item = repository.findById(id);
         if (item.isPresent()) {
-            repository.deleteById(id);
+            repository.delete(id);
             return item.get().convertToDTO();
         }
         return null;

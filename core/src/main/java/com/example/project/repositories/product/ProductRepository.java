@@ -2,6 +2,7 @@ package com.example.project.repositories.product;
 
 import com.example.project.model.product.Product;
 import com.example.project.repositories.EntityRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

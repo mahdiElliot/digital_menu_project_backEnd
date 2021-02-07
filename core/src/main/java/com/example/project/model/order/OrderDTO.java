@@ -1,5 +1,9 @@
 package com.example.project.model.order;
 
+import com.example.project.model.business.BusinessDTO;
+import com.example.project.model.customer.CustomerDTO;
+import com.example.project.model.paymethod.PayMethod;
+import com.example.project.model.paymethod.PayMethodDTO;
 import com.example.project.model.purchase.PurchaseDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,36 +20,42 @@ import java.util.Set;
 public class OrderDTO {
     private long id;
 
-    @NotNull
     private Double tax;
 
-    @NotNull
     private Integer table_number;
 
     private String comment;
 
-    @NotNull
     private Long business_id;
 
-    @NotNull
-    private Long customer_id;
+    private BusinessDTO business;
 
-    @NotNull
-    private Long paymethod_id;
+    private Double service_fee;
+
+    private double service_tip;
+
+    private CustomerDTO customer;
+
+    private PayMethodDTO paymethod;
 
     private Date created_at;
 
     @NotEmpty
     Set<PurchaseDTO> purchases;
 
-    public OrderDTO(long id, double tax, int table_number, String comment, Long business_id, Long customer_id, Long paymethod_id, Date created_at) {
+    public OrderDTO(long id, double tax, int table_number, double service_tip, String comment, BusinessDTO business, CustomerDTO customer, PayMethodDTO paymethod, Date created_at) {
         this.id = id;
         this.tax = tax;
         this.table_number = table_number;
         this.comment = comment;
-        this.business_id = business_id;
-        this.customer_id = customer_id;
-        this.paymethod_id = paymethod_id;
+        this.business = business;
+        if (business != null) {
+            service_fee = business.getService_fee();
+            business_id = business.getId();
+        }
+        this.customer = customer;
+        this.paymethod = paymethod;
         this.created_at = created_at;
+        this.service_tip = service_tip;
     }
 }

@@ -43,7 +43,7 @@ public class MenuService implements IMenuService {
     public MenuDTO delete(Long id) {
         MenuDTO menuDTO = findById(id);
         if (menuDTO == null) return null;
-        menuRepository.deleteById(id);
+        menuRepository.delete(id);
         return menuDTO;
     }
 

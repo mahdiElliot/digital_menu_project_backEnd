@@ -45,7 +45,7 @@ public class PayMethodService implements IPayMethodService {
         if (id == null) return null;
         Optional<PayMethod> menu = payMethodRepository.findById(id);
         if (menu.isPresent()) {
-            payMethodRepository.deleteById(id);
+            payMethodRepository.delete(id);
             return menu.get().convertToDTO();
         }
         return null;

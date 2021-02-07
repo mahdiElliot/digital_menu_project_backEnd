@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = URLUtils.BASE)
@@ -33,6 +35,12 @@ public class PayMethodController extends BaseController {
         payMethodDTO.setBusiness_id(id);
         Business business = businessMapper().apply(id);
         return payMethodService.save(payMethodDTO.convertToPayMethodEntity(business));
+    }
+
+    @GetMapping(path = URLUtils.BUSINESS + "/{b_id}" + URLUtils.PAYMETHOD)
+    public List<PayMethodDTO> getAll(@PathVariable(name = "b_id") Long id) {
+        Business business = businessMapper().apply(id);
+        return new ArrayList<>(business.convertToDTO().getPayMethods());
     }
 
     @PutMapping(path = URLUtils.BUSINESS + "/{id}" + URLUtils.PAYMETHOD + "/{id2}")

@@ -1,7 +1,9 @@
 package com.example.project.model.order;
 
 import com.example.project.model.business.Business;
+import com.example.project.model.business.BusinessDTO;
 import com.example.project.model.customer.Customer;
+import com.example.project.model.customer.CustomerDTO;
 import com.example.project.model.paymethod.PayMethod;
 import com.example.project.model.purchase.Purchase;
 import com.example.project.model.purchase.PurchaseDTO;
@@ -34,6 +36,8 @@ public class Order {
     @Column(nullable = false)
     private Integer tableNumber;
 
+    private Double serviceTip;
+
     @ManyToOne
     @JoinColumn(name = "business_id", nullable = false)
     private Business business;
@@ -52,7 +56,7 @@ public class Order {
     @CreationTimestamp
     private Date created_at;
 
-    public Order(long id, double tax, int tableNumber, String comment, Business business, Customer customer, PayMethod payMethod) {
+    public Order(long id, double tax, int tableNumber, double serviceTip, String comment, Business business, Customer customer, PayMethod payMethod) {
         this.id = id;
         this.tax = tax;
         this.tableNumber = tableNumber;
@@ -60,19 +64,20 @@ public class Order {
         this.customer = customer;
         this.payMethod = payMethod;
         this.comment = comment;
+        this.serviceTip = serviceTip;
     }
 
     public OrderDTO convertToDTO() {
-        Long businessId = null;
-        Long customerId = null;
+        BusinessDTO businessDTO = null;
+        CustomerDTO customerDTO = null;
         if (business != null)
-            businessId = business.getId();
+            businessDTO = business.convertToDTO();
         if (customer != null)
-            customerId = customer.getId();
+            customerDTO = customer.convertToDTO();
         Set<PurchaseDTO> purchaseDTOS =
                 purchases.stream().map(Purchase::convertToDTO).collect(Collectors.toSet());
 
-        OrderDTO orderDTO = new OrderDTO(id, tax, tableNumber, comment, businessId, customerId, payMethod.getId(), created_at);
+        OrderDTO orderDTO = new OrderDTO(id, tax, tableNumber, serviceTip, comment, businessDTO, customerDTO, payMethod.convertToDTO(), created_at);
         orderDTO.setPurchases(purchaseDTOS);
         return orderDTO;
     }

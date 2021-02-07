@@ -44,7 +44,7 @@ public class ZoneService implements IZoneService {
         if (id == null) return null;
         Optional<Zone> menu = zoneRepository.findById(id);
         if (menu.isPresent()) {
-            zoneRepository.deleteById(id);
+            zoneRepository.delete(id);
             return menu.get().convertToDTO();
         }
         return null;

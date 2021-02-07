@@ -87,6 +87,6 @@ public class Purchase {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return new PurchaseDTO(id, comment, quantity, price, product.getId(), order.getId(), optionDTOS);
+        return new PurchaseDTO(id, product.getName(), comment, quantity, price, product.getId(), order.getId(), optionDTOS);
     }
 }

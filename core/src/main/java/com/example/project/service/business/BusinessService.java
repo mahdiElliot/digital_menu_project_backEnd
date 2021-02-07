@@ -43,7 +43,7 @@ public class BusinessService implements IBusinessService {
     public BusinessDTO delete(Long id) {
         BusinessDTO businessDTO = findById(id);
         if (businessDTO == null) return null;
-        businessRepository.deleteById(id);
+        businessRepository.delete(id);
         return businessDTO;
     }
 

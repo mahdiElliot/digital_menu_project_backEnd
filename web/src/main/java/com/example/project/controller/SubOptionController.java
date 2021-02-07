@@ -24,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -81,8 +82,8 @@ public class SubOptionController extends BaseController {
     public List<SubOptionDTO> getAll(@PathVariable(name = "b_id") Long id, @PathVariable(name = "e_id") Long id2, @PathVariable(name = "o_id") Long id3) {
         Business business = businessMapper().apply(id);
         Extra extra = extraMapper(business).apply(id2);
-        Option option = optionMapper(extra).apply(id3);
-        return subOptionService.findAll();
+        OptionDTO optionDTO = optionService.findById(id3);
+        return new ArrayList<>(optionDTO.getSubOptions());
     }
 
     @PutMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION + "/{o_id}" + URLUtils.SUBOPTION + "/{s_id}")

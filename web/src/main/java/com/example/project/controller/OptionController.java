@@ -19,9 +19,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = URLUtils.BASE)
@@ -60,8 +62,8 @@ public class OptionController extends BaseController {
     @GetMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION)
     public List<OptionDTO> getAll(@PathVariable(name = "b_id") Long id, @PathVariable(name = "e_id") Long id2) {
         Business business = businessMapper().apply(id);
-        Extra extra = extraMapper(business).apply(id2);
-        return optionService.findAll();
+        ExtraDTO extraDTO = extraService.findById(id2);
+        return new ArrayList<>(extraDTO.getOptions());
     }
 
     @GetMapping(URLUtils.BUSINESS + "/{b_id}" + URLUtils.EXTRA + "/{e_id}" + URLUtils.OPTION + "/{o_id}")

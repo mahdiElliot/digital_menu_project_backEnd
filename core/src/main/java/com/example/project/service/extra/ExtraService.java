@@ -46,7 +46,7 @@ public class ExtraService implements IExtraService {
         if (id == null) return null;
         Optional<Extra> menu = extraRepository.findById(id);
         if (menu.isPresent()) {
-            extraRepository.deleteById(id);
+            extraRepository.delete(id);
             return menu.get().convertToDTO();
         }
         return null;

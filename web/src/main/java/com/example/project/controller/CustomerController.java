@@ -30,8 +30,8 @@ public class CustomerController {
         return customerService.findCustomersOrderedInBusiness(id);
     }
 
-    @GetMapping(path = "/business/{id}/customers-ordered/{tableNum}")
-    public List<CustomerDTO> findCustomersOrderedInBusinessByTableNumber(@PathVariable Long id, @PathVariable Integer tableNum) {
-        return customerService.findCustomersOrderedInBusinessByTableNumber(id, tableNum);
+    @GetMapping(path = "/business/{id}/customers-ordered/{tableNumber}")
+    public List<CustomerDTO> findCustomersOrderedInBusinessByTableNumber(@PathVariable Long id, @PathVariable Integer tableNumber) {
+        return customerService.findCustomersOrderedInBusinessByTableNumber(id, tableNumber);
     }
 }

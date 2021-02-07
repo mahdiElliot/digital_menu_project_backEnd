@@ -46,7 +46,7 @@ public class SubOptionService implements ISubOptionService {
         if (id == null) return null;
         Optional<SubOption> item = repository.findById(id);
         if (item.isPresent()) {
-            repository.deleteById(id);
+            repository.delete(id);
             return item.get().convertToDTO();
         }
         return null;

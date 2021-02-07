@@ -50,7 +50,7 @@ public class CategoryService implements ICategoryService {
     public CategoryDTO delete(Long id) {
         CategoryDTO categoryDTO = findById(id);
         if (categoryDTO == null) return null;
-        categoryRepository.deleteById(id);
+        categoryRepository.delete(id);
         return categoryDTO;
     }
 

@@ -25,6 +25,8 @@ public class RequestOrderDTO {
     @NotNull
     private Integer table_number;
 
+    private Double service_tip;
+
     private String comment;
 
     @NotNull
@@ -39,7 +41,7 @@ public class RequestOrderDTO {
     Set<RequestPurchaseDTO> purchases;
 
     public Order convertToOrderEntity(Business business, PayMethod payMethod) {
-        return new Order(id, tax, table_number, comment, business, customer.convertToCustomerEntity(), payMethod);
+        return new Order(id, tax, table_number, service_tip, comment, business, customer.convertToCustomerEntity(), payMethod);
     }
 
     @Override
