@@ -25,7 +25,7 @@ public class RequestOrderDTO {
     @NotNull
     private Integer table_number;
 
-    private Double service_tip;
+    private double service_tip;
 
     private String comment;
 

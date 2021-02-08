@@ -105,7 +105,7 @@ public class SubOptionController extends BaseController {
         Option option = optionMapper(extra).apply(id3);
         if (multipartFile != null) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            String uploadDir = URLUtils.SUBOPTION + "/photos/";
+            String uploadDir = URLUtils.API + URLUtils.SUBOPTION + "/photos/";
             subOptionDTO.setImage(uploadDir + fileName);
             SubOptionDTO subOptionDTO2 = subOptionService.save(subOptionDTO.convertToSubOptionEntity(optionMapper(extra).apply(id3)));
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
