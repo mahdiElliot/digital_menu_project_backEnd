@@ -28,9 +28,12 @@ subprojects {
 
 	dependencies {
 		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		testImplementation 'org.springframework.security:spring-security-test'
 		compile 'org.springframework.boot:spring-boot-devtools'
 		annotationProcessor 'org.projectlombok:lombok'
 		compileOnly 'org.projectlombok:lombok'
+
 		// https://mvnrepository.com/artifact/org.jetbrains/annotations
 		compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
 

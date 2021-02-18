@@ -1,6 +1,7 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
@@ -13,4 +14,5 @@ dependencies {
     compile group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '1.1.1'
 //Thanks for using https://jar-download.com
     compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
 }
